@@ -72,3 +72,5 @@ export function createStore<
     },
   }
 }
+
+export { install } from './install'
