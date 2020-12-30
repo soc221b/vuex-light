@@ -11,11 +11,23 @@ const store = createStore({
     increment(state) {
       ++state.count.value
     },
+    // with payload
+    add(state, offset: number) {
+      state.count.value += offset
+    },
   },
 })
+export default store
 
+// define injection
+export const storeKey = '$store'
+declare module '@vue/runtime-core' {
+  interface ComponentCustomProperties {
+    [storeKey]: typeof store
+  }
+}
+
+// declare the `useStore` composition function
 export function useStore() {
   return store
 }
-
-export default store
