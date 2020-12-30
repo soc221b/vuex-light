@@ -57,7 +57,7 @@ export function createStore<
   State extends StateParamType,
   Getters extends GettersParamType<State>,
   Mutations extends MutationsParamType<State>
->(options: { state: State; getters: Getters; mutations: Mutations }) {
+>(options: { state: State; getters?: Getters; mutations?: Mutations }) {
   const optionState = options.state
   const state = (Array.from(Object.keys(options.state)) as Array<keyof typeof optionState>).reduce(
     (state, stateKey) => {
@@ -66,16 +66,14 @@ export function createStore<
     {},
   ) as InnerStateType<State>
 
-  const getters = (Array.from(Object.keys(options.getters)) as Array<keyof typeof options.getters>).reduce(
-    (getters, getterKey) => {
-      const getter = computed(() => options.getters[getterKey](state as any))
-      return Object.assign(getters, { [getterKey]: getter })
-    },
-    {},
-  ) as GettersReturnType<Getters>
+  const optionGetters = options.getters || ({} as Getters)
+  const getters = (Array.from(Object.keys(optionGetters)) as Array<keyof Getters>).reduce((getters, getterKey) => {
+    const getter = computed(() => optionGetters[getterKey](state as any))
+    return Object.assign(getters, { [getterKey]: getter })
+  }, {}) as GettersReturnType<Getters>
 
-  const optionMutations = options.mutations || {}
-  const mutations = (Array.from(Object.keys(optionMutations)) as Array<keyof typeof optionMutations>).reduce(
+  const optionMutations = options.mutations || ({} as Mutations)
+  const mutations = (Array.from(Object.keys(optionMutations)) as Array<keyof Mutations>).reduce(
     (mutations, mutationKey) => {
       const mutation = (...payload: unknown[]) => optionMutations[mutationKey](state, ...payload)
       return Object.assign(mutations, { [mutationKey]: mutation })

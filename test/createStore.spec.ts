@@ -5,8 +5,6 @@ it('can create store with state', () => {
     state: {
       count: 0,
     },
-    getters: {},
-    mutations: {},
   })
 })
 
@@ -18,7 +16,6 @@ it('can create store with computed state', () => {
     getters: {
       double: state => state.count.value * 2,
     },
-    mutations: {},
   })
 })
 
@@ -31,7 +28,6 @@ it("computed's state parameter should be readonly", () => {
       // @ts-expect-error
       mutate: state => state.count.value++,
     },
-    mutations: {},
   })
 })
 
@@ -42,7 +38,6 @@ it("computed's state parameter should only have state types", () => {
       // @ts-expect-error
       mutate: state => state.count.value,
     },
-    mutations: {},
   })
 })
 
@@ -73,7 +68,6 @@ it('can create store with mutations', () => {
     state: {
       count: 0,
     },
-    getters: {},
     mutations: {
       increment(state) {
         ++state.count.value
@@ -85,7 +79,6 @@ it('can create store with mutations', () => {
 it("mutations's state parameter should only have state types", () => {
   createStore({
     state: {},
-    getters: {},
     mutations: {
       increment(state) {
         // @ts-expect-error
@@ -100,7 +93,6 @@ it('mutation should auto bind state to mutations', () => {
     state: {
       count: 0,
     },
-    getters: {},
     mutations: {
       increment(state) {
         state.count.value
@@ -116,7 +108,6 @@ it('can pass payload to mutations', () => {
     state: {
       count: 0,
     },
-    getters: {},
     mutations: {
       increment(state, payload: number) {
         state.count.value = payload
