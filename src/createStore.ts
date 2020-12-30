@@ -1,5 +1,5 @@
 import { ref, computed, Ref, ComputedRef, isReactive, toRefs } from 'vue'
-import { DeepReadonly, OmitFirst } from './util'
+import { getOwnKeys, DeepReadonly, OmitFirst } from './util'
 
 /**
  * @alpha
@@ -63,24 +63,21 @@ export function createStore<
   }
 
   const optionState = isReactive(options.state) ? toRefs(options.state) : options.state
-  const state = (Array.from(Object.keys(optionState)) as Array<keyof typeof optionState>).reduce((state, stateKey) => {
+  const state = getOwnKeys(optionState).reduce((state, stateKey) => {
     return Object.assign(state, { [stateKey]: ref(optionState[stateKey]) })
   }, {}) as InnerStateType<State>
 
   const optionGetters = options.getters || ({} as Getters)
-  const getters = (Array.from(Object.keys(optionGetters)) as Array<keyof Getters>).reduce((getters, getterKey) => {
+  const getters = getOwnKeys(optionGetters).reduce((getters, getterKey) => {
     const getter = computed(() => optionGetters[getterKey](state as any))
     return Object.assign(getters, { [getterKey]: getter })
   }, {}) as GettersReturnType<Getters>
 
   const optionMutations = options.mutations || ({} as Mutations)
-  const mutations = (Array.from(Object.keys(optionMutations)) as Array<keyof Mutations>).reduce(
-    (mutations, mutationKey) => {
-      const mutation = (...payload: unknown[]) => optionMutations[mutationKey](state, ...payload)
-      return Object.assign(mutations, { [mutationKey]: mutation })
-    },
-    {},
-  ) as MutationsReturnType<Mutations>
+  const mutations = getOwnKeys(optionMutations).reduce((mutations, mutationKey) => {
+    const mutation = (...payload: unknown[]) => optionMutations[mutationKey](state, ...payload)
+    return Object.assign(mutations, { [mutationKey]: mutation })
+  }, {}) as MutationsReturnType<Mutations>
 
   return {
     state: state as StateReturnType<State>,

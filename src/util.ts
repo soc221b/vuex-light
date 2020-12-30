@@ -9,3 +9,10 @@ export type DeepReadonly<T> = {
  * @alpha
  */
 export type OmitFirst<T> = T extends [any, ...infer Rest] ? Rest : never
+
+/**
+ * @alpha
+ */
+export function getOwnKeys<O extends object>(object: O) {
+  return Array.from(Object.keys(object)) as (keyof O)[]
+}
