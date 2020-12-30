@@ -1,4 +1,4 @@
-import { ref, computed, Ref, ComputedRef } from 'vue'
+import { ref, computed, Ref, ComputedRef, isReactive, toRefs } from 'vue'
 import { DeepReadonly, OmitFirst } from './util'
 
 /**
@@ -58,13 +58,14 @@ export function createStore<
   Getters extends GettersParamType<State>,
   Mutations extends MutationsParamType<State>
 >(options: { state: State; getters?: Getters; mutations?: Mutations }) {
-  const optionState = options.state
-  const state = (Array.from(Object.keys(options.state)) as Array<keyof typeof optionState>).reduce(
-    (state, stateKey) => {
-      return Object.assign(state, { [stateKey]: ref(optionState[stateKey]) })
-    },
-    {},
-  ) as InnerStateType<State>
+  if (__DEV__) {
+    if (typeof options.state !== 'object') throw Error('[vuex-light]: invalid state type.')
+  }
+
+  const optionState = isReactive(options.state) ? toRefs(options.state) : options.state
+  const state = (Array.from(Object.keys(optionState)) as Array<keyof typeof optionState>).reduce((state, stateKey) => {
+    return Object.assign(state, { [stateKey]: ref(optionState[stateKey]) })
+  }, {}) as InnerStateType<State>
 
   const optionGetters = options.getters || ({} as Getters)
   const getters = (Array.from(Object.keys(optionGetters)) as Array<keyof Getters>).reduce((getters, getterKey) => {

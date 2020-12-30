@@ -1,3 +1,4 @@
+import { reactive } from 'vue'
 import { createStore } from '../src'
 
 it('can create store with state', () => {
@@ -10,7 +11,32 @@ it('can create store with state', () => {
 
 it('can not create store without state', () => {
   // @ts-expect-error
-  createStore({})
+  expect(() => createStore({})).toThrow()
+})
+
+it('can reactive with existing reactivity object', () => {
+  const originalState = reactive({
+    count: 0,
+  })
+  const store = createStore({
+    state: originalState,
+    mutations: {
+      increment(state) {
+        ++state.count.value
+      },
+    },
+  })
+
+  expect(store.count.value).toBe(0)
+  expect(originalState.count).toBe(0)
+
+  store.mutations.increment()
+  expect(store.count.value).toBe(1)
+  expect(originalState.count).toBe(1)
+
+  ++originalState.count
+  expect(store.count.value).toBe(2)
+  expect(originalState.count).toBe(2)
 })
 
 it('can create store with computed state', () => {
