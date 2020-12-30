@@ -83,11 +83,9 @@ export function createStore<
   ) as MutationsReturnType<Mutations>
 
   return {
-    ...(state as StateReturnType<State>),
-    ...getters,
-    mutations: {
-      ...mutations,
-    },
+    state: state as StateReturnType<State>,
+    getters,
+    mutations,
   }
 }
 

@@ -44,7 +44,7 @@ it('should add to global properties', () => {
     },
   })
 
-  expect(vm.vm.$store.count.value).toBe(0)
+  expect(vm.vm.$store.state.count.value).toBe(0)
 })
 
 declare module '@vue/runtime-core' {
@@ -67,6 +67,6 @@ it("should allow to customize global property's name", () => {
 
   store.mutations.increment()
 
-  expect(vm.vm.$foo.count.value).toBe(1)
-  expect(() => vm.vm.$store.count.value).toThrow()
+  expect(vm.vm.$foo.state.count.value).toBe(1)
+  expect(() => vm.vm.$store.state.count.value).toThrow()
 })

@@ -27,15 +27,15 @@ it('can reactive with existing reactivity object', () => {
     },
   })
 
-  expect(store.count.value).toBe(0)
+  expect(store.state.count.value).toBe(0)
   expect(originalState.count).toBe(0)
 
   store.mutations.increment()
-  expect(store.count.value).toBe(1)
+  expect(store.state.count.value).toBe(1)
   expect(originalState.count).toBe(1)
 
   ++originalState.count
-  expect(store.count.value).toBe(2)
+  expect(store.state.count.value).toBe(2)
   expect(originalState.count).toBe(2)
 })
 
@@ -87,7 +87,7 @@ it('computed should be reactive', () => {
     },
   })
 
-  const double = store.double
+  const double = store.getters.double
   expect(double.value).toBe(0)
 
   store.mutations.increment()
@@ -147,5 +147,5 @@ it('can pass payload to mutations', () => {
   })
 
   store.mutations.increment(42)
-  expect(store.count.value).toBe(42)
+  expect(store.state.count.value).toBe(42)
 })

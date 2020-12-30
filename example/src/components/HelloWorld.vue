@@ -21,7 +21,9 @@ export default {
   },
   setup() {
     const {
-      count, // typed as DeepReadonly<Ref<number>>
+      state: {
+        count, // typed as DeepReadonly<Ref<number>>
+      },
       mutations: {
         increment, // typed as () => void
         add, // typed as (offset: number) => void
