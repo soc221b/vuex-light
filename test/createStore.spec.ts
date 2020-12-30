@@ -8,6 +8,11 @@ it('can create store with state', () => {
   })
 })
 
+it('can not create store without state', () => {
+  // @ts-expect-error
+  createStore({})
+})
+
 it('can create store with computed state', () => {
   createStore({
     state: {
