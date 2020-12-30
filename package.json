@@ -5,6 +5,12 @@
     "node": ">=10"
   },
   "description": "A store made with vue 3 composition API",
+  "keywords": [
+    "vue",
+    "vuex",
+    "composition",
+    "typescript"
+  ],
   "main": "dist/index.cjs.prod.js",
   "module": "dist/index.esm-bundler.js",
   "unpkg": "dist/index.global.prod.js",

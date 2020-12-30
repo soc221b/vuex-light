@@ -1,44 +1,9 @@
 # vuex-light
 
-# You might not need Vuex in Vue3
+# Features
 
-```ts
-import { ref, readonly, watchEffect } from 'vue'
-
-const StoreKey = '$store'
-
-// encapsulate your state, mutations, etc. in a hook function
-function useCount() {
-  const count = ref(0)
-  function increment() {
-    ++count.value
-  }
-  return {
-    count: readonly(count) as Readonly<typeof count>,
-    increment,
-  }
-}
-
-// and then create the store
-const store =
-  window.localStorage.getItem(StoreKey) !== null
-    ? JSON.parse(window.localStorage.getItem(StoreKey)!)
-    : {
-        ...useCount(),
-      }
-
-// use plugins
-function usePersistentStore<S>(store: S) {
-  watchEffect(() => {
-    window.localStorage.setItem(StoreKey, JSON.stringify(store))
-  })
-}
-
-const plugins = [usePersistentStore]
-plugins.forEach(plugin => plugin.call(null, store))
-
-export default store
-```
+- Light weight
+- Full typescript support
 
 # Installation
 
