@@ -1,35 +1,58 @@
 import { ref, computed, Ref, ComputedRef } from 'vue'
 import { DeepReadonly, OmitFirst } from './util'
 
-
-type StateParamType = {
+/**
+ * @alpha
+ */
+export type StateParamType = {
   [P: string]: unknown
 }
 
-type InnerStateType<S extends StateParamType> = {
+/**
+ * @alpha
+ */
+export type InnerStateType<S extends StateParamType> = {
   [P in keyof S]: Ref<S[P]>
 }
 
-type StateReturnType<S extends StateParamType> = {
+/**
+ * @alpha
+ */
+export type StateReturnType<S extends StateParamType> = {
   [P in keyof S]: DeepReadonly<Ref<S[P]>>
 }
 
-type GettersParamType<S extends StateParamType> = {
+/**
+ * @alpha
+ */
+export type GettersParamType<S extends StateParamType> = {
   [P: string]: (state: StateReturnType<S>) => unknown
 }
 
-type GettersReturnType<G extends GettersParamType<any>> = {
+/**
+ * @alpha
+ */
+export type GettersReturnType<G extends GettersParamType<any>> = {
   [P in keyof G]: ComputedRef<ReturnType<G[P]>>
 }
 
-type MutationsParamType<S extends StateParamType> = {
+/**
+ * @alpha
+ */
+export type MutationsParamType<S extends StateParamType> = {
   [P: string]: (state: InnerStateType<S>, ...payload: any[]) => void
 }
 
-type MutationsReturnType<M extends MutationsParamType<any>> = {
+/**
+ * @alpha
+ */
+export type MutationsReturnType<M extends MutationsParamType<any>> = {
   [P in keyof M]: (...args: OmitFirst<Parameters<M[P]>>) => void
 }
 
+/**
+ * @alpha
+ */
 export function createStore<
   State extends StateParamType,
   Getters extends GettersParamType<State>,
@@ -69,4 +92,5 @@ export function createStore<
   }
 }
 
-export { install } from './install'
+export * from './install'
+export * from './util'
