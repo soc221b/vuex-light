@@ -1,5 +1,5 @@
 import { ref, computed, Ref, ComputedRef, isReactive, toRefs } from 'vue'
-import { getOwnKeys, DeepReadonly, OmitFirst } from './util'
+import { getOwnKeys, assert, DeepReadonly, OmitFirst, isPlainObject } from './util'
 
 /**
  * @alpha
@@ -59,7 +59,7 @@ export function createStore<
   Mutations extends MutationsParamType<State>
 >(options: { state: State; getters?: Getters; mutations?: Mutations }) {
   if (__DEV__) {
-    if (typeof options.state !== 'object') throw Error('[vuex-light]: invalid state type.')
+    assert(isPlainObject(options.state), 'invalid state type.')
   }
 
   const optionState = isReactive(options.state) ? toRefs(options.state) : options.state
