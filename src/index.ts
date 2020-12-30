@@ -1,10 +1,6 @@
 import { ref, computed, Ref, ComputedRef } from 'vue'
 import { DeepReadonly, OmitFirst } from './util'
 
-/**
- * @alpha
- */
-export function dummy() {}
 
 type StateParamType = {
   [P: string]: unknown
