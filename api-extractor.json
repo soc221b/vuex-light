@@ -8,7 +8,7 @@
   },
 
   "docModel": {
-    "enabled": false
+    "enabled": true
   },
 
   "dtsRollup": {

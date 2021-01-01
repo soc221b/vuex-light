@@ -64,6 +64,7 @@
   },
   "scripts": {
     "build": "node scripts/build.js",
+    "docs": "api-documenter markdown -i temp -o docs",
     "release": "standard-version",
     "test": "jest",
     "lint": "prettier --check ."
