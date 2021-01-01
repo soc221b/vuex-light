@@ -47,9 +47,10 @@ it('should add to global properties', () => {
   expect(vm.vm[defaultStoreKey].state.count.value).toBe(0)
 })
 
+const customStoreKey = '$foo'
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
-    $foo: typeof store
+    [customStoreKey]: typeof store
   }
 }
 it("should allow to customize global property's name", () => {
@@ -61,12 +62,12 @@ it("should allow to customize global property's name", () => {
 
   const vm = mount(app, {
     global: {
-      plugins: [[{ install }, { store, storeKey: '$foo' }]],
+      plugins: [[{ install }, { store, storeKey: customStoreKey }]],
     },
   })
 
   store.mutations.increment()
 
-  expect(vm.vm.$foo.state.count.value).toBe(1)
+  expect(vm.vm[customStoreKey].state.count.value).toBe(1)
   expect(() => vm.vm[defaultStoreKey].state.count.value).toThrow()
 })
