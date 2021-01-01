@@ -1,5 +1,5 @@
 import { h } from 'vue'
-import { createStore, install } from '../src'
+import { createStore, install, defaultStoreKey } from '../src'
 import { mount } from '@vue/test-utils'
 
 function create() {
@@ -28,7 +28,7 @@ beforeEach(() => {
 
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
-    $store: typeof store
+    [defaultStoreKey]: typeof store
   }
 }
 it('should add to global properties', () => {
@@ -44,7 +44,7 @@ it('should add to global properties', () => {
     },
   })
 
-  expect(vm.vm.$store.state.count.value).toBe(0)
+  expect(vm.vm[defaultStoreKey].state.count.value).toBe(0)
 })
 
 declare module '@vue/runtime-core' {
@@ -68,5 +68,5 @@ it("should allow to customize global property's name", () => {
   store.mutations.increment()
 
   expect(vm.vm.$foo.state.count.value).toBe(1)
-  expect(() => vm.vm.$store.state.count.value).toThrow()
+  expect(() => vm.vm[defaultStoreKey].state.count.value).toThrow()
 })

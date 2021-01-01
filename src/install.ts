@@ -1,6 +1,9 @@
 import { App } from 'vue'
 
-const defaultStoreKey = '$store'
+/**
+ * @alpha
+ */
+export const defaultStoreKey = '$store'
 
 /**
  * @alpha
