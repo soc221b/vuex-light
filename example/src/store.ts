@@ -1,4 +1,4 @@
-import { createStore } from 'vuex-light'
+import { createStore, createPersistPlugin } from 'vuex-light'
 
 const store = createStore({
   state: {
@@ -17,6 +17,7 @@ const store = createStore({
     },
   },
 })
+createPersistPlugin()(store)
 export default store
 
 // define injection
