@@ -16,7 +16,7 @@ export const defaultPaths = null as string[] | null
  */
 export function defaultReducer<State extends StateReturnType<any>>(state: State, paths: string[] | null) {
   const unwrappedState = Object.keys(state).reduce((unwrappedState, key) => {
-    unwrappedState[key] = state[key].value
+    unwrappedState[key] = state[key]
     return unwrappedState
   }, {} as any)
   return paths === null

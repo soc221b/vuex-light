@@ -1,3 +1,4 @@
+import { toRefs } from 'vue'
 import { createStore, createPersistPlugin } from 'vuex-light'
 
 const store = createStore({
@@ -5,15 +6,15 @@ const store = createStore({
     count: 0,
   },
   getters: {
-    double: state => state.count.value * 2,
+    double: state => state.count * 2,
   },
   mutations: {
     increment(state) {
-      ++state.count.value
+      ++state.count
     },
     // with payload
     add(state, offset: number) {
-      state.count.value += offset
+      state.count += offset
     },
   },
 })
@@ -30,5 +31,9 @@ declare module '@vue/runtime-core' {
 
 // declare the `useStore` composition function
 export function useStore() {
-  return store
+  return {
+    state: toRefs(store.state),
+    getters: toRefs(store.getters),
+    mutations: store.mutations,
+  }
 }

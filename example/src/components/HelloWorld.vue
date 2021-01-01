@@ -10,7 +10,7 @@
   <p>Edit <code>components/HelloWorld.vue</code> to test hot module replacement.</p>
 </template>
 
-<script>
+<script lang="ts">
 import { ref } from 'vue'
 import { useStore } from '../store'
 

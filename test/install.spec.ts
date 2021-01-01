@@ -8,14 +8,14 @@ function create() {
       count: 0,
     },
     getters: {
-      double: state => state.count.value * 2,
+      double: state => state.count * 2,
     },
     mutations: {
       increment(state) {
-        ++state.count.value
+        ++state.count
       },
       reset(state) {
-        state.count.value = 0
+        state.count = 0
       },
     },
   })
@@ -44,7 +44,7 @@ it('should add to global properties', () => {
     },
   })
 
-  expect(vm.vm[defaultStoreKey].state.count.value).toBe(0)
+  expect(vm.vm[defaultStoreKey].state.count).toBe(0)
 })
 
 const customStoreKey = '$foo'
@@ -68,6 +68,6 @@ it("should allow to customize global property's name", () => {
 
   store.mutations.increment()
 
-  expect(vm.vm[customStoreKey].state.count.value).toBe(1)
-  expect(() => vm.vm[defaultStoreKey].state.count.value).toThrow()
+  expect(vm.vm[customStoreKey].state.count).toBe(1)
+  expect(() => vm.vm[defaultStoreKey].state.count).toThrow()
 })
