@@ -14,6 +14,16 @@ it('can not create store without state', () => {
   expect(() => createStore({})).toThrow()
 })
 
+it('state should be readonly', () => {
+  const store = createStore({
+    state: {
+      count: 0,
+    },
+  })
+  // @ts-expect-error
+  store.state.count.value++
+})
+
 it('can reactive with existing reactivity object', () => {
   const originalState = reactive({
     count: 0,
@@ -39,7 +49,7 @@ it('can reactive with existing reactivity object', () => {
   expect(originalState.count).toBe(2)
 })
 
-it('can create store with computed state', () => {
+it('getters should be computed', () => {
   createStore({
     state: {
       count: 0,
@@ -50,7 +60,25 @@ it('can create store with computed state', () => {
   })
 })
 
-it("computed's state parameter should be readonly", () => {
+it('getters should be readonly', () => {
+  const spy = jest.spyOn(global.console, 'warn').mockImplementation()
+
+  const store = createStore({
+    state: {
+      count: 0,
+    },
+    getters: {
+      double: state => state.count.value * 2,
+    },
+  })
+  // @ts-expect-error
+  store.getters.double.value++
+  expect(spy.mock.calls.length).toBe(1)
+
+  spy.mockRestore()
+})
+
+it("getters' state parameter should be readonly", () => {
   createStore({
     state: {
       count: 0,
@@ -62,7 +90,7 @@ it("computed's state parameter should be readonly", () => {
   })
 })
 
-it("computed's state parameter should only have state types", () => {
+it("getters' state parameter should only have state types", () => {
   createStore({
     state: {},
     getters: {
