@@ -3,17 +3,17 @@ import { StateReturnType, Subscriber, CreateStoreReturnType } from '../../'
 const deepMerge = require('deepmerge')
 
 /**
- * @alpha
+ * @public
  */
 export const defaultKey = 'vuex' as string
 
 /**
- * @alpha
+ * @public
  */
 export const defaultPaths = null as string[] | null
 
 /**
- * @alpha
+ * @public
  */
 export function defaultReducer<State extends StateReturnType<any>>(state: State, paths: string[] | null) {
   const unwrappedState = Object.keys(state).reduce((unwrappedState, key) => {
@@ -26,7 +26,7 @@ export function defaultReducer<State extends StateReturnType<any>>(state: State,
 }
 
 /**
- * @alpha
+ * @public
  */
 export function defaultSubscriber<Store extends CreateStoreReturnType<any, any, any>>(store: Store) {
   return function (handler: Subscriber) {
@@ -35,7 +35,7 @@ export function defaultSubscriber<Store extends CreateStoreReturnType<any, any, 
 }
 
 /**
- * @alpha
+ * @public
  */
 export type Storage = {
   getItem: (key: string) => any
@@ -43,12 +43,12 @@ export type Storage = {
   removeItem: (key: string) => void
 }
 /**
- * @alpha
+ * @public
  */
 export const defaultStorage: Storage = window.localStorage
 
 /**
- * @alpha
+ * @public
  */
 export function defaultGetState(key: Parameters<Storage['getItem']>['0'], storage: Storage) {
   const value = storage.getItem(key)
@@ -61,32 +61,32 @@ export function defaultGetState(key: Parameters<Storage['getItem']>['0'], storag
 }
 
 /**
- * @alpha
+ * @public
  */
 export function defaultSetState(key: Parameters<Storage['setItem']>['0'], state: any, storage: Storage) {
   return storage.setItem(key, JSON.stringify(state))
 }
 
 /**
- * @alpha
+ * @public
  */
 export function defaultFilter() {
   return true
 }
 
 /**
- * @alpha
+ * @public
  */
 export const defaultOverwrite = false as boolean
 
 /**
- * @alpha
+ * @public
  */
 export const defaultFetchBeforeUse = false as boolean
 
 const randomKey = '4u33j8eqxxyndzw5slhe6xyt9tuymkvf'
 /**
- * @alpha
+ * @public
  */
 export function defaultAssertStorage(storage: Storage): void | Error {
   storage.setItem(randomKey, 1)
@@ -94,19 +94,19 @@ export function defaultAssertStorage(storage: Storage): void | Error {
 }
 
 /**
- * @alpha
+ * @public
  */
 export function defaultArrayMerge(_: any[], savedState: any[]) {
   return savedState
 }
 
 /**
- * @alpha
+ * @public
  */
 export function defaultOnRehydrated<Store extends CreateStoreReturnType<any, any, any>>(_: Store) {}
 
 /**
- * @alpha
+ * @public
  */
 export type RequiredOptions = {
   key: typeof defaultKey
@@ -125,7 +125,7 @@ export type RequiredOptions = {
 }
 
 /**
- * @alpha
+ * @public
  */
 export type Options = Partial<RequiredOptions>
 
@@ -148,7 +148,7 @@ function normalize(options: Options): RequiredOptions {
 }
 
 /**
- * @alpha
+ * @public
  */
 export function createPersistPlugin(options?: Options) {
   const normalizedOptions = normalize(options || {})

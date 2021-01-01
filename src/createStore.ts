@@ -2,14 +2,14 @@ import { ref, computed, Ref, isReactive, toRefs, DeepReadonly, UnwrapRef, readon
 import { getOwnKeys, assert, OmitFirst, isPlainObject } from './util'
 
 /**
- * @alpha
+ * @public
  */
 export type StateOption = {
   [P: string]: unknown
 }
 
 /**
- * @alpha
+ * @public
  */
 export type StateType<S extends StateOption> = Ref<
   {
@@ -18,7 +18,7 @@ export type StateType<S extends StateOption> = Ref<
 >
 
 /**
- * @alpha
+ * @public
  */
 export type StateReturnType<S extends StateOption> = DeepReadonly<
   {
@@ -27,14 +27,14 @@ export type StateReturnType<S extends StateOption> = DeepReadonly<
 >
 
 /**
- * @alpha
+ * @public
  */
 export type GettersOption<S extends StateOption> = {
   [P: string]: (state: StateReturnType<S>) => unknown
 }
 
 /**
- * @alpha
+ * @public
  */
 export type GettersReturnType<G extends GettersOption<any>> = DeepReadonly<
   {
@@ -43,31 +43,31 @@ export type GettersReturnType<G extends GettersOption<any>> = DeepReadonly<
 >
 
 /**
- * @alpha
+ * @public
  */
 export type MutationsOption<S extends StateOption> = {
   [P: string]: (state: S, ...payload: any[]) => void
 }
 
 /**
- * @alpha
+ * @public
  */
 export type MutationsReturnType<M extends MutationsOption<any>> = {
   [P in keyof M]: (...args: OmitFirst<Parameters<M[P]>>) => void
 }
 
 /**
- * @alpha
+ * @public
  */
 export type Subscriber = (mutation: { key: string; payloads: unknown[] }) => void
 
 /**
- * @alpha
+ * @public
  */
 export type Plugin<Store> = (store: Store) => void
 
 /**
- * @alpha
+ * @public
  */
 export type CreateStoreReturnType<
   State extends StateOption,
@@ -82,7 +82,7 @@ export type CreateStoreReturnType<
 }
 
 /**
- * @alpha
+ * @public
  */
 export function createStore<
   State extends StateOption,

@@ -1,24 +1,24 @@
 /**
- * @alpha
+ * @public
  */
 export type OmitFirst<T> = T extends [any, ...infer Rest] ? Rest : never
 
 /**
- * @alpha
+ * @public
  */
 export function getOwnKeys<O extends object>(object: O) {
   return Array.from(Object.keys(object)) as (keyof O)[]
 }
 
 /**
- * @alpha
+ * @public
  */
 export function assert(condition: unknown, message: string) {
   if (!condition) throw Error(`[vuex-light]: ${message}`)
 }
 
 /**
- * @alpha
+ * @public
  */
 export function isPlainObject(object: unknown): boolean {
   return Object.prototype.toString.call(object) === '[object Object]'
