@@ -125,7 +125,7 @@ export function createStore<
 
   const replaceState = function (newState: UnwrapRef<typeof state>) {
     getOwnKeys(newState).forEach(key => {
-      ;(state.value as any)[key].value = newState[key]
+      ;(state.value as any)[key] = newState[key]
     })
   }
 
