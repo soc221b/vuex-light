@@ -53,11 +53,35 @@ export type MutationsReturnType<M extends MutationsParamType<any>> = {
 /**
  * @alpha
  */
+export type Subscriber = (mutation: { key: string; payloads: unknown[] }) => void
+
+/**
+ * @alpha
+ */
+export type CreateStoreReturnType<
+  State extends StateParamType,
+  Getters extends GettersParamType<State>,
+  Mutations extends MutationsParamType<State>
+> = {
+  state: StateReturnType<State>
+  getters: GettersReturnType<Getters>
+  mutations: MutationsReturnType<Mutations>
+  subscribe: (subscriber: Subscriber) => void
+  replaceState: (newState: InnerStateType<State>) => void
+}
+
+/**
+ * @alpha
+ */
 export function createStore<
   State extends StateParamType,
   Getters extends GettersParamType<State>,
   Mutations extends MutationsParamType<State>
->(options: { state: State; getters?: Getters; mutations?: Mutations }) {
+>(options: {
+  state: State
+  getters?: Getters
+  mutations?: Mutations
+}): CreateStoreReturnType<State, Getters, Mutations> {
   if (__DEV__) {
     assert(isPlainObject(options.state), 'invalid state type.')
   }
@@ -75,13 +99,29 @@ export function createStore<
 
   const optionMutations = options.mutations || ({} as Mutations)
   const mutations = getOwnKeys(optionMutations).reduce((mutations, mutationKey) => {
-    const mutation = (...payload: unknown[]) => optionMutations[mutationKey](state, ...payload)
+    const mutation = (...payloads: unknown[]) => {
+      optionMutations[mutationKey](state, ...payloads)
+      subscribers.forEach(subscriber => subscriber.call(null, { key: mutationKey as string, payloads }))
+    }
     return Object.assign(mutations, { [mutationKey]: mutation })
   }, {}) as MutationsReturnType<Mutations>
+
+  const subscribers: Subscriber[] = []
+  const subscribe = function (subscriber: Subscriber) {
+    subscribers.push(subscriber)
+  }
+
+  const replaceState = function (newState: typeof state) {
+    getOwnKeys(newState).forEach(key => {
+      state[key].value = newState[key] as any
+    })
+  }
 
   return {
     state: state as StateReturnType<State>,
     getters,
     mutations,
+    subscribe,
+    replaceState,
   }
 }

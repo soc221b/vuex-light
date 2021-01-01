@@ -55,6 +55,9 @@
   "peerDependencies": {
     "vue": "^3.0.4"
   },
+  "optionalDependencies": {
+    "shvl": "^2.0.1"
+  },
   "scripts": {
     "build": "node scripts/build.js",
     "release": "standard-version",
