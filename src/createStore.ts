@@ -64,6 +64,11 @@ export type Subscriber = (mutation: { key: string; payloads: unknown[] }) => voi
 /**
  * @alpha
  */
+export type Plugin<Store> = (store: Store) => void
+
+/**
+ * @alpha
+ */
 export type CreateStoreReturnType<
   State extends StateOption,
   Getters extends GettersOption<State>,
@@ -87,6 +92,7 @@ export function createStore<
   state: State
   getters?: Getters
   mutations?: Mutations
+  plugins?: Plugin<CreateStoreReturnType<State, Getters, Mutations>>[]
 }): CreateStoreReturnType<State, Getters, Mutations> {
   if (__DEV__) {
     assert(isPlainObject(options.state), 'invalid state type.')
@@ -129,11 +135,16 @@ export function createStore<
     })
   }
 
-  return {
+  const store = {
     state: state.value as StateReturnType<State>,
     getters,
     mutations,
     subscribe,
     replaceState,
   }
+
+  const optionPlugins = options.plugins || []
+  optionPlugins.forEach(plugin => plugin(store))
+
+  return store
 }
