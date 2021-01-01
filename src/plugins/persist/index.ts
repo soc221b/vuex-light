@@ -169,7 +169,7 @@ export function createPersistPlugin(options?: Options) {
       store.replaceState(
         normalizedOptions.overwrite
           ? savedState
-          : deepMerge(store.state.value, savedState, {
+          : deepMerge(store.state, savedState, {
               arrayMerge: normalizedOptions.arrayMerge,
               clone: false,
             }),
