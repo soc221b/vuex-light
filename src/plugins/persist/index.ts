@@ -1,5 +1,6 @@
 import { set, get } from 'shvl'
 import { StateReturnType, Subscriber, CreateStoreReturnType } from '../../'
+const deepMerge = require('deepmerge')
 
 /**
  * @alpha
@@ -95,6 +96,18 @@ export function defaultAssertStorage(storage: Storage): void | Error {
 /**
  * @alpha
  */
+export function defaultArrayMerge<State extends StateReturnType<any>>(_: State, savedState: State) {
+  return savedState
+}
+
+/**
+ * @alpha
+ */
+export function defaultOnRehydrated<Store extends CreateStoreReturnType<any, any, any>>(_: Store) {}
+
+/**
+ * @alpha
+ */
 export type RequiredOptions = {
   key: typeof defaultKey
   paths: typeof defaultPaths
@@ -107,6 +120,8 @@ export type RequiredOptions = {
   overwrite: typeof defaultOverwrite
   fetchBeforeUse: typeof defaultFetchBeforeUse
   assertStorage: typeof defaultAssertStorage
+  arrayMerge: typeof defaultArrayMerge
+  onRehydrated: typeof defaultOnRehydrated
 }
 
 /**
@@ -127,6 +142,8 @@ function normalize(options: Options): RequiredOptions {
     overwrite: options.overwrite || defaultOverwrite,
     fetchBeforeUse: options.fetchBeforeUse || defaultFetchBeforeUse,
     assertStorage: options.assertStorage || defaultAssertStorage,
+    arrayMerge: options.arrayMerge || defaultArrayMerge,
+    onRehydrated: options.onRehydrated || defaultOnRehydrated,
   }
 }
 
@@ -149,7 +166,15 @@ export function createPersistPlugin(options?: Options) {
     }
 
     if (typeof savedState === 'object' && savedState !== null) {
-      store.replaceState(savedState)
+      store.replaceState(
+        normalizedOptions.overwrite
+          ? savedState
+          : deepMerge(store.state.value, savedState, {
+              arrayMerge: normalizedOptions.arrayMerge,
+              clone: false,
+            }),
+      )
+      normalizedOptions.onRehydrated(store)
     }
 
     normalizedOptions.subscriber(store)(mutation => {
