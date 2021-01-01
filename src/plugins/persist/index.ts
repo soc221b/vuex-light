@@ -96,7 +96,7 @@ export function defaultAssertStorage(storage: Storage): void | Error {
 /**
  * @alpha
  */
-export function defaultArrayMerge<State extends StateReturnType<any>>(_: State, savedState: State) {
+export function defaultArrayMerge(_: any[], savedState: any[]) {
   return savedState
 }
 
