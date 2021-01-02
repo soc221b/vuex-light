@@ -30,7 +30,7 @@ export type StateReturnType<S extends StateOption> = DeepReadonly<
  * @public
  */
 export type GettersOption<S extends StateOption> = {
-  [P: string]: (state: StateReturnType<S>) => unknown
+  [P: string]: (state: StateReturnType<S>, getters: any) => unknown
 }
 
 /**
@@ -109,7 +109,7 @@ export function createStore<
   const getters = readonly(
     reactive(
       getOwnKeys(optionGetters).reduce((getters, getterKey) => {
-        const getter = computed(() => optionGetters[getterKey](state.value as DeepReadonly<State>))
+        const getter = computed(() => optionGetters[getterKey](state.value as DeepReadonly<State>, getters))
         return Object.assign(getters, { [getterKey]: getter })
       }, {}),
     ),
