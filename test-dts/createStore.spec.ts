@@ -125,7 +125,7 @@ it('mutation', () => {
 
   expectType<() => void>(store.mutations.increment)
   // @ts-expect-error
-  expectError<(notExists: number) => void>(store.mutations.increment)
+  store.mutations.increment(0)
   // @ts-expect-error
   expectError<() => never>(store.mutations.increment)
   // @ts-expect-error
@@ -152,7 +152,7 @@ it('mutation with payload', () => {
   // @ts-expect-error
   expectError<(number: number, condition: boolean) => never>(store.mutations.incrementByNumberIf)
   // @ts-expect-error
-  expectError<(number: number, condition: boolean, notExists: number) => void>(store.mutations.incrementByNumberIf)
+  store.mutations.incrementByNumberIf(0, false, 'notExists')
 })
 
 it("state as action's param", () => {
@@ -238,7 +238,7 @@ it("mutations with payload as action's param", () => {
         // @ts-expect-error
         expectError<(number: number, condition: boolean) => never>(mutations.incrementByNumberIf)
         // @ts-expect-error
-        expectError<(number: number, condition: boolean, notExists: number) => void>(mutations.incrementByNumberIf)
+        mutations.incrementByNumberIf(0, false, 'notExists')
       },
     },
   })
@@ -254,7 +254,7 @@ it('action', () => {
 
   expectType<() => void>(store.actions.increment)
   // @ts-expect-error
-  expectError<(notExists: number) => void>(store.actions.increment)
+  store.actions.increment('notExists')
   // @ts-expect-error
   expectError<() => never>(store.actions.increment)
   // @ts-expect-error
@@ -281,5 +281,5 @@ it('action with payload', () => {
   // @ts-expect-error
   expectError<(number: number, condition: boolean) => never>(store.actions.incrementByNumberIf)
   // @ts-expect-error
-  expectError<(number: number, condition: boolean, notExists: number) => void>(store.actions.incrementByNumberIf)
+  store.actions.incrementByNumberIf(0, false, 'notExists')
 })
