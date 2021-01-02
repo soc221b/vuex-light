@@ -46,7 +46,7 @@ export type GettersReturnType<G extends GettersOption<any>> = DeepReadonly<
  * @public
  */
 export type MutationsOption<S extends StateOption> = {
-  [P: string]: (state: S, ...payload: any[]) => void
+  [P: string]: (state: S, ...payloads: any[]) => void
 }
 
 /**
