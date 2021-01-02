@@ -53,7 +53,7 @@ export type MutationsOption<S extends StateOption> = {
  * @public
  */
 export type MutationsReturnType<M extends MutationsOption<any>> = {
-  [P in keyof M]: (...args: OmitFirst<Parameters<M[P]>>) => void
+  readonly [P in keyof M]: (...args: OmitFirst<Parameters<M[P]>>) => void
 }
 
 /**
