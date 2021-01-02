@@ -1,7 +1,7 @@
 /**
  * @public
  */
-export type OmitFirst<T> = T extends [any, ...infer Rest] ? [...Rest, void] : void
+export type OmitFirstParameter<F> = F extends (x: any, ...params: infer Rest) => infer R ? (...params: Rest) => R : void
 
 /**
  * @public

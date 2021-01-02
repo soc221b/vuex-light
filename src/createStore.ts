@@ -1,5 +1,5 @@
 import { ref, computed, Ref, isReactive, toRefs, DeepReadonly, UnwrapRef, readonly, reactive } from 'vue'
-import { getOwnKeys, assert, OmitFirst, isPlainObject } from './util'
+import { getOwnKeys, assert, OmitFirstParameter, isPlainObject } from './util'
 
 /**
  * @public
@@ -56,7 +56,7 @@ export type MutationsOption<S extends StateOption> = {
  * @public
  */
 export type MutationsReturnType<M extends MutationsOption<any>> = {
-  readonly [P in keyof M]: (...args: OmitFirst<Parameters<M[P]>>) => void
+  readonly [P in keyof M]: OmitFirstParameter<M[P]>
 }
 
 /**
@@ -81,7 +81,7 @@ export type ActionsOption<S extends StateOption> = {
  * @public
  */
 export type ActionsReturnType<A extends ActionsOption<any>> = {
-  readonly [P in keyof A]: (...args: OmitFirst<Parameters<A[P]>>) => void
+  readonly [P in keyof A]: OmitFirstParameter<A[P]>
 }
 
 /**
