@@ -1,5 +1,4 @@
-import { toRefs } from 'vue'
-import { createStore, createPersistPlugin } from 'vuex-light'
+import { createStore } from 'vuex-light'
 
 const store = createStore({
   state: {
@@ -12,13 +11,8 @@ const store = createStore({
     increment(state) {
       ++state.count
     },
-    // with payload
-    add(state, offset: number) {
-      state.count += offset
-    },
   },
 })
-createPersistPlugin()(store)
 export default store
 
 // define injection
@@ -31,9 +25,5 @@ declare module '@vue/runtime-core' {
 
 // declare the `useStore` composition function
 export function useStore() {
-  return {
-    state: toRefs(store.state),
-    getters: toRefs(store.getters),
-    mutations: store.mutations,
-  }
+  return store
 }

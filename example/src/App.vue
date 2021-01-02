@@ -3,7 +3,7 @@
   <HelloWorld msg="Hello Vue 3.0 + Vuex-light" />
 </template>
 
-<script>
+<script lang="ts">
 import HelloWorld from './components/HelloWorld.vue'
 
 export default {
