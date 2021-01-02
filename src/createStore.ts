@@ -41,24 +41,21 @@ export type GettersReturnType<G extends GettersOption<any>> = {
 /**
  * @public
  */
-export type MutationsOption<S extends StateOption> = {
-  [P: string]: (
-    { state, getters }: { state: S; getters: GettersReturnType<GettersOption<S>> },
-    ...payloads: any[]
-  ) => void
+export type MutationsOption<S extends StateOption, G extends GettersOption<S>> = {
+  [P: string]: ({ state, getters }: { state: S; getters: GettersReturnType<G> }, ...payloads: any[]) => void
 }
 
 /**
  * @public
  */
-export type MutationsReturnType<M extends MutationsOption<any>> = {
+export type MutationsReturnType<M extends MutationsOption<any, any>> = {
   readonly [P in keyof M]: OmitFirstParameter<M[P]>
 }
 
 /**
  * @public
  */
-export type ActionsOption<S extends StateOption> = {
+export type ActionsOption<S extends StateOption, G extends GettersOption<S>, M extends MutationsOption<S, G>> = {
   [P: string]: (
     {
       state,
@@ -66,8 +63,8 @@ export type ActionsOption<S extends StateOption> = {
       mutations,
     }: {
       state: StateReturnType<S>
-      getters: GettersReturnType<GettersOption<S>>
-      mutations: MutationsReturnType<MutationsOption<S>>
+      getters: GettersReturnType<G>
+      mutations: MutationsReturnType<M>
     },
     ...payloads: any[]
   ) => void
@@ -76,7 +73,7 @@ export type ActionsOption<S extends StateOption> = {
 /**
  * @public
  */
-export type ActionsReturnType<A extends ActionsOption<any>> = {
+export type ActionsReturnType<A extends ActionsOption<any, any, any>> = {
   readonly [P in keyof A]: OmitFirstParameter<A[P]>
 }
 
@@ -96,8 +93,8 @@ export type Plugin<Store> = (store: Store) => void
 export type CreateStoreReturnType<
   State extends StateOption,
   Getters extends GettersOption<State>,
-  Mutations extends MutationsOption<State>,
-  Actions extends ActionsOption<State>
+  Mutations extends MutationsOption<State, Getters>,
+  Actions extends ActionsOption<State, Getters, Mutations>
 > = {
   state: StateReturnType<State>
   getters: GettersReturnType<Getters>
@@ -113,8 +110,8 @@ export type CreateStoreReturnType<
 export function createStore<
   State extends StateOption,
   Getters extends GettersOption<State>,
-  Mutations extends MutationsOption<State>,
-  Actions extends ActionsOption<State>
+  Mutations extends MutationsOption<State, Getters>,
+  Actions extends ActionsOption<State, Getters, Mutations>
 >(options: {
   state: State
   getters?: Getters
