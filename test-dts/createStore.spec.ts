@@ -209,12 +209,12 @@ it("mutations as action's param", () => {
         expectType<() => void>(mutations.increment)
         // @ts-expect-error
         expectError((mutations.increment = () => {}))
-        // @ts-expect-error
+        // TODO: @ts-expect-error
         expectError<(payload: number) => void>(mutations.increment)
         // @ts-expect-error
         expectError<() => never>(mutations.increment)
-        // @ts-expect-error
-        expectError(mutations.notExists)
+        // TODO: @ts-expect-error
+        // expectError(mutations.notExists)
         // @ts-expect-error
         expectError((mutations.notExists = () => {}))
       },
@@ -231,14 +231,14 @@ it("mutations with payload as action's param", () => {
     actions: {
       increment({ mutations }) {
         expectType<(number: number, condition: boolean) => void>(mutations.incrementByNumberIf)
-        // @ts-expect-error
-        expectError<(number: void, condition: boolean) => void>(mutations.incrementByNumberIf)
-        // @ts-expect-error
-        expectError<(number: number, condition: void) => void>(mutations.incrementByNumberIf)
+        // TODO: @ts-expect-error
+        // expectError<(number: void, condition: boolean) => void>(mutations.incrementByNumberIf)
+        // TODO: @ts-expect-error
+        // expectError<(number: number, condition: void) => void>(mutations.incrementByNumberIf)
         // @ts-expect-error
         expectError<(number: number, condition: boolean) => never>(mutations.incrementByNumberIf)
-        // @ts-expect-error
-        mutations.incrementByNumberIf(0, false, 'notExists')
+        // TODO: @ts-expect-error
+        // mutations.incrementByNumberIf(0, false, 'notExists')
       },
     },
   })
