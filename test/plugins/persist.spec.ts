@@ -275,23 +275,23 @@ it('uses the custom reducer when persisting the state', () => {
   expect(customReducer).toBeCalledWith({ original: 'state' }, ['original'])
 })
 
-it('uses the custom arrayMerge when rehydrating', () => {
+it('uses the custom mergeDeepWithKeyFn when rehydrating', () => {
   const storage = new Storage()
   storage.setItem(defaultKey, JSON.stringify({ persisted: ['foo'] }))
   const store = createStore({
     state: {
-      persisted: ['foo', 'bar'],
+      persisted: ['bar', 'baz'],
     },
   })
-  const arrayMerge = jest.fn(() => {
-    return ['baz']
+  const mergeDeepWithKeyFn = jest.fn((_k, l, _r) => {
+    return l
   })
   const plugin = createPersistPlugin({
     storage,
-    arrayMerge,
+    mergeDeepWithKeyFn,
   })
   plugin(store)
 
-  expect(arrayMerge).toBeCalled()
-  expect(store.state).toEqual({ persisted: ['baz'] })
+  expect(mergeDeepWithKeyFn).toBeCalled()
+  expect(store.state).toEqual({ persisted: ['bar', 'baz'] })
 })

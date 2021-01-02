@@ -1,6 +1,6 @@
 import { set, get } from 'shvl'
 import { StateReturnType, Subscriber, CreateStoreReturnType } from '../../'
-const deepMerge = require('deepmerge')
+import { mergeDeepWithKey } from 'ramda'
 
 /**
  * @public
@@ -96,8 +96,8 @@ export function defaultAssertStorage(storage: Storage): void | Error {
 /**
  * @public
  */
-export function defaultArrayMerge(_: any[], savedState: any[]) {
-  return savedState
+export function defaultMergeDeepWithKeyFn(_k: string, _l: any, r: any) {
+  return r
 }
 
 /**
@@ -120,7 +120,7 @@ export type RequiredOptions = {
   overwrite: typeof defaultOverwrite
   fetchBeforeUse: typeof defaultFetchBeforeUse
   assertStorage: typeof defaultAssertStorage
-  arrayMerge: typeof defaultArrayMerge
+  mergeDeepWithKeyFn: typeof defaultMergeDeepWithKeyFn
   onRehydrated: typeof defaultOnRehydrated
 }
 
@@ -142,7 +142,7 @@ function normalize(options: Options): RequiredOptions {
     overwrite: options.overwrite !== undefined ? options.overwrite : defaultOverwrite,
     fetchBeforeUse: options.fetchBeforeUse !== undefined ? options.fetchBeforeUse : defaultFetchBeforeUse,
     assertStorage: options.assertStorage || defaultAssertStorage,
-    arrayMerge: options.arrayMerge || defaultArrayMerge,
+    mergeDeepWithKeyFn: options.mergeDeepWithKeyFn || defaultMergeDeepWithKeyFn,
     onRehydrated: options.onRehydrated || defaultOnRehydrated,
   }
 }
@@ -169,10 +169,7 @@ export function createPersistPlugin(options?: Options) {
       store.replaceState(
         normalizedOptions.overwrite
           ? savedState
-          : deepMerge(store.state, savedState, {
-              arrayMerge: normalizedOptions.arrayMerge,
-              clone: false,
-            }),
+          : mergeDeepWithKey(normalizedOptions.mergeDeepWithKeyFn, store.state, savedState),
       )
       normalizedOptions.onRehydrated(store)
     }
