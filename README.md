@@ -26,6 +26,32 @@ via cdn
 <script src="https://unpkg.com/vuex-light@latest"></script>
 ```
 
+# Getting Started
+
+```ts
+import { createApp } from 'vue'
+import { createStore, install } from 'vuex-light'
+
+// Create a new store instance.
+const store = createStore({
+  state: {
+    count: 0,
+  },
+  mutations: {
+    increment({ state }) {
+      state.count++
+    },
+  },
+})
+
+const app = createApp({
+  /* your root component */
+})
+
+// Install the store instance as a plugin
+app.use(install, { store })
+```
+
 # Examples
 
 - [Hello world](https://codesandbox.io/s/github/js-cosmos/vuex-light/tree/main/examples/hello-world)
