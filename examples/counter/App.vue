@@ -17,7 +17,7 @@ export default {
 
     return {
       count: computed(() => store.state.count),
-      eventOrOdd: computed(() => store.getters.evenOrOdd),
+      evenOrOdd: computed(() => store.getters.evenOrOdd),
       increment: store.actions.increment,
       decrement: store.actions.decrement,
       incrementIfOdd: store.actions.incrementIfOdd,

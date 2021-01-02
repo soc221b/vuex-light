@@ -19,8 +19,8 @@
 
 <script lang="ts">
 import { ref, watch, nextTick, defineComponent, PropType } from 'vue'
-import { useStore } from './store'
-import { Todo } from './types'
+import { useStore } from '../store'
+import { Todo } from '../types'
 
 export default defineComponent({
   name: 'Todo',

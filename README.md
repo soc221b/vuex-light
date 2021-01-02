@@ -6,8 +6,6 @@
 ![npm downloads](https://img.shields.io/npm/dm/vuex-light)
 ![last commit](https://img.shields.io/github/last-commit/js-cosmos/vuex-light/main)
 
-[![Edit example](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/js-cosmos/vuex-light/tree/main/example?fontsize=14&hidenavigation=1&theme=dark)
-
 # Features
 
 - Light weight (10x smaller then [vuex](https://bundlephobia.com/result?p=vuex@next))
@@ -27,6 +25,12 @@ via cdn
 ```html
 <script src="https://unpkg.com/vuex-light@latest"></script>
 ```
+
+# Examples
+
+- [Hello world](https://codesandbox.io/s/github/js-cosmos/vuex-light/tree/main/examples/hello-world)
+- [Counter](https://codesandbox.io/s/github/js-cosmos/vuex-light/tree/main/examples/counter)
+- [Todo MVC](https://codesandbox.io/s/github/js-cosmos/vuex-light/tree/main/examples/todomvc)
 
 # Contributing
 
