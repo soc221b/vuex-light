@@ -1,7 +1,7 @@
 /**
  * @public
  */
-export type OmitFirst<T> = T extends [any, ...infer Rest] ? Rest : never
+export type OmitFirst<T> = T extends [any, ...infer Rest] ? [...Rest, void] : void
 
 /**
  * @public
