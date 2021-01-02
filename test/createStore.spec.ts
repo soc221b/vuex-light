@@ -224,3 +224,26 @@ it('can pass payload to mutations', () => {
   store.mutations.increment(42)
   expect(store.state.count).toBe(42)
 })
+
+it('should auto bind state, getters and mutations to actions', () => {
+  createStore({
+    state: {
+      count: 0,
+    },
+    getters: {
+      isOdd: ({ state }) => state.count % 2,
+    },
+    mutations: {
+      increment({ state }) {
+        state.count
+      },
+    },
+    actions: {
+      incrementIfOddAndLargeThan10({ state, getters, mutations }) {
+        if (state.count > 10 && getters.isOdd) {
+          mutations.increment()
+        }
+      },
+    },
+  })
+})

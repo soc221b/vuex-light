@@ -28,7 +28,7 @@ export function defaultReducer<State extends StateReturnType<any>>(state: State,
 /**
  * @public
  */
-export function defaultSubscriber<Store extends CreateStoreReturnType<any, any, any>>(store: Store) {
+export function defaultSubscriber<Store extends CreateStoreReturnType<any, any, any, any>>(store: Store) {
   return function (handler: Subscriber) {
     return store.subscribe(handler)
   }
@@ -103,7 +103,7 @@ export function defaultArrayMerge(_: any[], savedState: any[]) {
 /**
  * @public
  */
-export function defaultOnRehydrated<Store extends CreateStoreReturnType<any, any, any>>(_: Store) {}
+export function defaultOnRehydrated<Store extends CreateStoreReturnType<any, any, any, any>>(_: Store) {}
 
 /**
  * @public
@@ -160,7 +160,7 @@ export function createPersistPlugin(options?: Options) {
     savedState = normalizedOptions.getState(normalizedOptions.key, normalizedOptions.storage)
   }
 
-  return function <Store extends CreateStoreReturnType<any, any, any>>(store: Store) {
+  return function <Store extends CreateStoreReturnType<any, any, any, any>>(store: Store) {
     if (normalizedOptions.fetchBeforeUse === false) {
       savedState = normalizedOptions.getState(normalizedOptions.key, normalizedOptions.storage)
     }

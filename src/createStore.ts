@@ -62,6 +62,31 @@ export type MutationsReturnType<M extends MutationsOption<any>> = {
 /**
  * @public
  */
+export type ActionsOption<S extends StateOption> = {
+  [P: string]: (
+    {
+      state,
+      getters,
+      mutations,
+    }: {
+      state: StateReturnType<S>
+      getters: GettersReturnType<GettersOption<S>>
+      mutations: MutationsReturnType<MutationsOption<S>>
+    },
+    ...payloads: any[]
+  ) => void
+}
+
+/**
+ * @public
+ */
+export type ActionsReturnType<A extends ActionsOption<any>> = {
+  readonly [P in keyof A]: (...args: OmitFirst<Parameters<A[P]>>) => void
+}
+
+/**
+ * @public
+ */
 export type Subscriber = (mutation: { key: string; payloads: unknown[] }) => void
 
 /**
@@ -75,11 +100,13 @@ export type Plugin<Store> = (store: Store) => void
 export type CreateStoreReturnType<
   State extends StateOption,
   Getters extends GettersOption<State>,
-  Mutations extends MutationsOption<State>
+  Mutations extends MutationsOption<State>,
+  Actions extends ActionsOption<State>
 > = {
   state: StateReturnType<State>
   getters: GettersReturnType<Getters>
   mutations: MutationsReturnType<Mutations>
+  actions: ActionsReturnType<Actions>
   subscribe: (subscriber: Subscriber) => void
   replaceState: (newState: UnwrapRef<StateType<State>>) => void
 }
@@ -90,13 +117,15 @@ export type CreateStoreReturnType<
 export function createStore<
   State extends StateOption,
   Getters extends GettersOption<State>,
-  Mutations extends MutationsOption<State>
+  Mutations extends MutationsOption<State>,
+  Actions extends ActionsOption<State>
 >(options: {
   state: State
   getters?: Getters
   mutations?: Mutations
-  plugins?: Plugin<CreateStoreReturnType<State, Getters, Mutations>>[]
-}): CreateStoreReturnType<State, Getters, Mutations> {
+  actions?: Actions
+  plugins?: Plugin<CreateStoreReturnType<State, Getters, Mutations, Actions>>[]
+}): CreateStoreReturnType<State, Getters, Mutations, Actions> {
   if (__DEV__) {
     assert(isPlainObject(options.state), 'invalid state type.')
   }
@@ -127,6 +156,21 @@ export function createStore<
     return Object.assign(mutations, { [mutationKey]: mutation })
   }, {}) as MutationsReturnType<Mutations>
 
+  const optionActions = options.actions || ({} as Actions)
+  const actions = getOwnKeys(optionActions).reduce((actions, actionKey) => {
+    const action = (...payloads: unknown[]) => {
+      optionActions[actionKey](
+        {
+          state: state.value as DeepReadonly<State>,
+          getters: getters as any,
+          mutations,
+        },
+        ...payloads,
+      )
+    }
+    return Object.assign(actions, { [actionKey]: action })
+  }, {}) as ActionsReturnType<Actions>
+
   const subscribers: Subscriber[] = []
   const subscribe = function (subscriber: Subscriber) {
     subscribers.push(subscriber)
@@ -145,6 +189,7 @@ export function createStore<
     state: state.value as StateReturnType<State>,
     getters,
     mutations,
+    actions,
     subscribe,
     replaceState,
   }
