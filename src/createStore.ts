@@ -1,4 +1,4 @@
-import { ref, computed, Ref, isReactive, toRefs, DeepReadonly, UnwrapRef, readonly, reactive } from 'vue'
+import { ref, computed, Ref, isReactive, toRefs, UnwrapRef, readonly, reactive } from 'vue'
 import { getOwnKeys, assert, OmitFirstParameter, isPlainObject } from './util'
 
 /**
@@ -20,11 +20,9 @@ export type StateType<S extends StateOption> = Ref<
 /**
  * @public
  */
-export type StateReturnType<S extends StateOption> = DeepReadonly<
-  {
-    [P in keyof S]: S[P]
-  }
->
+export type StateReturnType<S extends StateOption> = {
+  readonly [P in keyof S]: S[P]
+}
 
 /**
  * @public
@@ -36,11 +34,9 @@ export type GettersOption<S extends StateOption> = {
 /**
  * @public
  */
-export type GettersReturnType<G extends GettersOption<any>> = DeepReadonly<
-  {
-    [P in keyof G]: ReturnType<G[P]>
-  }
->
+export type GettersReturnType<G extends GettersOption<any>> = {
+  readonly [P in keyof G]: ReturnType<G[P]>
+}
 
 /**
  * @public
@@ -141,7 +137,7 @@ export function createStore<
   const getters = readonly(
     reactive(
       getOwnKeys(optionGetters).reduce((rawGetters, getterKey) => {
-        const getter = computed(() => optionGetters[getterKey]({ state: state.value as DeepReadonly<State>, getters }))
+        const getter = computed(() => optionGetters[getterKey]({ state: state.value, getters }))
         return Object.assign(rawGetters, { [getterKey]: getter })
       }, {}),
     ),
@@ -150,7 +146,7 @@ export function createStore<
   const optionMutations = options.mutations || ({} as Mutations)
   const mutations = getOwnKeys(optionMutations).reduce((mutations, mutationKey) => {
     const mutation = (...payloads: unknown[]) => {
-      optionMutations[mutationKey]({ state: state.value, getters: getters as any }, ...payloads)
+      optionMutations[mutationKey]({ state: state.value, getters }, ...payloads)
       subscribers.forEach(subscriber => subscriber.call(null, { key: mutationKey as string, payloads }))
     }
     return Object.assign(mutations, { [mutationKey]: mutation })
@@ -161,8 +157,8 @@ export function createStore<
     const action = (...payloads: unknown[]) => {
       optionActions[actionKey](
         {
-          state: state.value as DeepReadonly<State>,
-          getters: getters as any,
+          state: state.value,
+          getters,
           mutations,
         },
         ...payloads,
@@ -186,7 +182,7 @@ export function createStore<
   }
 
   const store = {
-    state: state.value as StateReturnType<State>,
+    state: state.value,
     getters,
     mutations,
     actions,
