@@ -140,9 +140,9 @@ export function createStore<
   const optionGetters = options.getters || ({} as Getters)
   const getters = readonly(
     reactive(
-      getOwnKeys(optionGetters).reduce((getters, getterKey) => {
+      getOwnKeys(optionGetters).reduce((rawGetters, getterKey) => {
         const getter = computed(() => optionGetters[getterKey]({ state: state.value as DeepReadonly<State>, getters }))
-        return Object.assign(getters, { [getterKey]: getter })
+        return Object.assign(rawGetters, { [getterKey]: getter })
       }, {}),
     ),
   ) as GettersReturnType<Getters>
