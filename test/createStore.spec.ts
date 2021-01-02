@@ -30,7 +30,7 @@ it('state should be reactive', async () => {
       count: 0,
     },
     mutations: {
-      increment(state) {
+      increment({ state }) {
         ++state.count
       },
     },
@@ -57,7 +57,7 @@ it('can reactive with existing reactivity object', async () => {
   const store = createStore({
     state: originalState,
     mutations: {
-      increment(state) {
+      increment({ state }) {
         ++state.count
       },
     },
@@ -95,7 +95,7 @@ it('getters should be computed', () => {
       count: 0,
     },
     getters: {
-      double: state => state.count * 2,
+      double: ({ state }) => state.count * 2,
     },
   })
 })
@@ -108,7 +108,7 @@ it('getters should be readonly', () => {
       count: 0,
     },
     getters: {
-      double: state => state.count * 2,
+      double: ({ state }) => state.count * 2,
     },
   })
   // @ts-expect-error
@@ -146,10 +146,10 @@ it('computed should be reactive', async () => {
       count: 0,
     },
     getters: {
-      double: state => state.count * 2,
+      double: ({ state }) => state.count * 2,
     },
     mutations: {
-      increment(state) {
+      increment({ state }) {
         ++state.count
       },
     },
@@ -175,7 +175,7 @@ it('can create store with mutations', () => {
       count: 0,
     },
     mutations: {
-      increment(state) {
+      increment({ state }) {
         ++state.count
       },
     },
@@ -200,7 +200,7 @@ it('mutation should auto bind state to mutations', () => {
       count: 0,
     },
     mutations: {
-      increment(state) {
+      increment({ state }) {
         state.count
       },
     },
@@ -215,7 +215,7 @@ it('can pass payload to mutations', () => {
       count: 0,
     },
     mutations: {
-      increment(state, payload: number) {
+      increment({ state }, payload: number) {
         state.count = payload
       },
     },

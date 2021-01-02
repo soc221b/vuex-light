@@ -30,7 +30,7 @@ export type StateReturnType<S extends StateOption> = DeepReadonly<
  * @public
  */
 export type GettersOption<S extends StateOption> = {
-  [P: string]: (state: StateReturnType<S>, getters: any) => unknown
+  [P: string]: ({ state, getters }: { state: StateReturnType<S>; getters: any }) => unknown
 }
 
 /**
@@ -46,7 +46,10 @@ export type GettersReturnType<G extends GettersOption<any>> = DeepReadonly<
  * @public
  */
 export type MutationsOption<S extends StateOption> = {
-  [P: string]: (state: S, ...payloads: any[]) => void
+  [P: string]: (
+    { state, getters }: { state: S; getters: GettersReturnType<GettersOption<S>> },
+    ...payloads: any[]
+  ) => void
 }
 
 /**
@@ -109,7 +112,7 @@ export function createStore<
   const getters = readonly(
     reactive(
       getOwnKeys(optionGetters).reduce((getters, getterKey) => {
-        const getter = computed(() => optionGetters[getterKey](state.value as DeepReadonly<State>, getters))
+        const getter = computed(() => optionGetters[getterKey]({ state: state.value as DeepReadonly<State>, getters }))
         return Object.assign(getters, { [getterKey]: getter })
       }, {}),
     ),
@@ -118,7 +121,7 @@ export function createStore<
   const optionMutations = options.mutations || ({} as Mutations)
   const mutations = getOwnKeys(optionMutations).reduce((mutations, mutationKey) => {
     const mutation = (...payloads: unknown[]) => {
-      optionMutations[mutationKey](state.value, ...payloads)
+      optionMutations[mutationKey]({ state: state.value, getters: getters as any }, ...payloads)
       subscribers.forEach(subscriber => subscriber.call(null, { key: mutationKey as string, payloads }))
     }
     return Object.assign(mutations, { [mutationKey]: mutation })

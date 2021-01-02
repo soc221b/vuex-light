@@ -5,10 +5,10 @@ const store = createStore({
     count: 0,
   },
   getters: {
-    double: state => state.count * 2,
+    double: ({ state }) => state.count * 2,
   },
   mutations: {
-    increment(state) {
+    increment({ state }) {
       ++state.count
     },
   },

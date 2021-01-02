@@ -141,10 +141,10 @@ it('filter mutation', () => {
       original: 'state',
     },
     mutations: {
-      save(state) {
+      save({ state }) {
         state.original = 'saved'
       },
-      notSave(state) {
+      notSave({ state }) {
         state.original = 'notSaved'
       },
     },
@@ -169,7 +169,7 @@ it('setState by custom function', () => {
       original: 'state',
     },
     mutations: {
-      change(state) {
+      change({ state }) {
         state.original = 'new state'
       },
     },
