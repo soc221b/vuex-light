@@ -3,7 +3,20 @@ import { Todo } from './types'
 
 const store = createStore({
   state: {
-    todos: [] as Todo[],
+    todos: [
+      {
+        text: 'Take a galance of examples',
+        done: true,
+      },
+      {
+        text: 'Create awesome app!',
+        done: false,
+      },
+      {
+        text: 'Star vuex-light repository',
+        done: false,
+      },
+    ] as Todo[],
   },
   mutations: {
     addTodo({ state }, todo: Todo) {
