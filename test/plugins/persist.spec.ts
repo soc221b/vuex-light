@@ -1,6 +1,8 @@
-import { createStore, createPersistPlugin, defaultKey } from '../../src'
+import { createStore, createPersistPlugin } from '../../src'
 // @ts-ignore
 import Storage from 'dom-storage'
+
+const vuexKey = 'vuex'
 
 it('can be created with the default options', () => {
   expect(() => {
@@ -15,7 +17,7 @@ it('can be created with the default options', () => {
 
 it("replaces store's state when initializing", () => {
   const storage = new Storage()
-  storage.setItem(defaultKey, JSON.stringify({ persisted: 'json' }))
+  storage.setItem(vuexKey, JSON.stringify({ persisted: 'json' }))
   const store = createStore({
     state: {
       original: 'state',
@@ -34,7 +36,7 @@ it("replaces store's state when initializing", () => {
 
 it("does not replace store's state with invalid JSON", () => {
   const storage = new Storage()
-  storage.setItem(defaultKey, '<invalid>')
+  storage.setItem(vuexKey, '<invalid>')
   const store = createStore({
     state: {
       original: 'state',
@@ -50,7 +52,7 @@ it("does not replace store's state with invalid JSON", () => {
 
 it("does not replace store's state with null", () => {
   const storage = new Storage()
-  storage.setItem(defaultKey, null)
+  storage.setItem(vuexKey, null)
   const store = createStore({
     state: {
       original: 'state',
@@ -66,7 +68,7 @@ it("does not replace store's state with null", () => {
 
 it("does not overrite store's state by default", () => {
   const storage = new Storage()
-  storage.setItem(defaultKey, JSON.stringify({ persisted: 'json' }))
+  storage.setItem(vuexKey, JSON.stringify({ persisted: 'json' }))
   const store = createStore({
     state: {
       original: 'state',
@@ -80,7 +82,7 @@ it("does not overrite store's state by default", () => {
 
 it("overrite store's state", () => {
   const storage = new Storage()
-  storage.setItem(defaultKey, JSON.stringify({ persisted: 'json' }))
+  storage.setItem(vuexKey, JSON.stringify({ persisted: 'json' }))
   const store = createStore({
     state: {
       original: 'state',
@@ -106,7 +108,7 @@ it('does not fetch before use by default', () => {
   })
   plugin(store)
 
-  expect(storage.getItem).toBeCalledWith(defaultKey)
+  expect(storage.getItem).toBeCalledWith(vuexKey)
 })
 
 it('does not fetch before use by default', () => {
@@ -114,7 +116,7 @@ it('does not fetch before use by default', () => {
   storage.getItem = jest.fn()
   createPersistPlugin({ storage, fetchBeforeUse: true })
 
-  expect(storage.getItem).toBeCalledWith(defaultKey)
+  expect(storage.getItem).toBeCalledWith(vuexKey)
 })
 
 it('assert storage when initializing', () => {
@@ -156,10 +158,10 @@ it('filter mutation', () => {
   plugin(store)
 
   store.mutations.save()
-  expect(JSON.parse(storage.getItem(defaultKey))).toEqual({ original: 'saved' })
+  expect(JSON.parse(storage.getItem(vuexKey))).toEqual({ original: 'saved' })
 
   store.mutations.notSave()
-  expect(JSON.parse(storage.getItem(defaultKey))).toEqual({ original: 'saved' })
+  expect(JSON.parse(storage.getItem(vuexKey))).toEqual({ original: 'saved' })
 })
 
 it('setState by custom function', () => {
@@ -181,12 +183,12 @@ it('setState by custom function', () => {
   plugin(store)
 
   store.mutations.change()
-  expect(JSON.parse(storage.getItem(defaultKey))).toEqual({ original: 'changed' })
+  expect(JSON.parse(storage.getItem(vuexKey))).toEqual({ original: 'changed' })
 })
 
 it('setState by custom function', () => {
   const storage = new Storage()
-  storage.setItem(defaultKey, JSON.stringify({ persisted: 'json' }))
+  storage.setItem(vuexKey, JSON.stringify({ persisted: 'json' }))
   const store = createStore({
     state: {
       persisted: 'state',
@@ -217,7 +219,7 @@ it('should only save given paths', () => {
   plugin(store)
 
   store.mutations.fireSetItem()
-  expect(JSON.parse(storage.getItem(defaultKey))).toEqual({ saved: 'saved' })
+  expect(JSON.parse(storage.getItem(vuexKey))).toEqual({ saved: 'saved' })
 })
 
 it('should save as given key', () => {
@@ -235,13 +237,13 @@ it('should save as given key', () => {
   plugin(store)
 
   store.mutations.fireSetItem()
-  expect(JSON.parse(storage.getItem(defaultKey))).toBe(null)
+  expect(JSON.parse(storage.getItem(vuexKey))).toBe(null)
   expect(JSON.parse(storage.getItem(randomKey))).toEqual({ original: 'state' })
 })
 
 it('should call rehydrate callback after rehydrated', () => {
   const storage = new Storage()
-  storage.setItem(defaultKey, JSON.stringify({ persisted: 'json' }))
+  storage.setItem(vuexKey, JSON.stringify({ persisted: 'json' }))
   const store = createStore({
     state: {},
   })
@@ -277,7 +279,7 @@ it('uses the custom reducer when persisting the state', () => {
 
 it('uses the custom mergeDeepWithKeyFn when rehydrating', () => {
   const storage = new Storage()
-  storage.setItem(defaultKey, JSON.stringify({ persisted: ['foo'] }))
+  storage.setItem(vuexKey, JSON.stringify({ persisted: ['foo'] }))
   const store = createStore({
     state: {
       persisted: ['bar', 'baz'],

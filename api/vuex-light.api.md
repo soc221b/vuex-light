@@ -32,7 +32,7 @@ export type ActionSubscriber = (action: {
 export function assert(condition: unknown, message: string): void;
 
 // @public (undocumented)
-export function createPersistPlugin(options?: Options): <Store extends CreateStoreReturnType<any, any, any, any>>(store: Store) => void;
+export function createPersistPlugin(options?: PersistPluginOptions): <Store extends CreateStoreReturnType<any, any, any, any>>(store: Store) => void;
 
 // @public (undocumented)
 export function createStore<State extends StateOption, Getters extends GettersOption<State>, Mutations extends MutationsOption<State, Getters>, Actions extends ActionsOption<State, Getters, Mutations>>(options: {
@@ -58,37 +58,13 @@ export type CreateStoreReturnType<State extends StateOption, Getters extends Get
 export function defaultAssertStorage(storage: Storage_2): void | Error;
 
 // @public (undocumented)
-export const defaultFetchBeforeUse: boolean;
-
-// @public (undocumented)
-export function defaultFilter(): boolean;
-
-// @public (undocumented)
 export function defaultGetState(key: Parameters<Storage_2['getItem']>['0'], storage: Storage_2): any;
-
-// @public (undocumented)
-export const defaultKey: string;
-
-// @public (undocumented)
-export function defaultMergeDeepWithKeyFn(_k: string, _l: any, r: any): any;
-
-// @public (undocumented)
-export function defaultOnRehydrated<Store extends CreateStoreReturnType<any, any, any, any>>(_: Store): void;
-
-// @public (undocumented)
-export const defaultOverwrite: boolean;
-
-// @public (undocumented)
-export const defaultPaths: string[] | null;
 
 // @public (undocumented)
 export function defaultReducer<State extends StateReturnType<any>>(state: State, paths: string[] | null): any;
 
 // @public (undocumented)
 export function defaultSetState(key: Parameters<Storage_2['setItem']>['0'], state: any, storage: Storage_2): void;
-
-// @public (undocumented)
-export const defaultStorage: Storage_2;
 
 // @public (undocumented)
 export const defaultStoreKey = "$store";
@@ -138,29 +114,29 @@ export type MutationsReturnType<M extends MutationsOption<any, any>> = {
 export type OmitFirstParameter<F> = F extends (x: any, ...params: infer Rest) => infer R ? (...params: Rest) => R : void;
 
 // @public (undocumented)
-export type Options = Partial<RequiredOptions>;
+export type PersistPluginOptions = Partial<PersistPluginRequiredOptions>;
+
+// @public (undocumented)
+export type PersistPluginRequiredOptions = {
+    key: string;
+    paths: string[] | null;
+    reducer: typeof defaultReducer;
+    subscriber: typeof defaultSubscriber;
+    storage: Storage_2;
+    getState: typeof defaultGetState;
+    setState: typeof defaultSetState;
+    filter: (mutation: string) => boolean;
+    overwrite: boolean;
+    fetchBeforeUse: boolean;
+    assertStorage: typeof defaultAssertStorage;
+    mergeDeepWithKeyFn: (k: string, l: any, r: any) => any;
+    onRehydrated: <Store extends CreateStoreReturnType<any, any, any, any>>(_: Store) => void;
+};
 
 // @public (undocumented)
 type Plugin_2<Store> = (store: Store) => void;
 
 export { Plugin_2 as Plugin }
-
-// @public (undocumented)
-export type RequiredOptions = {
-    key: typeof defaultKey;
-    paths: typeof defaultPaths;
-    reducer: typeof defaultReducer;
-    subscriber: typeof defaultSubscriber;
-    storage: typeof defaultStorage;
-    getState: typeof defaultGetState;
-    setState: typeof defaultSetState;
-    filter: (mutation: string) => boolean;
-    overwrite: typeof defaultOverwrite;
-    fetchBeforeUse: typeof defaultFetchBeforeUse;
-    assertStorage: typeof defaultAssertStorage;
-    mergeDeepWithKeyFn: typeof defaultMergeDeepWithKeyFn;
-    onRehydrated: typeof defaultOnRehydrated;
-};
 
 // @public (undocumented)
 export type StateOption = {

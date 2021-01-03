@@ -5,16 +5,6 @@ import { mergeDeepWithKey } from 'ramda'
 /**
  * @public
  */
-export const defaultKey = 'vuex' as string
-
-/**
- * @public
- */
-export const defaultPaths = null as string[] | null
-
-/**
- * @public
- */
 export function defaultReducer<State extends StateReturnType<any>>(state: State, paths: string[] | null) {
   const unwrappedState = Object.keys(state).reduce((unwrappedState, key) => {
     unwrappedState[key] = state[key]
@@ -42,10 +32,6 @@ export type Storage = {
   setItem: (key: string, value: any) => void
   removeItem: (key: string) => void
 }
-/**
- * @public
- */
-export const defaultStorage: Storage = window.localStorage
 
 /**
  * @public
@@ -67,23 +53,6 @@ export function defaultSetState(key: Parameters<Storage['setItem']>['0'], state:
   return storage.setItem(key, JSON.stringify(state))
 }
 
-/**
- * @public
- */
-export function defaultFilter() {
-  return true
-}
-
-/**
- * @public
- */
-export const defaultOverwrite = false as boolean
-
-/**
- * @public
- */
-export const defaultFetchBeforeUse = false as boolean
-
 const randomKey = '4u33j8eqxxyndzw5slhe6xyt9tuymkvf'
 /**
  * @public
@@ -96,61 +65,49 @@ export function defaultAssertStorage(storage: Storage): void | Error {
 /**
  * @public
  */
-export function defaultMergeDeepWithKeyFn(_k: string, _l: any, r: any) {
-  return r
-}
-
-/**
- * @public
- */
-export function defaultOnRehydrated<Store extends CreateStoreReturnType<any, any, any, any>>(_: Store) {}
-
-/**
- * @public
- */
-export type RequiredOptions = {
-  key: typeof defaultKey
-  paths: typeof defaultPaths
+export type PersistPluginRequiredOptions = {
+  key: string
+  paths: string[] | null
   reducer: typeof defaultReducer
   subscriber: typeof defaultSubscriber
-  storage: typeof defaultStorage
+  storage: Storage
   getState: typeof defaultGetState
   setState: typeof defaultSetState
   filter: (mutation: string) => boolean
-  overwrite: typeof defaultOverwrite
-  fetchBeforeUse: typeof defaultFetchBeforeUse
+  overwrite: boolean
+  fetchBeforeUse: boolean
   assertStorage: typeof defaultAssertStorage
-  mergeDeepWithKeyFn: typeof defaultMergeDeepWithKeyFn
-  onRehydrated: typeof defaultOnRehydrated
+  mergeDeepWithKeyFn: (k: string, l: any, r: any) => any
+  onRehydrated: <Store extends CreateStoreReturnType<any, any, any, any>>(_: Store) => void
 }
 
 /**
  * @public
  */
-export type Options = Partial<RequiredOptions>
+export type PersistPluginOptions = Partial<PersistPluginRequiredOptions>
 
-function normalize(options: Options): RequiredOptions {
+function normalize(options: PersistPluginOptions): PersistPluginRequiredOptions {
   return {
-    key: options.key || defaultKey,
-    paths: options.paths || defaultPaths,
+    key: options.key || 'vuex',
+    paths: options.paths || null,
     reducer: options.reducer || defaultReducer,
     subscriber: options.subscriber || defaultSubscriber,
-    storage: options.storage || defaultStorage,
+    storage: options.storage || window.localStorage,
     getState: options.getState || defaultGetState,
     setState: options.setState || defaultSetState,
-    filter: options.filter || defaultFilter,
-    overwrite: options.overwrite !== undefined ? options.overwrite : defaultOverwrite,
-    fetchBeforeUse: options.fetchBeforeUse !== undefined ? options.fetchBeforeUse : defaultFetchBeforeUse,
+    filter: options.filter || (() => true),
+    overwrite: options.overwrite !== undefined ? options.overwrite : false,
+    fetchBeforeUse: options.fetchBeforeUse !== undefined ? options.fetchBeforeUse : false,
     assertStorage: options.assertStorage || defaultAssertStorage,
-    mergeDeepWithKeyFn: options.mergeDeepWithKeyFn || defaultMergeDeepWithKeyFn,
-    onRehydrated: options.onRehydrated || defaultOnRehydrated,
+    mergeDeepWithKeyFn: options.mergeDeepWithKeyFn || ((_k, _l, r) => r),
+    onRehydrated: options.onRehydrated || (() => {}),
   }
 }
 
 /**
  * @public
  */
-export function createPersistPlugin(options?: Options) {
+export function createPersistPlugin(options?: PersistPluginOptions) {
   const normalizedOptions = normalize(options || {})
 
   normalizedOptions.assertStorage(normalizedOptions.storage)
