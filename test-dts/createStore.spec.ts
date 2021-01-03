@@ -119,6 +119,18 @@ it("getter as mutation's param", () => {
   })
 })
 
+it("mutation as mutation's param", () => {
+  createStore({
+    state: {},
+    mutations: {
+      increment() {},
+      incrementTwice({ mutations }) {
+        expectType<any>(mutations.increment)
+      },
+    },
+  })
+})
+
 it('mutation', () => {
   const store = createStore({
     state: {},
@@ -243,6 +255,18 @@ it("mutations with payload as action's param", () => {
         expectError<(number: number, condition: boolean) => never>(mutations.incrementByNumberIf)
         // TODO: @ts-expect-error
         // mutations.incrementByNumberIf(0, false, 'notExists')
+      },
+    },
+  })
+})
+
+it("mutations as action's param", () => {
+  createStore({
+    state: {},
+    actions: {
+      increment() {},
+      incrementTwice({ actions }) {
+        expectType<any>(actions.increment)
       },
     },
   })

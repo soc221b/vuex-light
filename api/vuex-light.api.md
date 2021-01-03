@@ -14,6 +14,7 @@ export type ActionsOption<S extends StateOption, G extends GettersOption<S>, M e
         state: StateReturnType<S>;
         getters: GettersReturnType<G>;
         mutations: MutationsReturnType<M>;
+        actions: any;
     }, ...payloads: any[]) => void;
 };
 
@@ -129,9 +130,10 @@ export function isPlainObject(object: unknown): boolean;
 
 // @public (undocumented)
 export type MutationsOption<S extends StateOption, G extends GettersOption<S>> = {
-    [P: string]: ({ state, getters }: {
+    [P: string]: ({ state, getters, mutations }: {
         state: S;
         getters: GettersReturnType<G>;
+        mutations: any;
     }, ...payloads: any[]) => void;
 };
 

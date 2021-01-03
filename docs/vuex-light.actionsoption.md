@@ -13,6 +13,7 @@ export declare type ActionsOption<S extends StateOption, G extends GettersOption
         state: StateReturnType<S>;
         getters: GettersReturnType<G>;
         mutations: MutationsReturnType<M>;
+        actions: any;
     }, ...payloads: any[]) => void;
 };
 ```

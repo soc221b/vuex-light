@@ -9,9 +9,10 @@
 
 ```typescript
 export declare type MutationsOption<S extends StateOption, G extends GettersOption<S>> = {
-    [P: string]: ({ state, getters }: {
+    [P: string]: ({ state, getters, mutations }: {
         state: S;
         getters: GettersReturnType<G>;
+        mutations: any;
     }, ...payloads: any[]) => void;
 };
 ```

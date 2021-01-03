@@ -69,12 +69,12 @@ const store = new Vuex.Store({
     },
   },
   mutations: {
-    increment({ state, getters }, ...payloads) {
+    increment({ state, getters, mutations }, ...payloads) {
       // ...
     },
   },
   actions: {
-    incrementIfOdd({ state, getters, mutations }, ...payloads) {
+    incrementIfOdd({ state, getters, mutations, actions }, ...payloads) {
       // ...
     },
   },

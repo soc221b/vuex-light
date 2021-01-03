@@ -42,7 +42,10 @@ export type GettersReturnType<G extends GettersOption<any>> = {
  * @public
  */
 export type MutationsOption<S extends StateOption, G extends GettersOption<S>> = {
-  [P: string]: ({ state, getters }: { state: S; getters: GettersReturnType<G> }, ...payloads: any[]) => void
+  [P: string]: (
+    { state, getters, mutations }: { state: S; getters: GettersReturnType<G>; mutations: any },
+    ...payloads: any[]
+  ) => void
 }
 
 /**
@@ -65,6 +68,7 @@ export type ActionsOption<S extends StateOption, G extends GettersOption<S>, M e
       state: StateReturnType<S>
       getters: GettersReturnType<G>
       mutations: MutationsReturnType<M>
+      actions: any
     },
     ...payloads: any[]
   ) => void
@@ -149,7 +153,7 @@ export function createStore<
   const optionMutations = options.mutations || ({} as Mutations)
   const mutations = getOwnKeys(optionMutations).reduce((mutations, mutationKey) => {
     const mutation = (...payloads: unknown[]) => {
-      optionMutations[mutationKey]({ state: state.value, getters }, ...payloads)
+      optionMutations[mutationKey]({ state: state.value, getters, mutations }, ...payloads)
       subscribers.forEach(subscriber => subscriber.call(null, { key: mutationKey as string, payloads }))
     }
     return Object.assign(mutations, { [mutationKey]: mutation })
@@ -164,6 +168,7 @@ export function createStore<
           state: state.value,
           getters,
           mutations,
+          actions,
         },
         ...payloads,
       )
