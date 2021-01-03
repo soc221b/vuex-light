@@ -5,7 +5,7 @@ const store = createStore({
   state: {
     todos: [
       {
-        text: 'Take a galance of examples',
+        text: 'Give it a try.',
         done: true,
       },
       {
