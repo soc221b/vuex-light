@@ -1,4 +1,4 @@
-import { createStore, createPersistPlugin } from 'vuex-light'
+import { createStore, createPersistPlugin, createLoggerPlugin } from 'vuex-light'
 import { Todo } from './types'
 
 const store = createStore({
@@ -61,7 +61,7 @@ const store = createStore({
         })
     },
   },
-  plugins: [createPersistPlugin()],
+  plugins: [createPersistPlugin(), createLoggerPlugin()],
 })
 export default store
 
