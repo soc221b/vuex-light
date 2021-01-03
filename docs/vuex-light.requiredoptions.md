@@ -9,20 +9,16 @@
 
 ```typescript
 export declare type RequiredOptions = {
-    key: typeof defaultKey;
-    paths: typeof defaultPaths;
-    reducer: typeof defaultReducer;
-    subscriber: typeof defaultSubscriber;
-    storage: typeof defaultStorage;
-    getState: typeof defaultGetState;
-    setState: typeof defaultSetState;
-    filter: (mutation: string) => boolean;
-    overwrite: typeof defaultOverwrite;
-    fetchBeforeUse: typeof defaultFetchBeforeUse;
-    assertStorage: typeof defaultAssertStorage;
-    arrayMerge: typeof defaultArrayMerge;
-    onRehydrated: typeof defaultOnRehydrated;
+    collapsed: boolean;
+    filter: typeof defaultFilter;
+    actionFilter: typeof defaultActionFilter;
+    transformer: typeof defaultTransformer;
+    mutationTransformer: typeof defaultMutationTransformer;
+    actionTransformer: typeof defaultActionTransformer;
+    logMutations: boolean;
+    logActions: boolean;
+    logger: typeof defaultLogger;
 };
 ```
-<b>References:</b> [defaultKey](./vuex-light.defaultkey.md)<!-- -->, [defaultPaths](./vuex-light.defaultpaths.md)<!-- -->, [defaultStorage](./vuex-light.defaultstorage.md)<!-- -->, [defaultOverwrite](./vuex-light.defaultoverwrite.md)<!-- -->, [defaultFetchBeforeUse](./vuex-light.defaultfetchbeforeuse.md)
+<b>References:</b> [defaultLogger](./vuex-light.defaultlogger.md)
 

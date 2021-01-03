@@ -8,8 +8,17 @@
 <b>Signature:</b>
 
 ```typescript
-export declare function defaultFilter(): boolean;
+export declare function defaultFilter(_mutation: Parameters<Subscriber>['0'], _prevState: any, _state: any): boolean;
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  \_mutation | Parameters&lt;[Subscriber](./vuex-light.subscriber.md)<!-- -->&gt;\['0'\] |  |
+|  \_prevState | any |  |
+|  \_state | any |  |
+
 <b>Returns:</b>
 
 boolean

@@ -8,9 +8,12 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type MutationsOption<S extends StateOption> = {
-    [P: string]: (state: S, ...payload: any[]) => void;
+export declare type MutationsOption<S extends StateOption, G extends GettersOption<S>> = {
+    [P: string]: ({ state, getters }: {
+        state: S;
+        getters: GettersReturnType<G>;
+    }, ...payloads: any[]) => void;
 };
 ```
-<b>References:</b> [StateOption](./vuex-light.stateoption.md)
+<b>References:</b> [StateOption](./vuex-light.stateoption.md)<!-- -->, [GettersOption](./vuex-light.gettersoption.md)<!-- -->, [GettersReturnType](./vuex-light.gettersreturntype.md)
 

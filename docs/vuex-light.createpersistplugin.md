@@ -8,16 +8,16 @@
 <b>Signature:</b>
 
 ```typescript
-export declare function createPersistPlugin(options?: Options): <Store extends CreateStoreReturnType<any, any, any>>(store: Store) => void;
+export declare function createPersistPlugin(options?: PersistPluginOptions): <Store extends CreateStoreReturnType<any, any, any, any>>(store: Store) => void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  options | [Options](./vuex-light.options.md) |  |
+|  options | [PersistPluginOptions](./vuex-light.persistpluginoptions.md) |  |
 
 <b>Returns:</b>
 
-&lt;Store extends [CreateStoreReturnType](./vuex-light.createstorereturntype.md)<!-- -->&lt;any, any, any&gt;&gt;(store: Store) =&gt; void
+&lt;Store extends [CreateStoreReturnType](./vuex-light.createstorereturntype.md)<!-- -->&lt;any, any, any, any&gt;&gt;(store: Store) =&gt; void
 

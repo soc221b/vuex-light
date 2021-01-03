@@ -8,7 +8,7 @@
 <b>Signature:</b>
 
 ```typescript
-export declare function defaultSubscriber<Store extends CreateStoreReturnType<any, any, any>>(store: Store): (handler: Subscriber) => void;
+export declare function defaultSubscriber<Store extends CreateStoreReturnType<any, any, any, any>>(store: Store): (handler: Subscriber) => void;
 ```
 
 ## Parameters

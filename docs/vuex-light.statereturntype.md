@@ -8,9 +8,9 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type StateReturnType<S extends StateOption> = DeepReadonly<{
-    [P in keyof S]: S[P];
-}>;
+export declare type StateReturnType<S extends StateOption> = {
+    readonly [P in keyof S]: S[P];
+};
 ```
 <b>References:</b> [StateOption](./vuex-light.stateoption.md)
 

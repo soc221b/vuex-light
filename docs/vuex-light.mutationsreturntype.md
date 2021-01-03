@@ -8,9 +8,9 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type MutationsReturnType<M extends MutationsOption<any>> = {
-    [P in keyof M]: (...args: OmitFirst<Parameters<M[P]>>) => void;
+export declare type MutationsReturnType<M extends MutationsOption<any, any>> = {
+    readonly [P in keyof M]: OmitFirstParameter<M[P]>;
 };
 ```
-<b>References:</b> [MutationsOption](./vuex-light.mutationsoption.md)<!-- -->, [OmitFirst](./vuex-light.omitfirst.md)
+<b>References:</b> [MutationsOption](./vuex-light.mutationsoption.md)<!-- -->, [OmitFirstParameter](./vuex-light.omitfirstparameter.md)
 

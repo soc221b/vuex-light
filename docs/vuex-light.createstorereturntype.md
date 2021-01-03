@@ -8,13 +8,15 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type CreateStoreReturnType<State extends StateOption, Getters extends GettersOption<State>, Mutations extends MutationsOption<State>> = {
+export declare type CreateStoreReturnType<State extends StateOption, Getters extends GettersOption<State>, Mutations extends MutationsOption<State, Getters>, Actions extends ActionsOption<State, Getters, Mutations>> = {
     state: StateReturnType<State>;
     getters: GettersReturnType<Getters>;
     mutations: MutationsReturnType<Mutations>;
+    actions: ActionsReturnType<Actions>;
     subscribe: (subscriber: Subscriber) => void;
+    actionSubscribe: (subscriber: ActionSubscriber) => void;
     replaceState: (newState: UnwrapRef<StateType<State>>) => void;
 };
 ```
-<b>References:</b> [StateOption](./vuex-light.stateoption.md)<!-- -->, [GettersOption](./vuex-light.gettersoption.md)<!-- -->, [MutationsOption](./vuex-light.mutationsoption.md)<!-- -->, [StateReturnType](./vuex-light.statereturntype.md)<!-- -->, [GettersReturnType](./vuex-light.gettersreturntype.md)<!-- -->, [MutationsReturnType](./vuex-light.mutationsreturntype.md)<!-- -->, [Subscriber](./vuex-light.subscriber.md)<!-- -->, [StateType](./vuex-light.statetype.md)
+<b>References:</b> [StateOption](./vuex-light.stateoption.md)<!-- -->, [GettersOption](./vuex-light.gettersoption.md)<!-- -->, [MutationsOption](./vuex-light.mutationsoption.md)<!-- -->, [ActionsOption](./vuex-light.actionsoption.md)<!-- -->, [StateReturnType](./vuex-light.statereturntype.md)<!-- -->, [GettersReturnType](./vuex-light.gettersreturntype.md)<!-- -->, [MutationsReturnType](./vuex-light.mutationsreturntype.md)<!-- -->, [ActionsReturnType](./vuex-light.actionsreturntype.md)<!-- -->, [Subscriber](./vuex-light.subscriber.md)<!-- -->, [ActionSubscriber](./vuex-light.actionsubscriber.md)<!-- -->, [StateType](./vuex-light.statetype.md)
 

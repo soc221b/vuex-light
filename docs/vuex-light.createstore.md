@@ -8,21 +8,22 @@
 <b>Signature:</b>
 
 ```typescript
-export declare function createStore<State extends StateOption, Getters extends GettersOption<State>, Mutations extends MutationsOption<State>>(options: {
+export declare function createStore<State extends StateOption, Getters extends GettersOption<State>, Mutations extends MutationsOption<State, Getters>, Actions extends ActionsOption<State, Getters, Mutations>>(options: {
     state: State;
     getters?: Getters;
     mutations?: Mutations;
-    plugins?: Plugin<CreateStoreReturnType<State, Getters, Mutations>>[];
-}): CreateStoreReturnType<State, Getters, Mutations>;
+    actions?: Actions;
+    plugins?: Plugin<CreateStoreReturnType<State, Getters, Mutations, Actions>>[];
+}): CreateStoreReturnType<State, Getters, Mutations, Actions>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  options | { state: State; getters?: Getters; mutations?: Mutations; plugins?: Plugin&lt;[CreateStoreReturnType](./vuex-light.createstorereturntype.md)<!-- -->&lt;State, Getters, Mutations&gt;&gt;\[\]; } |  |
+|  options | { state: State; getters?: Getters; mutations?: Mutations; actions?: Actions; plugins?: Plugin&lt;[CreateStoreReturnType](./vuex-light.createstorereturntype.md)<!-- -->&lt;State, Getters, Mutations, Actions&gt;&gt;\[\]; } |  |
 
 <b>Returns:</b>
 
-[CreateStoreReturnType](./vuex-light.createstorereturntype.md)<!-- -->&lt;State, Getters, Mutations&gt;
+[CreateStoreReturnType](./vuex-light.createstorereturntype.md)<!-- -->&lt;State, Getters, Mutations, Actions&gt;
 

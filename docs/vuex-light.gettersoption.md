@@ -9,7 +9,10 @@
 
 ```typescript
 export declare type GettersOption<S extends StateOption> = {
-    [P: string]: (state: StateReturnType<S>) => unknown;
+    [P: string]: ({ state, getters }: {
+        state: StateReturnType<S>;
+        getters: any;
+    }) => unknown;
 };
 ```
 <b>References:</b> [StateOption](./vuex-light.stateoption.md)<!-- -->, [StateReturnType](./vuex-light.statereturntype.md)

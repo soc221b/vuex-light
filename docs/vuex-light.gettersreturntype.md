@@ -8,9 +8,9 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type GettersReturnType<G extends GettersOption<any>> = DeepReadonly<{
-    [P in keyof G]: ReturnType<G[P]>;
-}>;
+export declare type GettersReturnType<G extends GettersOption<any>> = {
+    readonly [P in keyof G]: ReturnType<G[P]>;
+};
 ```
 <b>References:</b> [GettersOption](./vuex-light.gettersoption.md)
 

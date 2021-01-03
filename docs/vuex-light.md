@@ -9,16 +9,19 @@
 |  Function | Description |
 |  --- | --- |
 |  [assert(condition, message)](./vuex-light.assert.md) |  |
+|  [createLoggerPlugin(options)](./vuex-light.createloggerplugin.md) |  |
 |  [createPersistPlugin(options)](./vuex-light.createpersistplugin.md) |  |
 |  [createStore(options)](./vuex-light.createstore.md) |  |
-|  [defaultArrayMerge(\_, savedState)](./vuex-light.defaultarraymerge.md) |  |
+|  [defaultActionFilter(\_action)](./vuex-light.defaultactionfilter.md) |  |
+|  [defaultActionTransformer(action)](./vuex-light.defaultactiontransformer.md) |  |
 |  [defaultAssertStorage(storage)](./vuex-light.defaultassertstorage.md) |  |
-|  [defaultFilter()](./vuex-light.defaultfilter.md) |  |
+|  [defaultFilter(\_mutation, \_prevState, \_state)](./vuex-light.defaultfilter.md) |  |
 |  [defaultGetState(key, storage)](./vuex-light.defaultgetstate.md) |  |
-|  [defaultOnRehydrated(\_)](./vuex-light.defaultonrehydrated.md) |  |
+|  [defaultMutationTransformer(mutation)](./vuex-light.defaultmutationtransformer.md) |  |
 |  [defaultReducer(state, paths)](./vuex-light.defaultreducer.md) |  |
 |  [defaultSetState(key, state, storage)](./vuex-light.defaultsetstate.md) |  |
 |  [defaultSubscriber(store)](./vuex-light.defaultsubscriber.md) |  |
+|  [defaultTransformer(state)](./vuex-light.defaulttransformer.md) |  |
 |  [getOwnKeys(object)](./vuex-light.getownkeys.md) |  |
 |  [install(app, { store, storeKey })](./vuex-light.install.md) |  |
 |  [isPlainObject(object)](./vuex-light.isplainobject.md) |  |
@@ -27,24 +30,26 @@
 
 |  Variable | Description |
 |  --- | --- |
-|  [defaultFetchBeforeUse](./vuex-light.defaultfetchbeforeuse.md) |  |
-|  [defaultKey](./vuex-light.defaultkey.md) |  |
-|  [defaultOverwrite](./vuex-light.defaultoverwrite.md) |  |
-|  [defaultPaths](./vuex-light.defaultpaths.md) |  |
-|  [defaultStorage](./vuex-light.defaultstorage.md) |  |
+|  [defaultCollapsed](./vuex-light.defaultcollapsed.md) |  |
+|  [defaultLogger](./vuex-light.defaultlogger.md) |  |
 |  [defaultStoreKey](./vuex-light.defaultstorekey.md) |  |
 
 ## Type Aliases
 
 |  Type Alias | Description |
 |  --- | --- |
+|  [ActionsOption](./vuex-light.actionsoption.md) |  |
+|  [ActionsReturnType](./vuex-light.actionsreturntype.md) |  |
+|  [ActionSubscriber](./vuex-light.actionsubscriber.md) |  |
 |  [CreateStoreReturnType](./vuex-light.createstorereturntype.md) |  |
 |  [GettersOption](./vuex-light.gettersoption.md) |  |
 |  [GettersReturnType](./vuex-light.gettersreturntype.md) |  |
 |  [MutationsOption](./vuex-light.mutationsoption.md) |  |
 |  [MutationsReturnType](./vuex-light.mutationsreturntype.md) |  |
-|  [OmitFirst](./vuex-light.omitfirst.md) |  |
+|  [OmitFirstParameter](./vuex-light.omitfirstparameter.md) |  |
 |  [Options](./vuex-light.options.md) |  |
+|  [PersistPluginOptions](./vuex-light.persistpluginoptions.md) |  |
+|  [PersistPluginRequiredOptions](./vuex-light.persistpluginrequiredoptions.md) |  |
 |  [Plugin\_2](./vuex-light.plugin_2.md) |  |
 |  [RequiredOptions](./vuex-light.requiredoptions.md) |  |
 |  [StateOption](./vuex-light.stateoption.md) |  |
