@@ -53,6 +53,8 @@ it("getter as getter's param", () => {
 })
 
 it('getter', () => {
+  const spy = jest.spyOn(console, 'warn').mockImplementation()
+
   const store = createStore({
     state: {},
     getters: {
@@ -71,6 +73,8 @@ it('getter', () => {
   expectError(store.getters.notExists)
   // @ts-expect-error
   expectError((store.getters.notExists = 0))
+
+  spy.mockRestore()
 })
 
 it("state as mutation's param", () => {
