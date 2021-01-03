@@ -44,9 +44,7 @@ const store = createStore({
   },
 })
 
-const app = createApp({
-  /* your root component */
-})
+const app = createApp({})
 
 // Install the store instance as a plugin
 app.use(install, { store })
@@ -57,6 +55,96 @@ app.use(install, { store })
 - [Hello world](https://codesandbox.io/s/github/js-cosmos/vuex-light/tree/main/examples/hello-world)
 - [Counter](https://codesandbox.io/s/github/js-cosmos/vuex-light/tree/main/examples/counter)
 - [Todo MVC](https://codesandbox.io/s/github/js-cosmos/vuex-light/tree/main/examples/todomvc)
+
+# Core API
+
+```ts
+const store = new Vuex.Store({
+  state: {
+    count: 0,
+  },
+  getters: {
+    isOdd({ state, getters }) {
+      // ...
+    },
+  },
+  mutations: {
+    increment({ state, getters }, ...payloads) {
+      // ...
+    },
+  },
+  actions: {
+    incrementIfOdd({ state, getters, mutations }, ...payloads) {
+      // ...
+    },
+  },
+})
+
+store.state.count
+store.getters.isOdd
+store.mutations.increment()
+store.actions.incrementIfOdd()
+```
+
+# TypeScript Support
+
+## Typing `useStore` Composition Function
+
+Just create a function and return it!
+
+```ts
+import { useStore } from 'vuex-light'
+
+const store = createStore({
+  state: {
+    count: 0,
+  },
+})
+
+function useStore() {
+  return store
+}
+```
+
+```ts
+import { defineComponent } from 'vue'
+import { useStore } from './store'
+
+defineComponent({
+  setup() {
+    const store = useStore()
+    store.state.count // typed as number
+    return {}
+  },
+})
+```
+
+## Typing `$store` Property in Vue Component
+
+```ts
+import { createApp } from 'vue'
+import { useStore, install } from 'vuex-light'
+
+const store = createStore({
+  state: {
+    count: 0,
+  },
+})
+
+const app = createApp({})
+
+app.use(install, { store })
+```
+
+```ts
+import { defineComponent } from 'vue'
+
+defineComponent({
+  created() {
+    this.$store.state.count // typed as number
+  },
+})
+```
 
 # Contributing
 
