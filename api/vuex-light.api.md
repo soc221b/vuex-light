@@ -32,6 +32,9 @@ export type ActionSubscriber = (action: {
 export function assert(condition: unknown, message: string): void;
 
 // @public (undocumented)
+export function createLoggerPlugin(options?: Options): <Store extends CreateStoreReturnType<any, any, any, any>>(store: Store) => void;
+
+// @public (undocumented)
 export function createPersistPlugin(options?: PersistPluginOptions): <Store extends CreateStoreReturnType<any, any, any, any>>(store: Store) => void;
 
 // @public (undocumented)
@@ -55,10 +58,34 @@ export type CreateStoreReturnType<State extends StateOption, Getters extends Get
 };
 
 // @public (undocumented)
+export function defaultActionFilter(_action: Parameters<ActionSubscriber>['0']): boolean;
+
+// @public (undocumented)
+export function defaultActionTransformer(action: Parameters<ActionSubscriber>['0']): {
+    key: string;
+    payloads: unknown[];
+};
+
+// @public (undocumented)
 export function defaultAssertStorage(storage: Storage_2): void | Error;
 
 // @public (undocumented)
+export const defaultCollapsed: boolean;
+
+// @public (undocumented)
+export function defaultFilter(_mutation: Parameters<Subscriber>['0'], _prevState: any, _state: any): boolean;
+
+// @public (undocumented)
 export function defaultGetState(key: Parameters<Storage_2['getItem']>['0'], storage: Storage_2): any;
+
+// @public (undocumented)
+export const defaultLogger: Console;
+
+// @public (undocumented)
+export function defaultMutationTransformer(mutation: Parameters<Subscriber>['0']): {
+    key: string;
+    payloads: unknown[];
+};
 
 // @public (undocumented)
 export function defaultReducer<State extends StateReturnType<any>>(state: State, paths: string[] | null): any;
@@ -71,6 +98,9 @@ export const defaultStoreKey = "$store";
 
 // @public (undocumented)
 export function defaultSubscriber<Store extends CreateStoreReturnType<any, any, any, any>>(store: Store): (handler: Subscriber) => void;
+
+// @public (undocumented)
+export function defaultTransformer(state: any): any;
 
 // @public (undocumented)
 export function getOwnKeys<O extends object>(object: O): (keyof O)[];
@@ -114,6 +144,9 @@ export type MutationsReturnType<M extends MutationsOption<any, any>> = {
 export type OmitFirstParameter<F> = F extends (x: any, ...params: infer Rest) => infer R ? (...params: Rest) => R : void;
 
 // @public (undocumented)
+export type Options = Partial<RequiredOptions>;
+
+// @public (undocumented)
 export type PersistPluginOptions = Partial<PersistPluginRequiredOptions>;
 
 // @public (undocumented)
@@ -137,6 +170,19 @@ export type PersistPluginRequiredOptions = {
 type Plugin_2<Store> = (store: Store) => void;
 
 export { Plugin_2 as Plugin }
+
+// @public (undocumented)
+export type RequiredOptions = {
+    collapsed: boolean;
+    filter: typeof defaultFilter;
+    actionFilter: typeof defaultActionFilter;
+    transformer: typeof defaultTransformer;
+    mutationTransformer: typeof defaultMutationTransformer;
+    actionTransformer: typeof defaultActionTransformer;
+    logMutations: boolean;
+    logActions: boolean;
+    logger: typeof defaultLogger;
+};
 
 // @public (undocumented)
 export type StateOption = {
