@@ -85,6 +85,11 @@ export type Subscriber = (mutation: { key: string; payloads: unknown[] }) => voi
 /**
  * @public
  */
+export type ActionSubscriber = (action: { key: string; payloads: unknown[] }) => void
+
+/**
+ * @public
+ */
 export type Plugin<Store> = (store: Store) => void
 
 /**
@@ -101,6 +106,7 @@ export type CreateStoreReturnType<
   mutations: MutationsReturnType<Mutations>
   actions: ActionsReturnType<Actions>
   subscribe: (subscriber: Subscriber) => void
+  actionSubscribe: (subscriber: ActionSubscriber) => void
   replaceState: (newState: UnwrapRef<StateType<State>>) => void
 }
 
@@ -152,6 +158,7 @@ export function createStore<
   const optionActions = options.actions || ({} as Actions)
   const actions = getOwnKeys(optionActions).reduce((actions, actionKey) => {
     const action = (...payloads: unknown[]) => {
+      actionSubscribers.forEach(subscriber => subscriber.call(null, { key: actionKey as string, payloads }))
       optionActions[actionKey](
         {
           state: state.value,
@@ -169,6 +176,11 @@ export function createStore<
     subscribers.push(subscriber)
   }
 
+  const actionSubscribers: ActionSubscriber[] = []
+  const actionSubscribe = function (subscriber: ActionSubscriber) {
+    actionSubscribers.push(subscriber)
+  }
+
   const replaceState = function (newState: UnwrapRef<typeof state>) {
     getOwnKeys(state.value)
       .filter(key => newState[key as any] === undefined)
@@ -184,6 +196,7 @@ export function createStore<
     mutations,
     actions,
     subscribe,
+    actionSubscribe,
     replaceState,
   }
 

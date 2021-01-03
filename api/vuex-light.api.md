@@ -23,6 +23,12 @@ export type ActionsReturnType<A extends ActionsOption<any, any, any>> = {
 };
 
 // @public (undocumented)
+export type ActionSubscriber = (action: {
+    key: string;
+    payloads: unknown[];
+}) => void;
+
+// @public (undocumented)
 export function assert(condition: unknown, message: string): void;
 
 // @public (undocumented)
@@ -44,6 +50,7 @@ export type CreateStoreReturnType<State extends StateOption, Getters extends Get
     mutations: MutationsReturnType<Mutations>;
     actions: ActionsReturnType<Actions>;
     subscribe: (subscriber: Subscriber) => void;
+    actionSubscribe: (subscriber: ActionSubscriber) => void;
     replaceState: (newState: UnwrapRef<StateType<State>>) => void;
 };
 
