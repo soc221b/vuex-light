@@ -8,9 +8,10 @@
 
 # Features
 
-- Light weight (10x smaller then [vuex](https://bundlephobia.com/result?p=vuex@next))
-- Full typescript support
+- Robust typescript support :muscle:
+- Consistent and intuitive interface :bulb:
 - Implement with vue 3 reactivity system only
+- Light weight
 
 # Installation
 
