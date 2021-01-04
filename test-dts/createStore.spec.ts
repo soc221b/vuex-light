@@ -260,7 +260,7 @@ it("mutations with payload as action's param", () => {
   })
 })
 
-it("mutations as action's param", () => {
+it("action as action's param", () => {
   createStore({
     state: {},
     actions: {
