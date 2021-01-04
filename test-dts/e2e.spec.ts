@@ -42,13 +42,13 @@ it('e2e', () => {
         expectError((state.notExists = false))
 
         expectType<number>(getters.double)
-        // @ts-expect-error
+        // TODO: @ts-expect-error
         expectError(getters.double++)
-        // @ts-expect-error
+        // TODO: @ts-expect-error
         expectError<void>(getters.double)
         // TODO: @ts-expect-error
         // expectError(getters.notExists)
-        // @ts-expect-error
+        // TODO: @ts-expect-error
         expectError((getters.notExists = false))
 
         expectType<any>(mutations.notExists)
@@ -68,13 +68,13 @@ it('e2e', () => {
         expectError((state.notExists = false))
 
         expectType<boolean>(getters.double)
-        // @ts-expect-error
+        // TODO: @ts-expect-error
         expectError((getters.double = false))
-        // @ts-expect-error
+        // TODO: @ts-expect-error
         expectError<void>(getters.double)
         // TODO: @ts-expect-error
         // expectError(getters.notExists)
-        // @ts-expect-error
+        // TODO: @ts-expect-error
         expectError((getters.notExists = false))
 
         expectType<(number: number, condition: boolean) => void>(mutations.incrementByNumberIf)

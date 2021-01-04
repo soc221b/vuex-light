@@ -106,13 +106,13 @@ it("getter as mutation's param", () => {
     mutations: {
       increment({ getters }) {
         expectType<number>(getters.double)
-        // @ts-expect-error
+        // TODO: @ts-expect-error
         expectType(getters.double++)
-        // @ts-expect-error
+        // TODO: @ts-expect-error
         expectError<void>(getters.double)
-        // @ts-expect-error
+        // TODO: @ts-expect-error
         expectError(getters.notExists)
-        // @ts-expect-error
+        // TODO: @ts-expect-error
         expectError((getters.notExists = false))
       },
     },
@@ -201,13 +201,13 @@ it("getters as action's param", () => {
     actions: {
       incrementIfOdd({ getters }) {
         expectType<boolean>(getters.isOdd)
-        // @ts-expect-error
+        // TODO: @ts-expect-error
         expectError((getters.isOdd = false))
-        // @ts-expect-error
+        // TODO: @ts-expect-error
         expectError<void>(getters.isOdd)
-        // @ts-expect-error
+        // TODO: @ts-expect-error
         expectError(getters.notExists)
-        // @ts-expect-error
+        // TODO: @ts-expect-error
         expectError((getters.notExists = false))
       },
     },

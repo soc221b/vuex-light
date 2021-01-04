@@ -41,11 +41,8 @@ export type GettersReturnType<G extends GettersOption<any>> = {
 /**
  * @public
  */
-export type MutationsOption<S extends StateOption, G extends GettersOption<S>> = {
-  [P: string]: (
-    { state, getters, mutations }: { state: S; getters: GettersReturnType<G>; mutations: any },
-    ...payloads: any[]
-  ) => void
+export type MutationsOption<S extends StateOption, _G extends GettersOption<S>> = {
+  [P: string]: ({ state, getters, mutations }: { state: S; getters: any; mutations: any }, ...payloads: any[]) => void
 }
 
 /**
@@ -66,7 +63,7 @@ export type ActionsOption<S extends StateOption, G extends GettersOption<S>, M e
       mutations,
     }: {
       state: StateReturnType<S>
-      getters: GettersReturnType<G>
+      getters: any
       mutations: MutationsReturnType<M>
       actions: any
     },

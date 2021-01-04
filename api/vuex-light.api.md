@@ -12,7 +12,7 @@ import { UnwrapRef } from 'vue';
 export type ActionsOption<S extends StateOption, G extends GettersOption<S>, M extends MutationsOption<S, G>> = {
     [P: string]: ({ state, getters, mutations, }: {
         state: StateReturnType<S>;
-        getters: GettersReturnType<G>;
+        getters: any;
         mutations: MutationsReturnType<M>;
         actions: any;
     }, ...payloads: any[]) => void;
@@ -33,10 +33,10 @@ export type ActionSubscriber = (action: {
 export function assert(condition: unknown, message: string): void;
 
 // @public (undocumented)
-export function createLoggerPlugin(options?: Options): <Store extends CreateStoreReturnType<any, any, any, any>>(store: Store) => void;
+export function createLoggerPlugin(options?: Options): (store: any) => void;
 
 // @public (undocumented)
-export function createPersistPlugin(options?: PersistPluginOptions): <Store extends CreateStoreReturnType<any, any, any, any>>(store: Store) => void;
+export function createPersistPlugin(options?: PersistPluginOptions): (store: any) => void;
 
 // @public (undocumented)
 export function createStore<State extends StateOption, Getters extends GettersOption<State>, Mutations extends MutationsOption<State, Getters>, Actions extends ActionsOption<State, Getters, Mutations>>(options: {
@@ -129,10 +129,10 @@ export function install<Store>(app: App, { store, storeKey }: {
 export function isPlainObject(object: unknown): boolean;
 
 // @public (undocumented)
-export type MutationsOption<S extends StateOption, G extends GettersOption<S>> = {
+export type MutationsOption<S extends StateOption, _G extends GettersOption<S>> = {
     [P: string]: ({ state, getters, mutations }: {
         state: S;
-        getters: GettersReturnType<G>;
+        getters: any;
         mutations: any;
     }, ...payloads: any[]) => void;
 };

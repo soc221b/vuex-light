@@ -1,4 +1,4 @@
-import { CreateStoreReturnType, Subscriber, ActionSubscriber } from '../../'
+import { Subscriber, ActionSubscriber } from '../../'
 import { clone } from 'ramda'
 
 /**
@@ -96,11 +96,13 @@ export function createLoggerPlugin(options?: Options) {
     logger,
   } = normalize(options || {})
 
-  return function <Store extends CreateStoreReturnType<any, any, any, any>>(store: Store) {
+  // TODO: add type info
+  return function (store: any) {
     let prevState = clone(store.state)
 
     if (logMutations) {
-      store.subscribe(mutation => {
+      // TODO: add type info
+      store.subscribe((mutation: any) => {
         const state = clone(store.state)
 
         if (filter(mutation, prevState, state)) {
@@ -120,7 +122,8 @@ export function createLoggerPlugin(options?: Options) {
     }
 
     if (logActions) {
-      store.actionSubscribe(action => {
+      // TODO: add type info
+      store.actionSubscribe((action: any) => {
         if (actionFilter(action) === false) return
 
         const formattedTime = getFormattedTime()

@@ -117,7 +117,8 @@ export function createPersistPlugin(options?: PersistPluginOptions) {
     savedState = normalizedOptions.getState(normalizedOptions.key, normalizedOptions.storage)
   }
 
-  return function <Store extends CreateStoreReturnType<any, any, any, any>>(store: Store) {
+  // TODO: add type info
+  return function (store: any) {
     if (normalizedOptions.fetchBeforeUse === false) {
       savedState = normalizedOptions.getState(normalizedOptions.key, normalizedOptions.storage)
     }
