@@ -11,11 +11,7 @@ export type StateOption = {
 /**
  * @public
  */
-export type StateType<S extends StateOption> = Ref<
-  {
-    [P in keyof S]: S[P]
-  }
->
+export type StateType<S extends StateOption> = Ref<S>
 
 /**
  * @public

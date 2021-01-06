@@ -197,9 +197,7 @@ export type StateReturnType<S extends StateOption> = {
 };
 
 // @public (undocumented)
-export type StateType<S extends StateOption> = Ref<{
-    [P in keyof S]: S[P];
-}>;
+export type StateType<S extends StateOption> = Ref<S>;
 
 // @public (undocumented)
 type Storage_2 = {
