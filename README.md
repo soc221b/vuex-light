@@ -6,6 +6,8 @@
 ![npm downloads](https://img.shields.io/npm/dm/vuex-light)
 ![last commit](https://img.shields.io/github/last-commit/js-cosmos/vuex-light/main)
 
+[![Demo](./demo.gif)](https://codesandbox.io/s/github/js-cosmos/vuex-light/tree/main/examples/todomvc)
+
 # Features
 
 - Robust typescript support :muscle:
