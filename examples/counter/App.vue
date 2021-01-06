@@ -1,5 +1,5 @@
 <template>
-  Clicked: {{ store.state.count }} times, count is {{ store.state.evenOrOdd }}.
+  Clicked: {{ store.state.count }} times, count is {{ store.getters.evenOrOdd }}.
   <button @click="store.actions.increment">+</button>
   <button @click="store.actions.decrement">-</button>
   <button @click="store.actions.incrementIfOdd">Increment if odd</button>

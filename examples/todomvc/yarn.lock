@@ -1981,11 +1981,6 @@ to-regex-range@^5.0.1:
   dependencies:
     is-number "^7.0.0"
 
-todomvc-app-css@^2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/todomvc-app-css/-/todomvc-app-css-2.3.0.tgz#cc27f1686ab4c418eef4e790289cc124baca2546"
-  integrity sha512-RG8hxqoVn8Be3wxyuyHfOSAXiY1Z0N+PYQOe/jxzy3wpU1Obfwd1RF1i/fz/fR+MrYL+Q+BdrUt8SsXdtR7Oow==
-
 toidentifier@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/toidentifier/-/toidentifier-1.0.0.tgz#7e1be3470f1e77948bc43d94a3c8f4d7752ba553"
@@ -2104,10 +2099,10 @@ vue@^3.0.3, vue@^3.0.4:
     "@vue/runtime-dom" "3.0.5"
     "@vue/shared" "3.0.5"
 
-vuex-light@0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/vuex-light/-/vuex-light-0.5.0.tgz#a06adaafefeea0f5277cc192eb2ec3226016befe"
-  integrity sha512-ADMmb2xcpntNa5nEN1VHPAFSMIr4WST6wXjVwP3U9wlevrPtweCh77NWi2wFHvL7awh3SEwe/JP8279D2wPFVw==
+vuex-light@0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/vuex-light/-/vuex-light-0.7.0.tgz#7accfd17a889cd903aa64b54861d4d4715df94d3"
+  integrity sha512-3chKPksa+WqgQFPJvYIEjFXE9X3EOAZ5PH6MX7tcgx4ZgU4RFHPShOh8bgEii8MWfaGD85G1QSCpAMqGNj9NfA==
   optionalDependencies:
     ramda "^0.27.1"
     shvl "^2.0.1"
