@@ -43,11 +43,11 @@ it('e2e', () => {
         expectType<TypeEqual<number, typeof getters.double>>(true)
         // TODO
         // expectType<TypeEqual<any, typeof getters.double>>(false)
-        // TODO: @ts-expect-error
+        // @ts-expect-error
         getters.double = 0
         // TODO: @ts-expect-error
         getters.notExists
-        // TODO: @ts-expect-error
+        // @ts-expect-error
         getters.notExists = 0
 
         expectType<TypeEqual<any, typeof mutations.notExists>>(true)
@@ -69,11 +69,11 @@ it('e2e', () => {
         expectType<TypeEqual<number, typeof getters.double>>(true)
         // TODO
         // expectType<TypeEqual<any, typeof getters.double>>(false)
-        // TODO: @ts-expect-error
+        // @ts-expect-error
         getters.double = 0
         // TODO: @ts-expect-error
         getters.notExists
-        // TODO: @ts-expect-error
+        // @ts-expect-error
         getters.notExists = 0
 
         expectType<TypeEqual<() => void, typeof mutations.increment>>(true)

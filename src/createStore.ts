@@ -5,7 +5,7 @@ import { getOwnKeys, assert, OmitFirstParameter, isPlainObject } from './util'
  * @public
  */
 export type StateOption = {
-  [P: string]: unknown
+  [P: string]: any
 }
 
 /**
@@ -28,7 +28,7 @@ export type StateReturnType<S extends StateOption> = {
  * @public
  */
 export type GettersOption<S extends StateOption> = {
-  [P: string]: ({ state, getters }: { state: StateReturnType<S>; getters: any }) => unknown
+  [P: string]: ({ state, getters }: { state: StateReturnType<S>; getters: any }) => any
 }
 
 /**
@@ -41,8 +41,11 @@ export type GettersReturnType<G extends GettersOption<any>> = {
 /**
  * @public
  */
-export type MutationsOption<S extends StateOption, _G extends GettersOption<S>> = {
-  [P: string]: ({ state, getters, mutations }: { state: S; getters: any; mutations: any }, ...payloads: any[]) => void
+export type MutationsOption<S extends StateOption, G extends GettersOption<S>> = {
+  [P: string]: (
+    { state, getters, mutations }: { state: S; getters: GettersReturnType<G>; mutations: any },
+    ...payloads: any[]
+  ) => void
 }
 
 /**
@@ -63,7 +66,7 @@ export type ActionsOption<S extends StateOption, G extends GettersOption<S>, M e
       mutations,
     }: {
       state: StateReturnType<S>
-      getters: any
+      getters: GettersReturnType<G>
       mutations: MutationsReturnType<M>
       actions: any
     },

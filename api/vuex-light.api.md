@@ -12,7 +12,7 @@ import { UnwrapRef } from 'vue';
 export type ActionsOption<S extends StateOption, G extends GettersOption<S>, M extends MutationsOption<S, G>> = {
     [P: string]: ({ state, getters, mutations, }: {
         state: StateReturnType<S>;
-        getters: any;
+        getters: GettersReturnType<G>;
         mutations: MutationsReturnType<M>;
         actions: any;
     }, ...payloads: any[]) => void;
@@ -111,7 +111,7 @@ export type GettersOption<S extends StateOption> = {
     [P: string]: ({ state, getters }: {
         state: StateReturnType<S>;
         getters: any;
-    }) => unknown;
+    }) => any;
 };
 
 // @public (undocumented)
@@ -129,10 +129,10 @@ export function install<Store>(app: App, { store, storeKey }: {
 export function isPlainObject(object: unknown): boolean;
 
 // @public (undocumented)
-export type MutationsOption<S extends StateOption, _G extends GettersOption<S>> = {
+export type MutationsOption<S extends StateOption, G extends GettersOption<S>> = {
     [P: string]: ({ state, getters, mutations }: {
         state: S;
-        getters: any;
+        getters: GettersReturnType<G>;
         mutations: any;
     }, ...payloads: any[]) => void;
 };
@@ -188,7 +188,7 @@ export type RequiredOptions = {
 
 // @public (undocumented)
 export type StateOption = {
-    [P: string]: unknown;
+    [P: string]: any;
 };
 
 // @public (undocumented)

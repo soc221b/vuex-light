@@ -101,13 +101,12 @@ it("getter as mutation's param", () => {
     mutations: {
       increment({ getters }) {
         expectType<TypeEqual<number, typeof getters.double>>(true)
-        // TODO
-        // expectType<TypeEqual<any, typeof getters.double>>(false)
-        // TODO: @ts-expect-error
+        expectType<TypeEqual<any, typeof getters.double>>(false)
+        // @ts-expect-error
         getters.double = 0
-        // TODO: @ts-expect-error
+        // @ts-expect-error
         getters.notExists
-        // TODO: @ts-expect-error
+        // @ts-expect-error
         getters.notExists = 0
       },
     },
@@ -189,13 +188,12 @@ it("getters as action's param", () => {
     actions: {
       increment({ getters }) {
         expectType<TypeEqual<number, typeof getters.double>>(true)
-        // TODO
-        // expectType<TypeEqual<any, typeof getters.double>>(false)
-        // TODO: @ts-expect-error
+        expectType<TypeEqual<any, typeof getters.double>>(false)
+        // @ts-expect-error
         getters.double = 0
-        // TODO: @ts-expect-error
+        // @ts-expect-error
         getters.notExists
-        // TODO: @ts-expect-error
+        // @ts-expect-error
         getters.notExists = 0
       },
     },
