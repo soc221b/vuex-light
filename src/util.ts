@@ -6,6 +6,13 @@ export type OmitFirstParameter<F> = F extends (x: any, ...params: infer Rest) =>
 /**
  * @public
  */
+export type ShallowReadonly<T> = {
+  readonly [P in keyof T]: T[P]
+}
+
+/**
+ * @public
+ */
 export function getOwnKeys<O extends object>(object: O) {
   return Array.from(Object.keys(object)) as (keyof O)[]
 }

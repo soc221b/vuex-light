@@ -19,9 +19,9 @@ export type ActionsOption<S extends StateOption, G extends GettersOption<S>, M e
 };
 
 // @public (undocumented)
-export type ActionsReturnType<A extends ActionsOption<any, any, any>> = {
-    readonly [P in keyof A]: OmitFirstParameter<A[P]>;
-};
+export type ActionsReturnType<A extends ActionsOption<any, any, any>> = ShallowReadonly<{
+    [P in keyof A]: OmitFirstParameter<A[P]>;
+}>;
 
 // @public (undocumented)
 export type ActionSubscriber = (action: {
@@ -115,9 +115,9 @@ export type GettersOption<S extends StateOption> = {
 };
 
 // @public (undocumented)
-export type GettersReturnType<G extends GettersOption<any>> = {
-    readonly [P in keyof G]: ReturnType<G[P]>;
-};
+export type GettersReturnType<G extends GettersOption<any>> = ShallowReadonly<{
+    [P in keyof G]: ReturnType<G[P]>;
+}>;
 
 // @public (undocumented)
 export function install<Store>(app: App, { store, storeKey }: {
@@ -138,9 +138,9 @@ export type MutationsOption<S extends StateOption, G extends GettersOption<S>> =
 };
 
 // @public (undocumented)
-export type MutationsReturnType<M extends MutationsOption<any, any>> = {
-    readonly [P in keyof M]: OmitFirstParameter<M[P]>;
-};
+export type MutationsReturnType<M extends MutationsOption<any, any>> = ShallowReadonly<{
+    [P in keyof M]: OmitFirstParameter<M[P]>;
+}>;
 
 // @public (undocumented)
 export type OmitFirstParameter<F> = F extends (x: any, ...params: infer Rest) => infer R ? (...params: Rest) => R : void;
@@ -187,14 +187,17 @@ export type RequiredOptions = {
 };
 
 // @public (undocumented)
+export type ShallowReadonly<T> = {
+    readonly [P in keyof T]: T[P];
+};
+
+// @public (undocumented)
 export type StateOption = {
     [P: string]: any;
 };
 
 // @public (undocumented)
-export type StateReturnType<S extends StateOption> = {
-    readonly [P in keyof S]: S[P];
-};
+export type StateReturnType<S extends StateOption> = ShallowReadonly<S>;
 
 // @public (undocumented)
 export type StateType<S extends StateOption> = Ref<S>;

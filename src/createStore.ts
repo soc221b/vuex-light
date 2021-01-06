@@ -1,5 +1,5 @@
 import { ref, computed, Ref, isReactive, toRefs, UnwrapRef, readonly, reactive } from 'vue'
-import { getOwnKeys, assert, OmitFirstParameter, isPlainObject } from './util'
+import { getOwnKeys, assert, OmitFirstParameter, isPlainObject, ShallowReadonly } from './util'
 
 /**
  * @public
@@ -16,9 +16,7 @@ export type StateType<S extends StateOption> = Ref<S>
 /**
  * @public
  */
-export type StateReturnType<S extends StateOption> = {
-  readonly [P in keyof S]: S[P]
-}
+export type StateReturnType<S extends StateOption> = ShallowReadonly<S>
 
 /**
  * @public
@@ -30,9 +28,11 @@ export type GettersOption<S extends StateOption> = {
 /**
  * @public
  */
-export type GettersReturnType<G extends GettersOption<any>> = {
-  readonly [P in keyof G]: ReturnType<G[P]>
-}
+export type GettersReturnType<G extends GettersOption<any>> = ShallowReadonly<
+  {
+    [P in keyof G]: ReturnType<G[P]>
+  }
+>
 
 /**
  * @public
@@ -47,9 +47,11 @@ export type MutationsOption<S extends StateOption, G extends GettersOption<S>> =
 /**
  * @public
  */
-export type MutationsReturnType<M extends MutationsOption<any, any>> = {
-  readonly [P in keyof M]: OmitFirstParameter<M[P]>
-}
+export type MutationsReturnType<M extends MutationsOption<any, any>> = ShallowReadonly<
+  {
+    [P in keyof M]: OmitFirstParameter<M[P]>
+  }
+>
 
 /**
  * @public
@@ -73,9 +75,11 @@ export type ActionsOption<S extends StateOption, G extends GettersOption<S>, M e
 /**
  * @public
  */
-export type ActionsReturnType<A extends ActionsOption<any, any, any>> = {
-  readonly [P in keyof A]: OmitFirstParameter<A[P]>
-}
+export type ActionsReturnType<A extends ActionsOption<any, any, any>> = ShallowReadonly<
+  {
+    [P in keyof A]: OmitFirstParameter<A[P]>
+  }
+>
 
 /**
  * @public
