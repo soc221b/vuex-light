@@ -2099,10 +2099,10 @@ vue@^3.0.3, vue@^3.0.4:
     "@vue/runtime-dom" "3.0.5"
     "@vue/shared" "3.0.5"
 
-vuex-light@0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/vuex-light/-/vuex-light-0.4.0.tgz#a6d462489a0667f8e9a96d16b91ea58ed5b66b50"
-  integrity sha512-TNjo28XYo9jvyRWMtEH4QTrMdcg6ppPzCGbOnoe6n7otJu5SjqRm4sctBaKTDV4HGK949AqL1tLLKg9Hwt7iIA==
+vuex-light@0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/vuex-light/-/vuex-light-0.5.0.tgz#a06adaafefeea0f5277cc192eb2ec3226016befe"
+  integrity sha512-ADMmb2xcpntNa5nEN1VHPAFSMIr4WST6wXjVwP3U9wlevrPtweCh77NWi2wFHvL7awh3SEwe/JP8279D2wPFVw==
   optionalDependencies:
     ramda "^0.27.1"
     shvl "^2.0.1"

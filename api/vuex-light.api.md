@@ -4,7 +4,6 @@
 
 ```ts
 
-import { App } from 'vue';
 import { Ref } from 'vue';
 import { UnwrapRef } from 'vue';
 
@@ -95,9 +94,6 @@ export function defaultReducer<State extends StateReturnType<any>>(state: State,
 export function defaultSetState(key: Parameters<Storage_2['setItem']>['0'], state: any, storage: Storage_2): void;
 
 // @public (undocumented)
-export const defaultStoreKey = "$store";
-
-// @public (undocumented)
 export function defaultSubscriber<Store extends CreateStoreReturnType<any, any, any, any>>(store: Store): (handler: Subscriber) => void;
 
 // @public (undocumented)
@@ -118,12 +114,6 @@ export type GettersOption<S extends StateOption> = {
 export type GettersReturnType<G extends GettersOption<any>> = ShallowReadonly<{
     [P in keyof G]: ReturnType<G[P]>;
 }>;
-
-// @public (undocumented)
-export function install<Store>(app: App, { store, storeKey }: {
-    store: Store;
-    storeKey?: string;
-}): void;
 
 // @public (undocumented)
 export function isPlainObject(object: unknown): boolean;

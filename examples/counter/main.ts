@@ -1,10 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-
-import store, { storeKey } from './store'
-import { install } from 'vuex-light'
+import store from './store'
 
 const app = createApp(App)
-// pass the injection key
-app.use(install, { store, storeKey })
+app.provide('store', store)
 app.mount('#app')
