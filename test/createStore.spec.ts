@@ -42,6 +42,53 @@ it('state should be reactive', async () => {
   expect(handler2.mock.calls[0].slice(0, 2)).toEqual([3, 2])
 })
 
+it('state should be deeply reactive', async () => {
+  const store = createStore({
+    state: {
+      deep: {
+        count: 0,
+      },
+    },
+    mutations: {
+      increment({ state }) {
+        ++state.deep.count
+      },
+      replaceDeep({ state }, deep: typeof state.deep) {
+        state.deep = deep
+      },
+    },
+  })
+
+  const { deep } = toRefs(store.state)
+  expect(deep.value.count).toBe(0)
+
+  store.mutations.increment()
+  expect(deep.value.count).toBe(1)
+
+  store.mutations.replaceDeep({ count: 2 })
+  expect(deep.value.count).toBe(2)
+
+  const handleCountChange = jest.fn()
+  watch(() => store.state.deep.count, handleCountChange)
+  const handleDeepCountChange = jest.fn()
+  watch(() => store.state.deep, handleDeepCountChange)
+
+  store.mutations.replaceDeep({ count: 3 })
+  expect(deep.value).toEqual({ count: 3 })
+  await nextTick()
+  expect(handleCountChange).toBeCalledTimes(1)
+  expect(handleCountChange.mock.calls[0].slice(0, 2)).toEqual([3, 2])
+  expect(handleDeepCountChange).toBeCalledTimes(1)
+  expect(handleDeepCountChange.mock.calls[0].slice(0, 2)).toEqual([{ count: 3 }, { count: 2 }])
+
+  store.mutations.increment()
+  expect(deep.value).toEqual({ count: 4 })
+  await nextTick()
+  expect(handleCountChange).toBeCalledTimes(2)
+  expect(handleCountChange.mock.calls[1].slice(0, 2)).toEqual([4, 3])
+  expect(handleDeepCountChange).toBeCalledTimes(1)
+})
+
 it('can create store with mutations', () => {
   createStore({
     state: {
