@@ -141,7 +141,7 @@ export function createStore<
   const optionState = isReactive(options.state) ? toRefs(options.state) : options.state
   const state = ref(
     getOwnKeys(optionState).reduce((state, stateKey) => {
-      return Object.assign(state, { [stateKey]: ref(optionState[stateKey]) })
+      return Object.assign(state, { [stateKey]: optionState[stateKey] })
     }, {}),
   ) as StateType<State>
 
