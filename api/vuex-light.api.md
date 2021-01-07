@@ -32,6 +32,11 @@ export type ActionSubscriber = (action: {
 export function assert(condition: unknown, message: string): void;
 
 // @public (undocumented)
+export type AsyncFunc = {
+    (...args: any): Promise<any>;
+};
+
+// @public (undocumented)
 export function createLoggerPlugin(options?: Options): (store: any) => void;
 
 // @public (undocumented)
@@ -129,7 +134,7 @@ export type MutationsOption<S extends StateOption, G extends GettersOption<S>> =
 
 // @public (undocumented)
 export type MutationsReturnType<M extends MutationsOption<any, any>> = ShallowReadonly<{
-    [P in keyof M]: OmitFirstParameter<M[P]>;
+    [P in keyof M]: Exclude<OmitFirstParameter<M[P]>, AsyncFunc>;
 }>;
 
 // @public (undocumented)

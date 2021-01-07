@@ -47,9 +47,14 @@ export type MutationsOption<S extends StateOption, G extends GettersOption<S>> =
 /**
  * @public
  */
+export type AsyncFunc = { (...args: any): Promise<any> }
+
+/**
+ * @public
+ */
 export type MutationsReturnType<M extends MutationsOption<any, any>> = ShallowReadonly<
   {
-    [P in keyof M]: OmitFirstParameter<M[P]>
+    [P in keyof M]: Exclude<OmitFirstParameter<M[P]>, AsyncFunc>
   }
 >
 
@@ -153,8 +158,9 @@ export function createStore<
   const optionMutations = options.mutations || ({} as Mutations)
   const mutations = getOwnKeys(optionMutations).reduce((mutations, mutationKey) => {
     const mutation = (...payloads: unknown[]) => {
-      optionMutations[mutationKey]({ state: state.value, getters, mutations }, ...payloads)
+      const result = optionMutations[mutationKey]({ state: state.value, getters, mutations }, ...payloads)
       subscribers.forEach(subscriber => subscriber.call(null, { key: mutationKey as string, payloads }))
+      return result
     }
     return Object.assign(mutations, { [mutationKey]: mutation })
   }, {}) as MutationsReturnType<Mutations>
@@ -163,7 +169,7 @@ export function createStore<
   const actions = getOwnKeys(optionActions).reduce((actions, actionKey) => {
     const action = (...payloads: unknown[]) => {
       actionSubscribers.forEach(subscriber => subscriber.call(null, { key: actionKey as string, payloads }))
-      optionActions[actionKey](
+      return optionActions[actionKey](
         {
           state: state.value,
           getters,

@@ -240,6 +240,22 @@ it("mutations with payload as action's param", () => {
   })
 })
 
+it('mutation cannot be async function', () => {
+  const store = createStore({
+    state: {},
+    mutations: {
+      async incrementAsync() {},
+      incrementPromise() {
+        return Promise.resolve()
+      },
+    },
+  })
+  // @ts-expect-error
+  store.mutations.incrementAsync().then(() => {})
+  // @ts-expect-error
+  store.mutations.incrementPromise().then(() => {})
+})
+
 it("action as action's param", () => {
   createStore({
     state: {},
@@ -283,4 +299,33 @@ it('action with payload', () => {
   expectType<
     TypeEqual<(number: number, condition: boolean, notExists: any) => void, typeof store.actions.incrementByNumberIf>
   >(false)
+})
+
+it('async action', () => {
+  const store = createStore({
+    state: {},
+    actions: {
+      async incrementAsync() {},
+      incrementPromise() {
+        return Promise.resolve()
+      },
+    },
+  })
+
+  expectType<TypeEqual<() => Promise<void>, typeof store.actions.incrementAsync>>(true)
+  // @ts-expect-error
+  store.actions.incrementAsync('notExists').then(() => {})
+  // @ts-expect-error
+  store.actions.incrementAsync = Promise.resolve()
+
+  expectType<TypeEqual<() => Promise<void>, typeof store.actions.incrementPromise>>(true)
+  // @ts-expect-error
+  store.actions.incrementPromise('notExists').then(() => {})
+  // @ts-expect-error
+  store.actions.incrementPromise = Promise.resolve()
+
+  // @ts-expect-error
+  store.actions.notExists
+  // @ts-expect-error
+  store.actions.notExists = Promise.resolve()
 })
