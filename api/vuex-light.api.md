@@ -63,6 +63,11 @@ export type CreateStoreReturnType<State extends StateOption, Getters extends Get
 };
 
 // @public (undocumented)
+export type DeepReadonly<T> = {
+    readonly [P in keyof T]: T[P] extends object ? DeepReadonly<T[P]> : T[P];
+};
+
+// @public (undocumented)
 export function defaultActionFilter(_action: Parameters<ActionSubscriber>['0']): boolean;
 
 // @public (undocumented)
@@ -116,7 +121,7 @@ export type GettersOption<S extends StateOption> = {
 };
 
 // @public (undocumented)
-export type GettersReturnType<G extends GettersOption<any>> = ShallowReadonly<{
+export type GettersReturnType<G extends GettersOption<any>> = DeepReadonly<{
     [P in keyof G]: ReturnType<G[P]>;
 }>;
 
@@ -192,7 +197,7 @@ export type StateOption = {
 };
 
 // @public (undocumented)
-export type StateReturnType<S extends StateOption> = ShallowReadonly<S>;
+export type StateReturnType<S extends StateOption> = DeepReadonly<S>;
 
 // @public (undocumented)
 export type StateType<S extends StateOption> = Ref<S>;

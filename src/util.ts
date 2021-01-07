@@ -13,6 +13,13 @@ export type ShallowReadonly<T> = {
 /**
  * @public
  */
+export type DeepReadonly<T> = {
+  readonly [P in keyof T]: T[P] extends object ? DeepReadonly<T[P]> : T[P]
+}
+
+/**
+ * @public
+ */
 export function getOwnKeys<O extends object>(object: O) {
   return Array.from(Object.keys(object)) as (keyof O)[]
 }

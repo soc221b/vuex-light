@@ -1,5 +1,5 @@
 import { ref, computed, Ref, isReactive, toRefs, UnwrapRef, readonly, reactive } from 'vue'
-import { getOwnKeys, assert, OmitFirstParameter, isPlainObject, ShallowReadonly } from './util'
+import { getOwnKeys, assert, OmitFirstParameter, isPlainObject, ShallowReadonly, DeepReadonly } from './util'
 
 /**
  * @public
@@ -16,7 +16,7 @@ export type StateType<S extends StateOption> = Ref<S>
 /**
  * @public
  */
-export type StateReturnType<S extends StateOption> = ShallowReadonly<S>
+export type StateReturnType<S extends StateOption> = DeepReadonly<S>
 
 /**
  * @public
@@ -28,7 +28,7 @@ export type GettersOption<S extends StateOption> = {
 /**
  * @public
  */
-export type GettersReturnType<G extends GettersOption<any>> = ShallowReadonly<
+export type GettersReturnType<G extends GettersOption<any>> = DeepReadonly<
   {
     [P in keyof G]: ReturnType<G[P]>
   }

@@ -5,6 +5,9 @@ it('state', () => {
   const store = createStore({
     state: {
       count: 0,
+      nested: {
+        count: 0,
+      },
     },
   })
 
@@ -16,6 +19,15 @@ it('state', () => {
   store.state.notExists
   // @ts-expect-error
   store.state.notExists = 0
+
+  expectType<TypeEqual<number, typeof store.state.nested.count>>(true)
+  expectType<TypeEqual<any, typeof store.state.nested.count>>(false)
+  // @ts-expect-error
+  store.state.nested.count = 0
+  // @ts-expect-error
+  store.state.nested.notExists
+  // @ts-expect-error
+  store.state.nested.notExists = 0
 })
 
 it("state as getter's param", () => {
@@ -58,6 +70,11 @@ it('getter', () => {
       double() {
         return 0
       },
+      nested() {
+        return {
+          double: 0,
+        }
+      },
     },
   })
 
@@ -69,6 +86,15 @@ it('getter', () => {
   store.getters.notExists
   // @ts-expect-error
   store.getters.notExists = 0
+
+  expectType<TypeEqual<number, typeof store.getters.nested.double>>(true)
+  expectType<TypeEqual<any, typeof store.getters.nested.double>>(false)
+  // @ts-expect-error
+  store.getters.nested.double = 0
+  // @ts-expect-error
+  store.getters.nested.notExists
+  // @ts-expect-error
+  store.getters.nested.notExists = 0
 
   spy.mockRestore()
 })
