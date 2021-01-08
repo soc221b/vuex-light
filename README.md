@@ -122,7 +122,7 @@ Now, your can access the store by the following ways:
 # Core API
 
 ```ts
-const store = new Vuex.Store({
+const store = createStore({
   state: {
     count: 0,
   },
