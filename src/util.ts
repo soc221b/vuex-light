@@ -1,7 +1,9 @@
 /**
  * @public
  */
-export type OmitFirstParameter<F> = F extends (x: any, ...params: infer Rest) => infer R ? (...params: Rest) => R : void
+export type OmitFirstParameter<F> = F extends (x: any, ...params: infer Rest) => infer R
+  ? (...params: Rest) => R
+  : never
 
 /**
  * @public
@@ -16,6 +18,16 @@ export type ShallowReadonly<T> = {
 export type DeepReadonly<T> = {
   readonly [P in keyof T]: T[P] extends object ? DeepReadonly<T[P]> : T[P]
 }
+
+/**
+ * @public
+ */
+export type Func = { (...args: any): any }
+
+/**
+ * @public
+ */
+export type AsyncFunc = { (...args: any): Promise<any> }
 
 /**
  * @public

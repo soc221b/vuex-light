@@ -4,22 +4,21 @@
 
 ```ts
 
-import { Ref } from 'vue';
-import { UnwrapRef } from 'vue';
-
 // @public (undocumented)
-export type ActionsOption<S extends StateOption, G extends GettersOption<S>, M extends MutationsOption<S, G>> = {
+export type ActionsOption<StateReturnType, GettersReturnType, MutationsReturnType> = {
     [P: string]: ({ state, getters, mutations, }: {
-        state: StateReturnType<S>;
-        getters: GettersReturnType<G>;
-        mutations: MutationsReturnType<M>;
+        state: StateReturnType;
+        getters: GettersReturnType;
+        mutations: MutationsReturnType;
         actions: any;
     }, ...payloads: any[]) => void;
 };
 
 // @public (undocumented)
-export type ActionsReturnType<A extends ActionsOption<any, any, any>> = ShallowReadonly<{
-    [P in keyof A]: OmitFirstParameter<A[P]>;
+export type ActionsReturnType<ActionsOption extends {
+    [P: string]: Func;
+}> = ShallowReadonly<{
+    [P in keyof ActionsOption]: OmitFirstParameter<ActionsOption[P]>;
 }>;
 
 // @public (undocumented)
@@ -43,24 +42,24 @@ export function createLoggerPlugin(options?: Options): (store: any) => void;
 export function createPersistPlugin(options?: PersistPluginOptions): (store: any) => void;
 
 // @public (undocumented)
-export function createStore<State extends StateOption, Getters extends GettersOption<State>, Mutations extends MutationsOption<State, Getters>, Actions extends ActionsOption<State, Getters, Mutations>>(options: {
+export function createStore<State extends StateOption, Getters extends GettersOption<StateReturnType<State>> = GettersOption<StateReturnType<State>>, Mutations extends MutationsOption<State, GettersReturnType<Getters>> = MutationsOption<State, GettersReturnType<Getters>>, Actions extends ActionsOption<StateReturnType<State>, GettersReturnType<Getters>, MutationsReturnType<Mutations>> = ActionsOption<StateReturnType<State>, GettersReturnType<Getters>, MutationsReturnType<Mutations>>>(options: {
     state: State;
     getters?: Getters;
     mutations?: Mutations;
     actions?: Actions;
-    plugins?: Plugin_2<CreateStoreReturnType<State, Getters, Mutations, Actions>>[];
-}): CreateStoreReturnType<State, Getters, Mutations, Actions>;
-
-// @public (undocumented)
-export type CreateStoreReturnType<State extends StateOption, Getters extends GettersOption<State>, Mutations extends MutationsOption<State, Getters>, Actions extends ActionsOption<State, Getters, Mutations>> = {
-    state: StateReturnType<State>;
-    getters: GettersReturnType<Getters>;
-    mutations: MutationsReturnType<Mutations>;
-    actions: ActionsReturnType<Actions>;
+    plugins?: Plugin_2[];
+}): {
+    state: DeepReadonly<State>;
+    getters: DeepReadonly<DeepReadonly<{ [P in keyof Getters]: ReturnType<Getters[P]>; }>>;
+    mutations: ShallowReadonly<{ [P_1 in keyof Mutations]: Exclude<OmitFirstParameter<Mutations[P_1]>, AsyncFunc>; }>;
+    actions: ShallowReadonly<{ [P_2 in keyof Actions]: OmitFirstParameter<Actions[P_2]>; }>;
     subscribe: (subscriber: Subscriber) => void;
     actionSubscribe: (subscriber: ActionSubscriber) => void;
-    replaceState: (newState: UnwrapRef<StateType<State>>) => void;
+    replaceState: (newState: State) => void;
 };
+
+// @public (undocumented)
+export type CreateStoreReturnType = ReturnType<typeof createStore>;
 
 // @public (undocumented)
 export type DeepReadonly<T> = {
@@ -104,46 +103,53 @@ export function defaultReducer<State extends StateReturnType<any>>(state: State,
 export function defaultSetState(key: Parameters<Storage_2['setItem']>['0'], state: any, storage: Storage_2): void;
 
 // @public (undocumented)
-export function defaultSubscriber<Store extends CreateStoreReturnType<any, any, any, any>>(store: Store): (handler: Subscriber) => void;
+export function defaultSubscriber<Store extends CreateStoreReturnType>(store: Store): (handler: Subscriber) => void;
 
 // @public (undocumented)
 export function defaultTransformer(state: any): any;
 
 // @public (undocumented)
+export type Func = {
+    (...args: any): any;
+};
+
+// @public (undocumented)
 export function getOwnKeys<O extends object>(object: O): (keyof O)[];
 
 // @public (undocumented)
-export type GettersOption<S extends StateOption> = {
+export type GettersOption<StateReturnType> = {
     [P: string]: ({ state, getters }: {
-        state: StateReturnType<S>;
+        state: StateReturnType;
         getters: any;
     }) => any;
 };
 
 // @public (undocumented)
-export type GettersReturnType<G extends GettersOption<any>> = DeepReadonly<{
-    [P in keyof G]: ReturnType<G[P]>;
+export type GettersReturnType<GettersOption extends {
+    [P: string]: Func;
+}> = DeepReadonly<{
+    [P in keyof GettersOption]: ReturnType<GettersOption[P]>;
 }>;
 
 // @public (undocumented)
 export function isPlainObject(object: unknown): boolean;
 
 // @public (undocumented)
-export type MutationsOption<S extends StateOption, G extends GettersOption<S>> = {
+export type MutationsOption<StateOption, GettersReturnType> = {
     [P: string]: ({ state, getters, mutations }: {
-        state: S;
-        getters: GettersReturnType<G>;
+        state: StateOption;
+        getters: GettersReturnType;
         mutations: any;
     }, ...payloads: any[]) => void;
 };
 
 // @public (undocumented)
-export type MutationsReturnType<M extends MutationsOption<any, any>> = ShallowReadonly<{
-    [P in keyof M]: Exclude<OmitFirstParameter<M[P]>, AsyncFunc>;
+export type MutationsReturnType<MutationsOption> = ShallowReadonly<{
+    [P in keyof MutationsOption]: Exclude<OmitFirstParameter<MutationsOption[P]>, AsyncFunc>;
 }>;
 
 // @public (undocumented)
-export type OmitFirstParameter<F> = F extends (x: any, ...params: infer Rest) => infer R ? (...params: Rest) => R : void;
+export type OmitFirstParameter<F> = F extends (x: any, ...params: infer Rest) => infer R ? (...params: Rest) => R : never;
 
 // @public (undocumented)
 export type Options = Partial<RequiredOptions>;
@@ -165,11 +171,11 @@ export type PersistPluginRequiredOptions = {
     fetchBeforeUse: boolean;
     assertStorage: typeof defaultAssertStorage;
     mergeDeepWithKeyFn: (k: string, l: any, r: any) => any;
-    onRehydrated: <Store extends CreateStoreReturnType<any, any, any, any>>(_: Store) => void;
+    onRehydrated: <Store extends CreateStoreReturnType>(_: Store) => void;
 };
 
 // @public (undocumented)
-type Plugin_2<Store> = (store: Store) => void;
+type Plugin_2 = (store: ReturnType<typeof createStore>) => void;
 
 export { Plugin_2 as Plugin }
 
@@ -197,10 +203,7 @@ export type StateOption = {
 };
 
 // @public (undocumented)
-export type StateReturnType<S extends StateOption> = DeepReadonly<S>;
-
-// @public (undocumented)
-export type StateType<S extends StateOption> = Ref<S>;
+export type StateReturnType<StateOption> = DeepReadonly<StateOption>;
 
 // @public (undocumented)
 type Storage_2 = {

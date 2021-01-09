@@ -18,7 +18,7 @@ export function defaultReducer<State extends StateReturnType<any>>(state: State,
 /**
  * @public
  */
-export function defaultSubscriber<Store extends CreateStoreReturnType<any, any, any, any>>(store: Store) {
+export function defaultSubscriber<Store extends CreateStoreReturnType>(store: Store) {
   return function (handler: Subscriber) {
     return store.subscribe(handler)
   }
@@ -78,7 +78,7 @@ export type PersistPluginRequiredOptions = {
   fetchBeforeUse: boolean
   assertStorage: typeof defaultAssertStorage
   mergeDeepWithKeyFn: (k: string, l: any, r: any) => any
-  onRehydrated: <Store extends CreateStoreReturnType<any, any, any, any>>(_: Store) => void
+  onRehydrated: <Store extends CreateStoreReturnType>(_: Store) => void
 }
 
 /**
