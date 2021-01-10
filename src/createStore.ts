@@ -183,7 +183,7 @@ export function createStore<
 
   const replaceState = function (newState: State) {
     getOwnKeys(state.value)
-      .filter(key => newState[key as any] === undefined)
+      .filter(key => newState[key] === undefined)
       .forEach(key => delete state.value[key])
     getOwnKeys(newState).forEach(key => {
       ;(state.value as any)[key] = newState[key]
