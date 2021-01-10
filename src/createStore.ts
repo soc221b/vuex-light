@@ -41,10 +41,15 @@ export type GettersReturnType<GettersOption extends { [P: string]: Func }> = Dee
 /**
  * @public
  */
+export type Payload = any
+
+/**
+ * @public
+ */
 export type MutationsOption<StateOption, GettersReturnType> = {
   [P: string]: (
     { state, getters, mutations }: { state: StateOption; getters: GettersReturnType; mutations: any },
-    ...payloads: any[]
+    ...payloads: Payload[]
   ) => void
 }
 
@@ -72,7 +77,7 @@ export type ActionsOption<StateReturnType, GettersReturnType, MutationsReturnTyp
       mutations: MutationsReturnType
       actions: any
     },
-    ...payloads: any[]
+    ...payloads: Payload[]
   ) => void
 }
 
@@ -125,6 +130,9 @@ export function createStore<
     assert(isPlainObject(options.state), 'invalid state type.')
   }
 
+  const { subscribe, subscribers } = useSubscriber<Subscriber>()
+  const { subscribe: actionSubscribe, subscribers: actionSubscribers } = useSubscriber<ActionSubscriber>()
+
   const optionState = isReactive(options.state) ? toRefs(options.state) : options.state
   const state = ref(
     getOwnKeys(optionState).reduce((state, stateKey) => {
@@ -171,16 +179,6 @@ export function createStore<
     return Object.assign(actions, { [actionKey]: action })
   }, {}) as ActionsReturnType<Actions>
 
-  const subscribers: Subscriber[] = []
-  const subscribe = function (subscriber: Subscriber) {
-    subscribers.push(subscriber)
-  }
-
-  const actionSubscribers: ActionSubscriber[] = []
-  const actionSubscribe = function (subscriber: ActionSubscriber) {
-    actionSubscribers.push(subscriber)
-  }
-
   const replaceState = function (newState: State) {
     getOwnKeys(state.value)
       .filter(key => newState[key] === undefined)
@@ -204,4 +202,20 @@ export function createStore<
   optionPlugins.forEach(plugin => plugin(store as any))
 
   return store
+}
+
+/**
+ * @public
+ */
+export function useSubscriber<Subscriber>() {
+  const subscribers: Subscriber[] = []
+
+  const subscribe = function (subscriber: Subscriber) {
+    subscribers.push(subscriber)
+  }
+
+  return {
+    subscribe,
+    subscribers,
+  }
 }

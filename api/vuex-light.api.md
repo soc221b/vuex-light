@@ -11,7 +11,7 @@ export type ActionsOption<StateReturnType, GettersReturnType, MutationsReturnTyp
         getters: GettersReturnType;
         mutations: MutationsReturnType;
         actions: any;
-    }, ...payloads: any[]) => void;
+    }, ...payloads: Payload[]) => void;
 };
 
 // @public (undocumented)
@@ -140,7 +140,7 @@ export type MutationsOption<StateOption, GettersReturnType> = {
         state: StateOption;
         getters: GettersReturnType;
         mutations: any;
-    }, ...payloads: any[]) => void;
+    }, ...payloads: Payload[]) => void;
 };
 
 // @public (undocumented)
@@ -153,6 +153,9 @@ export type OmitFirstParameter<F> = F extends (x: any, ...params: infer Rest) =>
 
 // @public (undocumented)
 export type Options = Partial<RequiredOptions>;
+
+// @public (undocumented)
+export type Payload = any;
 
 // @public (undocumented)
 export type PersistPluginOptions = Partial<PersistPluginRequiredOptions>;
@@ -219,6 +222,12 @@ export type Subscriber = (mutation: {
     key: string;
     payloads: unknown[];
 }) => void;
+
+// @public (undocumented)
+export function useSubscriber<Subscriber>(): {
+    subscribe: (subscriber: Subscriber) => void;
+    subscribers: Subscriber[];
+};
 
 
 // (No @packageDocumentation comment for this package)
