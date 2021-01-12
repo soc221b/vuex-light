@@ -149,6 +149,16 @@ store.mutations.increment()
 store.actions.incrementIfOdd()
 ```
 
+# Plugins
+
+## `createLoggerPlugin`
+
+https://js-cosmos.github.io/vuex-light/vuex-light.createloggerplugin.html
+
+## `createPersistPlugin`
+
+https://js-cosmos.github.io/vuex-light/vuex-light.createpersistplugin.html
+
 # Contributing
 
 Please read [CONTRIBUTING.md](/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull
