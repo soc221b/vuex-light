@@ -14,10 +14,25 @@
 
 # Why
 
-Vuex-light always try to provides full type inference for you:
+> Vuex-light provides more type information to you.
+
+Assuming you have a simple store:
 
 <p align="center">
-  <img src="./screenshots/robust-type-inference.png" alt="robust type inference" width="720">
+  <img src="./screenshots/simple-store.png" alt="simple store" width="720">
+</p>
+
+With _vuex_, you often want to know what **the payload** is and what **action type** is, but it always gives you the
+**any** type:
+
+<p align="center">
+  <img src="./screenshots/vuex.png" alt="simple store" width="720">
+</p>
+
+But with _vuex-light_, you have full type inference:
+
+<p align="center">
+  <img src="./screenshots/vuex-light.png" alt="simple store" width="720">
 </p>
 
 # Features
