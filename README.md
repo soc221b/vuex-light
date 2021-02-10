@@ -6,7 +6,19 @@
 ![npm downloads](https://img.shields.io/npm/dm/vuex-light)
 ![last commit](https://img.shields.io/github/last-commit/js-cosmos/vuex-light/main)
 
-[![Demo](./demo.gif)](https://codesandbox.io/s/github/js-cosmos/vuex-light/tree/main/examples/todomvc)
+<p align="center">
+  <a href="https://codesandbox.io/s/github/js-cosmos/vuex-light/tree/main/examples/todomvc" target="_blank">
+    <img src="demo.gif" alt="demo" width="720" />
+  </a>
+</p>
+
+# Why
+
+Vuex-light always try to provides full type inference for you:
+
+<p align="center">
+  <img src="./screenshots/robust-type-inference.png" alt="robust type inference" width="720">
+</p>
 
 # Features
 
