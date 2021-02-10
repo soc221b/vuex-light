@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "vue": "^3.0.4",
-    "vuex-light": "0.7.0"
+    "vuex-light": "2.0.0-alpha.1"
   },
   "devDependencies": {
     "@vue/compiler-sfc": "^3.0.4",

@@ -4,27 +4,24 @@
 
 ```ts
 
-// @public (undocumented)
-export type ActionsOption<StateReturnType, GettersReturnType, MutationsReturnType> = {
-    [P: string]: ({ state, getters, mutations, }: {
-        state: StateReturnType;
-        getters: GettersReturnType;
-        mutations: MutationsReturnType;
-        actions: any;
-    }, ...payloads: Payload[]) => void;
-};
+import { DeepReadonly as DeepReadonly_2 } from 'src/util';
 
 // @public (undocumented)
-export type ActionsReturnType<ActionsOption extends {
-    [P: string]: Func;
-}> = ShallowReadonly<{
-    [P in keyof ActionsOption]: OmitFirstParameter<ActionsOption[P]>;
-}>;
+export type ActionsOptionType<StateOption extends StateOptionType, GettersOption extends GettersOptionType<StateOption>, MutationsOption extends MutationsOptionType<StateOption, GettersOption>> = Record<Key, ({ state, getters, mutations, actions, }: {
+    state: DeepReadonly<StateOption>;
+    getters: DeepReadonly<{
+        [P in keyof GettersOption]: ReturnType<OmitFirstParameter<GettersOption[P]>>;
+    }>;
+    mutations: DeepReadonly<{
+        [P in keyof MutationsOption]: OmitFirstParameter<MutationsOption[P]>;
+    }>;
+    actions: any;
+}, ...payload: Payload[]) => void>;
 
 // @public (undocumented)
 export type ActionSubscriber = (action: {
     key: string;
-    payloads: unknown[];
+    payload: unknown;
 }) => void;
 
 // @public (undocumented)
@@ -42,29 +39,23 @@ export function createLoggerPlugin(options?: Options): (store: any) => void;
 export function createPersistPlugin(options?: PersistPluginOptions): (store: any) => void;
 
 // @public (undocumented)
-export function createStore<State extends StateOption, Getters extends GettersOption<StateReturnType<State>> = GettersOption<StateReturnType<State>>, Mutations extends MutationsOption<State, GettersReturnType<Getters>> = MutationsOption<State, GettersReturnType<Getters>>, Actions extends ActionsOption<StateReturnType<State>, GettersReturnType<Getters>, MutationsReturnType<Mutations>> = ActionsOption<StateReturnType<State>, GettersReturnType<Getters>, MutationsReturnType<Mutations>>>(options: {
-    state: State;
-    getters?: Getters;
-    mutations?: Mutations;
-    actions?: Actions;
-    plugins?: Plugin_2[];
-}): {
-    state: DeepReadonly<State>;
-    getters: DeepReadonly<DeepReadonly<{ [P in keyof Getters]: ReturnType<Getters[P]>; }>>;
-    mutations: ShallowReadonly<{ [P_1 in keyof Mutations]: Exclude<OmitFirstParameter<Mutations[P_1]>, AsyncFunc>; }>;
-    actions: ShallowReadonly<{ [P_2 in keyof Actions]: OmitFirstParameter<Actions[P_2]>; }>;
+export function createStore<StateOption extends StateOptionType, GettersOption extends GettersOptionType<StateOption>, MutationsOption extends MutationsOptionType<StateOption, GettersOption>, ActionsOption extends ActionsOptionType<StateOption, GettersOption, MutationsOption>>(stateOption: StateOption, gettersOption?: GettersOption, mutationsOption?: MutationsOption, actionsOption?: ActionsOption, pluginsOption?: Plugin_2[]): {
+    state: DeepReadonly<StateOption>;
+    getters: { readonly [P in keyof GettersOption]: DeepReadonly<ReturnType<OmitFirstParameter<GettersOption[P]>>>; };
+    mutations: { readonly [P_1 in keyof MutationsOption]: Exclude<OmitFirstParameter<MutationsOption[P_1]>, AsyncFunc>; };
+    actions: { readonly [P_2 in keyof ActionsOption]: OmitFirstParameter<ActionsOption[P_2]>; };
     subscribe: (subscriber: Subscriber) => void;
     actionSubscribe: (subscriber: ActionSubscriber) => void;
-    replaceState: (newState: State) => void;
+    replaceState: (newState: StateOption) => void;
 };
 
 // @public (undocumented)
 export type CreateStoreReturnType = ReturnType<typeof createStore>;
 
 // @public (undocumented)
-export type DeepReadonly<T> = {
-    readonly [P in keyof T]: T[P] extends object ? DeepReadonly<T[P]> : T[P];
-};
+export type DeepReadonly<T> = T extends Func ? T : T extends object ? {
+    readonly [P in keyof T]: DeepReadonly<T[P]>;
+} : T;
 
 // @public (undocumented)
 export function defaultActionFilter(_action: Parameters<ActionSubscriber>['0']): boolean;
@@ -72,7 +63,7 @@ export function defaultActionFilter(_action: Parameters<ActionSubscriber>['0']):
 // @public (undocumented)
 export function defaultActionTransformer(action: Parameters<ActionSubscriber>['0']): {
     key: string;
-    payloads: unknown[];
+    payload: unknown;
 };
 
 // @public (undocumented)
@@ -93,11 +84,11 @@ export const defaultLogger: Console;
 // @public (undocumented)
 export function defaultMutationTransformer(mutation: Parameters<Subscriber>['0']): {
     key: string;
-    payloads: unknown[];
+    payload: unknown;
 };
 
 // @public (undocumented)
-export function defaultReducer<State extends StateReturnType<any>>(state: State, paths: string[] | null): any;
+export function defaultReducer<State extends DeepReadonly_2<Record<any, any>>>(state: State, paths: string[] | null): any;
 
 // @public (undocumented)
 export function defaultSetState(key: Parameters<Storage_2['setItem']>['0'], state: any, storage: Storage_2): void;
@@ -114,39 +105,28 @@ export type Func = {
 };
 
 // @public (undocumented)
-export function getOwnKeys<O extends object>(object: O): (keyof O)[];
+export function getOwnKeys<O extends Record<any, any>>(object: O): (keyof O)[];
 
 // @public (undocumented)
-export type GettersOption<StateReturnType> = {
-    [P: string]: ({ state, getters }: {
-        state: StateReturnType;
-        getters: any;
-    }) => any;
-};
-
-// @public (undocumented)
-export type GettersReturnType<GettersOption extends {
-    [P: string]: Func;
-}> = DeepReadonly<{
-    [P in keyof GettersOption]: ReturnType<GettersOption[P]>;
-}>;
+export type GettersOptionType<StateOption extends StateOptionType> = Record<Key, ({ state, getters }: {
+    state: DeepReadonly<StateOption>;
+    getters: any;
+}) => any>;
 
 // @public (undocumented)
 export function isPlainObject(object: unknown): boolean;
 
 // @public (undocumented)
-export type MutationsOption<StateOption, GettersReturnType> = {
-    [P: string]: ({ state, getters, mutations }: {
-        state: StateOption;
-        getters: GettersReturnType;
-        mutations: any;
-    }, ...payloads: Payload[]) => void;
-};
+export type Key = string | number;
 
 // @public (undocumented)
-export type MutationsReturnType<MutationsOption> = ShallowReadonly<{
-    [P in keyof MutationsOption]: Exclude<OmitFirstParameter<MutationsOption[P]>, AsyncFunc>;
-}>;
+export type MutationsOptionType<StateOption extends StateOptionType, GettersOption extends GettersOptionType<StateOption>> = Record<Key, Exclude<({ state, getters, mutations, }: {
+    state: StateOption;
+    getters: DeepReadonly<{
+        [P in keyof GettersOption]: ReturnType<GettersOption[P]>;
+    }>;
+    mutations: any;
+}, ...payload: Payload[]) => void, AsyncFunc>>;
 
 // @public (undocumented)
 export type OmitFirstParameter<F> = F extends (x: any, ...params: infer Rest) => infer R ? (...params: Rest) => R : never;
@@ -201,12 +181,7 @@ export type ShallowReadonly<T> = {
 };
 
 // @public (undocumented)
-export type StateOption = {
-    [P: string]: any;
-};
-
-// @public (undocumented)
-export type StateReturnType<StateOption> = DeepReadonly<StateOption>;
+export type StateOptionType = Record<Key, any>;
 
 // @public (undocumented)
 type Storage_2 = {
@@ -220,7 +195,7 @@ export { Storage_2 as Storage }
 // @public (undocumented)
 export type Subscriber = (mutation: {
     key: string;
-    payloads: unknown[];
+    payload: unknown;
 }) => void;
 
 // @public (undocumented)

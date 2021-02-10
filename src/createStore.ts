@@ -1,42 +1,10 @@
 import { ref, computed, isReactive, Ref, toRefs, readonly, reactive } from 'vue'
-import {
-  getOwnKeys,
-  assert,
-  OmitFirstParameter,
-  isPlainObject,
-  ShallowReadonly,
-  DeepReadonly,
-  Func,
-  AsyncFunc,
-} from './util'
+import { getOwnKeys, assert, OmitFirstParameter, isPlainObject, DeepReadonly, AsyncFunc } from './util'
 
 /**
  * @public
  */
-export type StateOption = {
-  [P: string]: any
-}
-
-/**
- * @public
- */
-export type StateReturnType<StateOption> = DeepReadonly<StateOption>
-
-/**
- * @public
- */
-export type GettersOption<StateReturnType> = {
-  [P: string]: ({ state, getters }: { state: StateReturnType; getters: any }) => any
-}
-
-/**
- * @public
- */
-export type GettersReturnType<GettersOption extends { [P: string]: Func }> = DeepReadonly<
-  {
-    [P in keyof GettersOption]: ReturnType<GettersOption[P]>
-  }
->
+export type Key = string | number
 
 /**
  * @public
@@ -46,64 +14,80 @@ export type Payload = any
 /**
  * @public
  */
-export type MutationsOption<StateOption, GettersReturnType> = {
-  [P: string]: (
-    { state, getters, mutations }: { state: StateOption; getters: GettersReturnType; mutations: any },
-    ...payloads: Payload[]
-  ) => void
-}
+export type StateOptionType = Record<Key, any>
 
 /**
  * @public
  */
-export type MutationsReturnType<MutationsOption> = ShallowReadonly<
-  {
-    [P in keyof MutationsOption]: Exclude<OmitFirstParameter<MutationsOption[P]>, AsyncFunc>
-  }
+export type GettersOptionType<StateOption extends StateOptionType> = Record<
+  Key,
+  ({ state, getters }: { state: DeepReadonly<StateOption>; getters: any }) => any
 >
 
 /**
  * @public
  */
-export type ActionsOption<StateReturnType, GettersReturnType, MutationsReturnType> = {
-  [P: string]: (
+export type MutationsOptionType<
+  StateOption extends StateOptionType,
+  GettersOption extends GettersOptionType<StateOption>
+> = Record<
+  Key,
+  Exclude<
+    (
+      {
+        state,
+        getters,
+        mutations,
+      }: {
+        state: StateOption
+        getters: DeepReadonly<{ [P in keyof GettersOption]: ReturnType<GettersOption[P]> }>
+        mutations: any
+      },
+      ...payload: Payload[]
+    ) => void,
+    AsyncFunc
+  >
+>
+
+/**
+ * @public
+ */
+export type ActionsOptionType<
+  StateOption extends StateOptionType,
+  GettersOption extends GettersOptionType<StateOption>,
+  MutationsOption extends MutationsOptionType<StateOption, GettersOption>
+> = Record<
+  Key,
+  (
     {
       state,
       getters,
       mutations,
+      actions,
     }: {
-      state: StateReturnType
-      getters: GettersReturnType
-      mutations: MutationsReturnType
+      state: DeepReadonly<StateOption>
+      getters: DeepReadonly<{ [P in keyof GettersOption]: ReturnType<OmitFirstParameter<GettersOption[P]>> }>
+      mutations: DeepReadonly<{ [P in keyof MutationsOption]: OmitFirstParameter<MutationsOption[P]> }>
       actions: any
     },
-    ...payloads: Payload[]
+    ...payload: Payload[]
   ) => void
-}
-
-/**
- * @public
- */
-export type ActionsReturnType<ActionsOption extends { [P: string]: Func }> = ShallowReadonly<
-  {
-    [P in keyof ActionsOption]: OmitFirstParameter<ActionsOption[P]>
-  }
 >
-
-/**
- * @public
- */
-export type Subscriber = (mutation: { key: string; payloads: unknown[] }) => void
-
-/**
- * @public
- */
-export type ActionSubscriber = (action: { key: string; payloads: unknown[] }) => void
 
 /**
  * @public
  */
 export type Plugin = (store: ReturnType<typeof createStore>) => void
+
+/**
+ * @public
+ */
+export type Subscriber = (mutation: { key: string; payload: unknown }) => void
+
+/**
+ * @public
+ */
+export type ActionSubscriber = (action: { key: string; payload: unknown }) => void
 
 /**
  * @public
@@ -114,72 +98,74 @@ export type CreateStoreReturnType = ReturnType<typeof createStore>
  * @public
  */
 export function createStore<
-  State extends StateOption,
-  Getters extends GettersOption<StateReturnType<State>> = GettersOption<StateReturnType<State>>,
-  Mutations extends MutationsOption<State, GettersReturnType<Getters>> = MutationsOption<
-    State,
-    GettersReturnType<Getters>
-  >,
-  Actions extends ActionsOption<
-    StateReturnType<State>,
-    GettersReturnType<Getters>,
-    MutationsReturnType<Mutations>
-  > = ActionsOption<StateReturnType<State>, GettersReturnType<Getters>, MutationsReturnType<Mutations>>
->(options: { state: State; getters?: Getters; mutations?: Mutations; actions?: Actions; plugins?: Plugin[] }) {
+  StateOption extends StateOptionType,
+  GettersOption extends GettersOptionType<StateOption>,
+  MutationsOption extends MutationsOptionType<StateOption, GettersOption>,
+  ActionsOption extends ActionsOptionType<StateOption, GettersOption, MutationsOption>
+>(
+  stateOption: StateOption,
+  gettersOption?: GettersOption,
+  mutationsOption?: MutationsOption,
+  actionsOption?: ActionsOption,
+  pluginsOption?: Plugin[],
+) {
   if (__DEV__) {
-    assert(isPlainObject(options.state), 'invalid state type.')
+    assert(isPlainObject(stateOption), 'invalid state type.')
   }
 
   const { subscribe, subscribers } = useSubscriber<Subscriber>()
   const { subscribe: actionSubscribe, subscribers: actionSubscribers } = useSubscriber<ActionSubscriber>()
 
-  const optionState = isReactive(options.state) ? toRefs(options.state) : options.state
+  const normalizedStateOption = isReactive(stateOption) ? toRefs(stateOption) : stateOption
   const state = ref(
-    getOwnKeys(optionState).reduce((state, stateKey) => {
-      return Object.assign(state, { [stateKey]: optionState[stateKey] })
+    getOwnKeys(normalizedStateOption).reduce((state, stateKey) => {
+      return Object.assign(state, { [stateKey]: normalizedStateOption[stateKey] })
     }, {}),
-  ) as Ref<State>
+  ) as Ref<StateOption>
 
-  const optionGetters = options.getters || ({} as Getters)
+  const normalizedGettersOption = gettersOption || ({} as GettersOption)
   const getters = readonly(
     reactive(
-      getOwnKeys(optionGetters).reduce((rawGetters, getterKey) => {
+      getOwnKeys(normalizedGettersOption).reduce((rawGetters, getterKey) => {
         const getter = computed(() =>
-          optionGetters[getterKey]({ state: state.value as StateReturnType<any>, getters }),
+          (normalizedGettersOption[getterKey] as any)({ state: state.value, getters }),
         ) as any
         return Object.assign(rawGetters, { [getterKey]: getter })
       }, {}),
-    ) as GettersReturnType<Getters>,
-  ) as DeepReadonly<GettersReturnType<Getters>>
+    ),
+  ) as { readonly [P in keyof GettersOption]: DeepReadonly<ReturnType<OmitFirstParameter<GettersOption[P]>>> }
 
-  const optionMutations = options.mutations || ({} as Mutations)
-  const mutations = getOwnKeys(optionMutations).reduce((mutations, mutationKey) => {
-    const mutation = (...payloads: unknown[]) => {
-      const result = (optionMutations as any)[mutationKey]({ state: state.value, getters, mutations }, ...payloads)
-      subscribers.forEach(subscriber => subscriber.call(null, { key: mutationKey as string, payloads }))
+  const normalizedMutationsOption = mutationsOption || ({} as MutationsOption)
+  const mutations = getOwnKeys(normalizedMutationsOption).reduce((mutations, mutationKey) => {
+    const mutation = (payload: unknown) => {
+      const result = (normalizedMutationsOption as any)[mutationKey](
+        { state: state.value, getters, mutations },
+        payload,
+      )
+      subscribers.forEach(subscriber => subscriber.call(null, { key: mutationKey as string, payload }))
       return result
     }
     return Object.assign(mutations, { [mutationKey]: mutation })
-  }, {}) as MutationsReturnType<Mutations>
+  }, {}) as { readonly [P in keyof MutationsOption]: Exclude<OmitFirstParameter<MutationsOption[P]>, AsyncFunc> }
 
-  const optionActions = options.actions || ({} as Actions)
-  const actions = getOwnKeys(optionActions).reduce((actions, actionKey) => {
-    const action = (...payloads: unknown[]) => {
-      actionSubscribers.forEach(subscriber => subscriber.call(null, { key: actionKey as string, payloads }))
-      return (optionActions as any)[actionKey](
+  const normalizedActionsOption = actionsOption || ({} as ActionsOption)
+  const actions = getOwnKeys(normalizedActionsOption).reduce((actions, actionKey) => {
+    const action = (payload: unknown) => {
+      actionSubscribers.forEach(subscriber => subscriber.call(null, { key: actionKey as string, payload }))
+      return (normalizedActionsOption as any)[actionKey](
         {
           state: state.value,
           getters,
           mutations,
           actions,
         },
-        ...payloads,
+        payload,
       )
     }
     return Object.assign(actions, { [actionKey]: action })
-  }, {}) as ActionsReturnType<Actions>
+  }, {}) as { readonly [P in keyof ActionsOption]: OmitFirstParameter<ActionsOption[P]> }
 
-  const replaceState = function (newState: State) {
+  const replaceState = function (newState: StateOption) {
     getOwnKeys(state.value)
       .filter(key => newState[key] === undefined)
       .forEach(key => delete state.value[key])
@@ -189,7 +175,7 @@ export function createStore<
   }
 
   const store = {
-    state: state.value as StateReturnType<State>,
+    state: state.value as DeepReadonly<StateOption>,
     getters,
     mutations,
     actions,
@@ -198,7 +184,7 @@ export function createStore<
     replaceState,
   }
 
-  const optionPlugins = options.plugins || []
+  const optionPlugins = pluginsOption || []
   optionPlugins.forEach(plugin => plugin(store as any))
 
   return store
