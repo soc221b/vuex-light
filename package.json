@@ -40,8 +40,9 @@
     "@vue/test-utils": "^2.0.0-beta.13",
     "dom-storage": "^2.1.0",
     "execa": "^5.0.0",
-    "husky": "^5.0.9",
+    "husky": "5",
     "jest": "^26.6.3",
+    "pinst": "^2.1.4",
     "prettier": "^2.1.2",
     "ramda": "^0.27.1",
     "rimraf": "^3.0.2",
@@ -69,6 +70,9 @@
     "docs": "api-documenter markdown -i temp -o docs",
     "release": "standard-version",
     "test": "jest",
-    "lint": "prettier --check ."
+    "lint": "prettier --check .",
+    "postinstall": "husky install",
+    "prepublishOnly": "pinst --disable",
+    "postpublish": "pinst --enable"
   }
 }
