@@ -1,8 +1,8 @@
 import { createStore, createPersistPlugin, createLoggerPlugin } from 'vuex-light'
 import { Todo } from './types'
 
-const store = createStore({
-  state: {
+const store = createStore(
+  {
     todos: [
       {
         text: 'Give it a try.',
@@ -18,7 +18,8 @@ const store = createStore({
       },
     ] as Todo[],
   },
-  mutations: {
+  {},
+  {
     addTodo({ state }, todo: Todo) {
       state.todos.push(todo)
     },
@@ -29,7 +30,7 @@ const store = createStore({
 
     editTodo(
       { state },
-      { todo, text = todo.text, done = todo.done }: { todo: Todo; text: Todo['text']; done: Todo['done'] },
+      { todo, text = todo.text, done = todo.done }: { todo: Todo; text?: Todo['text']; done?: Todo['done'] },
     ) {
       const index = state.todos.indexOf(todo)
 
@@ -40,7 +41,7 @@ const store = createStore({
       })
     },
   },
-  actions: {
+  {
     addTodo({ mutations }, text: string) {
       mutations.addTodo({
         text,
@@ -74,8 +75,8 @@ const store = createStore({
         })
     },
   },
-  plugins: [createPersistPlugin(), createLoggerPlugin()],
-})
+  [createPersistPlugin(), createLoggerPlugin()],
+)
 export default store
 
 // declare the `useStore` composition function

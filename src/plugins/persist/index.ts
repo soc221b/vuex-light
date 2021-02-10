@@ -1,11 +1,12 @@
 import { set, get } from 'shvl'
-import { StateReturnType, Subscriber, CreateStoreReturnType } from '../../'
+import { Subscriber, CreateStoreReturnType } from '../../'
 import { mergeDeepWithKey } from 'ramda'
+import { DeepReadonly } from 'src/util'
 
 /**
  * @public
  */
-export function defaultReducer<State extends StateReturnType<any>>(state: State, paths: string[] | null) {
+export function defaultReducer<State extends DeepReadonly<Record<any, any>>>(state: State, paths: string[] | null) {
   const unwrappedState = Object.keys(state).reduce((unwrappedState, key) => {
     unwrappedState[key] = state[key]
     return unwrappedState

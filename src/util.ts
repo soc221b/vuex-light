@@ -15,9 +15,13 @@ export type ShallowReadonly<T> = {
 /**
  * @public
  */
-export type DeepReadonly<T> = {
-  readonly [P in keyof T]: T[P] extends object ? DeepReadonly<T[P]> : T[P]
-}
+export type DeepReadonly<T> = T extends Func
+  ? T
+  : T extends object
+  ? {
+      readonly [P in keyof T]: DeepReadonly<T[P]>
+    }
+  : T
 
 /**
  * @public
@@ -32,7 +36,7 @@ export type AsyncFunc = { (...args: any): Promise<any> }
 /**
  * @public
  */
-export function getOwnKeys<O extends object>(object: O) {
+export function getOwnKeys<O extends Record<any, any>>(object: O) {
   return Array.from(Object.keys(object)) as (keyof O)[]
 }
 
