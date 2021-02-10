@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0-alpha.2](https://github.com/js-cosmos/vuex-light/compare/v1.0.0...v2.0.0-alpha.2) (2021-02-10)
+
+
+### ⚠ BREAKING CHANGES
+
+* change API interface
+
+### Features
+
+* fully support type inference ([9a5bbb7](https://github.com/js-cosmos/vuex-light/commit/9a5bbb7f9c88873684b44136a4afbae6a8806ede))
+
 ## [2.0.0-alpha.1](https://github.com/js-cosmos/vuex-light/compare/v1.0.0...v2.0.0-alpha.1) (2021-02-10)
 
 
