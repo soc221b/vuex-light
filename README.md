@@ -7,20 +7,12 @@
 ![last commit](https://img.shields.io/github/last-commit/js-cosmos/vuex-light/main)
 
 <p align="center">
-  <a href="https://codesandbox.io/s/github/js-cosmos/vuex-light/tree/main/examples/todomvc" target="_blank">
-    <img src="demo.gif" alt="demo" width="720" />
+  <a href="http://www.youtube.com/watch?v=bXR1VQWUd20" target="_blank">
+    <img src="./screenshots/typing.png" alt="demo" width="720" />
   </a>
 </p>
 
 # Why
-
-> Vuex-light provides more type information to you.
-
-Assuming you have a simple store:
-
-<p align="center">
-  <img src="./screenshots/simple-store.png" alt="simple store" width="720">
-</p>
 
 With _vuex_, you often want to know what **the payload** is and what **action type** is, but it always gives you the
 **any** type:
