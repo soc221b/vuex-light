@@ -21,7 +21,7 @@ export declare type PersistPluginRequiredOptions = {
     fetchBeforeUse: boolean;
     assertStorage: typeof defaultAssertStorage;
     mergeDeepWithKeyFn: (k: string, l: any, r: any) => any;
-    onRehydrated: <Store extends CreateStoreReturnType<any, any, any, any>>(_: Store) => void;
+    onRehydrated: <Store extends CreateStoreReturnType>(_: Store) => void;
 };
 ```
 <b>References:</b> [CreateStoreReturnType](./vuex-light.createstorereturntype.md)

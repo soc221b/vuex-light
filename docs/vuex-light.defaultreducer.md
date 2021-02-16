@@ -8,7 +8,7 @@
 <b>Signature:</b>
 
 ```typescript
-export declare function defaultReducer<State extends StateReturnType<any>>(state: State, paths: string[] | null): any;
+export declare function defaultReducer<State extends DeepReadonly<Record<any, any>>>(state: State, paths: string[] | null): any;
 ```
 
 ## Parameters

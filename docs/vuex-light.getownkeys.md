@@ -8,7 +8,7 @@
 <b>Signature:</b>
 
 ```typescript
-export declare function getOwnKeys<O extends object>(object: O): (keyof O)[];
+export declare function getOwnKeys<O extends Record<any, any>>(object: O): (keyof O)[];
 ```
 
 ## Parameters

@@ -10,6 +10,6 @@
 ```typescript
 export declare type ActionSubscriber = (action: {
     key: string;
-    payloads: unknown[];
+    payload: unknown;
 }) => void;
 ```

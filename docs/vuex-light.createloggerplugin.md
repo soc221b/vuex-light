@@ -8,7 +8,7 @@
 <b>Signature:</b>
 
 ```typescript
-export declare function createLoggerPlugin(options?: Options): <Store extends CreateStoreReturnType<any, any, any, any>>(store: Store) => void;
+export declare function createLoggerPlugin(options?: Options): (store: any) => void;
 ```
 
 ## Parameters
@@ -19,5 +19,5 @@ export declare function createLoggerPlugin(options?: Options): <Store extends Cr
 
 <b>Returns:</b>
 
-&lt;Store extends [CreateStoreReturnType](./vuex-light.createstorereturntype.md)<!-- -->&lt;any, any, any, any&gt;&gt;(store: Store) =&gt; void
+(store: any) =&gt; void
 

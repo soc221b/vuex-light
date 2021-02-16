@@ -11,7 +11,7 @@
 |  [assert(condition, message)](./vuex-light.assert.md) |  |
 |  [createLoggerPlugin(options)](./vuex-light.createloggerplugin.md) |  |
 |  [createPersistPlugin(options)](./vuex-light.createpersistplugin.md) |  |
-|  [createStore(options)](./vuex-light.createstore.md) |  |
+|  [createStore(stateOption, gettersOption, mutationsOption, actionsOption, pluginsOption)](./vuex-light.createstore.md) |  |
 |  [defaultActionFilter(\_action)](./vuex-light.defaultactionfilter.md) |  |
 |  [defaultActionTransformer(action)](./vuex-light.defaultactiontransformer.md) |  |
 |  [defaultAssertStorage(storage)](./vuex-light.defaultassertstorage.md) |  |
@@ -23,8 +23,8 @@
 |  [defaultSubscriber(store)](./vuex-light.defaultsubscriber.md) |  |
 |  [defaultTransformer(state)](./vuex-light.defaulttransformer.md) |  |
 |  [getOwnKeys(object)](./vuex-light.getownkeys.md) |  |
-|  [install(app, { store, storeKey })](./vuex-light.install.md) |  |
 |  [isPlainObject(object)](./vuex-light.isplainobject.md) |  |
+|  [useSubscriber()](./vuex-light.usesubscriber.md) |  |
 
 ## Variables
 
@@ -32,29 +32,29 @@
 |  --- | --- |
 |  [defaultCollapsed](./vuex-light.defaultcollapsed.md) |  |
 |  [defaultLogger](./vuex-light.defaultlogger.md) |  |
-|  [defaultStoreKey](./vuex-light.defaultstorekey.md) |  |
 
 ## Type Aliases
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [ActionsOption](./vuex-light.actionsoption.md) |  |
-|  [ActionsReturnType](./vuex-light.actionsreturntype.md) |  |
+|  [ActionsOptionType](./vuex-light.actionsoptiontype.md) |  |
 |  [ActionSubscriber](./vuex-light.actionsubscriber.md) |  |
+|  [AsyncFunc](./vuex-light.asyncfunc.md) |  |
 |  [CreateStoreReturnType](./vuex-light.createstorereturntype.md) |  |
-|  [GettersOption](./vuex-light.gettersoption.md) |  |
-|  [GettersReturnType](./vuex-light.gettersreturntype.md) |  |
-|  [MutationsOption](./vuex-light.mutationsoption.md) |  |
-|  [MutationsReturnType](./vuex-light.mutationsreturntype.md) |  |
+|  [DeepReadonly](./vuex-light.deepreadonly.md) |  |
+|  [Func](./vuex-light.func.md) |  |
+|  [GettersOptionType](./vuex-light.gettersoptiontype.md) |  |
+|  [Key](./vuex-light.key.md) |  |
+|  [MutationsOptionType](./vuex-light.mutationsoptiontype.md) |  |
 |  [OmitFirstParameter](./vuex-light.omitfirstparameter.md) |  |
 |  [Options](./vuex-light.options.md) |  |
+|  [Payload](./vuex-light.payload.md) |  |
 |  [PersistPluginOptions](./vuex-light.persistpluginoptions.md) |  |
 |  [PersistPluginRequiredOptions](./vuex-light.persistpluginrequiredoptions.md) |  |
 |  [Plugin\_2](./vuex-light.plugin_2.md) |  |
 |  [RequiredOptions](./vuex-light.requiredoptions.md) |  |
-|  [StateOption](./vuex-light.stateoption.md) |  |
-|  [StateReturnType](./vuex-light.statereturntype.md) |  |
-|  [StateType](./vuex-light.statetype.md) |  |
+|  [ShallowReadonly](./vuex-light.shallowreadonly.md) |  |
+|  [StateOptionType](./vuex-light.stateoptiontype.md) |  |
 |  [Storage\_2](./vuex-light.storage_2.md) |  |
 |  [Subscriber](./vuex-light.subscriber.md) |  |
 

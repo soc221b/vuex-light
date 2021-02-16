@@ -8,22 +8,28 @@
 <b>Signature:</b>
 
 ```typescript
-export declare function createStore<State extends StateOption, Getters extends GettersOption<State>, Mutations extends MutationsOption<State, Getters>, Actions extends ActionsOption<State, Getters, Mutations>>(options: {
-    state: State;
-    getters?: Getters;
-    mutations?: Mutations;
-    actions?: Actions;
-    plugins?: Plugin<CreateStoreReturnType<State, Getters, Mutations, Actions>>[];
-}): CreateStoreReturnType<State, Getters, Mutations, Actions>;
+export declare function createStore<StateOption extends StateOptionType, GettersOption extends GettersOptionType<StateOption>, MutationsOption extends MutationsOptionType<StateOption, GettersOption>, ActionsOption extends ActionsOptionType<StateOption, GettersOption, MutationsOption>>(stateOption: StateOption, gettersOption?: GettersOption, mutationsOption?: MutationsOption, actionsOption?: ActionsOption, pluginsOption?: Plugin[]): {
+    state: DeepReadonly<StateOption>;
+    getters: { readonly [P in keyof GettersOption]: DeepReadonly<ReturnType<OmitFirstParameter<GettersOption[P]>>>; };
+    mutations: { readonly [P_1 in keyof MutationsOption]: Exclude<OmitFirstParameter<MutationsOption[P_1]>, AsyncFunc>; };
+    actions: { readonly [P_2 in keyof ActionsOption]: OmitFirstParameter<ActionsOption[P_2]>; };
+    subscribe: (subscriber: Subscriber) => void;
+    actionSubscribe: (subscriber: ActionSubscriber) => void;
+    replaceState: (newState: StateOption) => void;
+};
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  options | { state: State; getters?: Getters; mutations?: Mutations; actions?: Actions; plugins?: Plugin&lt;[CreateStoreReturnType](./vuex-light.createstorereturntype.md)<!-- -->&lt;State, Getters, Mutations, Actions&gt;&gt;\[\]; } |  |
+|  stateOption | StateOption |  |
+|  gettersOption | GettersOption |  |
+|  mutationsOption | MutationsOption |  |
+|  actionsOption | ActionsOption |  |
+|  pluginsOption | Plugin\[\] |  |
 
 <b>Returns:</b>
 
-[CreateStoreReturnType](./vuex-light.createstorereturntype.md)<!-- -->&lt;State, Getters, Mutations, Actions&gt;
+{ state: [DeepReadonly](./vuex-light.deepreadonly.md)<!-- -->&lt;StateOption&gt;; getters: { readonly \[P in keyof GettersOption\]: [DeepReadonly](./vuex-light.deepreadonly.md)<!-- -->&lt;ReturnType&lt;[OmitFirstParameter](./vuex-light.omitfirstparameter.md)<!-- -->&lt;GettersOption\[P\]&gt;&gt;&gt;; }; mutations: { readonly \[P\_1 in keyof MutationsOption\]: Exclude&lt;[OmitFirstParameter](./vuex-light.omitfirstparameter.md)<!-- -->&lt;MutationsOption\[P\_1\]&gt;, [AsyncFunc](./vuex-light.asyncfunc.md)<!-- -->&gt;; }; actions: { readonly \[P\_2 in keyof ActionsOption\]: [OmitFirstParameter](./vuex-light.omitfirstparameter.md)<!-- -->&lt;ActionsOption\[P\_2\]&gt;; }; subscribe: (subscriber: [Subscriber](./vuex-light.subscriber.md)<!-- -->) =&gt; void; actionSubscribe: (subscriber: [ActionSubscriber](./vuex-light.actionsubscriber.md)<!-- -->) =&gt; void; replaceState: (newState: StateOption) =&gt; void; }
 

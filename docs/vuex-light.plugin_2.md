@@ -8,5 +8,5 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type Plugin<Store> = (store: Store) => void;
+export declare type Plugin = (store: ReturnType<typeof createStore>) => void;
 ```

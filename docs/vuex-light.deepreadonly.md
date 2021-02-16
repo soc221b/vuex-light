@@ -8,9 +8,9 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type DeepReadonly<T> = {
-    readonly [P in keyof T]: T[P] extends object ? DeepReadonly<T[P]> : T[P];
-};
+export declare type DeepReadonly<T> = T extends Func ? T : T extends object ? {
+    readonly [P in keyof T]: DeepReadonly<T[P]>;
+} : T;
 ```
-<b>References:</b> [DeepReadonly](./vuex-light.deepreadonly.md)
+<b>References:</b> [Func](./vuex-light.func.md)<!-- -->, [DeepReadonly](./vuex-light.deepreadonly.md)
 

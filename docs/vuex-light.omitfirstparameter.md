@@ -8,5 +8,5 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type OmitFirstParameter<F> = F extends (x: any, ...params: infer Rest) => infer R ? (...params: Rest) => R : void;
+export declare type OmitFirstParameter<F> = F extends (x: any, ...params: infer Rest) => infer R ? (...params: Rest) => R : never;
 ```

@@ -10,7 +10,7 @@
 ```typescript
 export declare function defaultActionTransformer(action: Parameters<ActionSubscriber>['0']): {
     key: string;
-    payloads: unknown[];
+    payload: unknown;
 };
 ```
 
@@ -22,5 +22,5 @@ export declare function defaultActionTransformer(action: Parameters<ActionSubscr
 
 <b>Returns:</b>
 
-{ key: string; payloads: unknown\[\]; }
+{ key: string; payload: unknown; }
 

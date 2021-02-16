@@ -10,6 +10,6 @@
 ```typescript
 export declare type Subscriber = (mutation: {
     key: string;
-    payloads: unknown[];
+    payload: unknown;
 }) => void;
 ```

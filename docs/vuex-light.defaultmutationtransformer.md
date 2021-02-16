@@ -10,7 +10,7 @@
 ```typescript
 export declare function defaultMutationTransformer(mutation: Parameters<Subscriber>['0']): {
     key: string;
-    payloads: unknown[];
+    payload: unknown;
 };
 ```
 
@@ -22,5 +22,5 @@ export declare function defaultMutationTransformer(mutation: Parameters<Subscrib
 
 <b>Returns:</b>
 
-{ key: string; payloads: unknown\[\]; }
+{ key: string; payload: unknown; }
 
