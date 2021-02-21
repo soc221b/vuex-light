@@ -14,14 +14,9 @@
 
 # Why
 
-With _vuex_, you often want to know what **the payload** is and what **action type** is, but it always gives you the
-**any** type:
+Have you ever want to know "what type payload is" or "what getters the store have" when use the vuex?
 
-<p align="center">
-  <img src="./screenshots/vuex.png" alt="simple store" width="720">
-</p>
-
-But with _vuex-light_, you have full type inference:
+In _vuex-light_, you have better typing to create and use store:
 
 <p align="center">
   <img src="./screenshots/vuex-light.png" alt="simple store" width="720">
@@ -30,7 +25,11 @@ But with _vuex-light_, you have full type inference:
 # Features
 
 - Robust typescript support :muscle:
+  > See [e2e test](https://github.com/js-cosmos/vuex-light/blob/main/test-dts/e2e.spec.ts).
 - Consistent and intuitive interface :bulb:
+  > See [GettersOption](https://js-cosmos.github.io/vuex-light/vuex-light.gettersoptiontype.html),
+  > [MutationsOption](https://js-cosmos.github.io/vuex-light/vuex-light.mutationsoptiontype.html),
+  > [ActionsOption](https://js-cosmos.github.io/vuex-light/vuex-light.actionsoptiontype.html) typing.
 - Implement with vue 3 reactivity system only
 - Light weight
 
