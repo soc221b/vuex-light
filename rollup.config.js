@@ -60,7 +60,10 @@ function createConfig({ format, mode, outputConfig }) {
       }),
       nodeResolve(),
       nodeGlobals(),
-      replace({ __DEV__: isBundler ? `(process.env.NODE_ENV !== 'production')` : isDev }),
+      replace({
+        preventAssignment: true,
+        __DEV__: isBundler ? `(process.env.NODE_ENV !== 'production')` : isDev,
+      }),
       isDev ? undefined : terser(),
     ],
   }
