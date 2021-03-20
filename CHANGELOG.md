@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0](https://github.com/js-cosmos/vuex-light/compare/v2.0.4...v2.1.0) (2021-03-20)
+
+
+### Features
+
+* support module ([6606af2](https://github.com/js-cosmos/vuex-light/commit/6606af2a7748e528434a66dff8666fa131dcc307))
+
 ### [2.0.4](https://github.com/js-cosmos/vuex-light/compare/v2.0.3...v2.0.4) (2021-03-04)
 
 ### [2.0.3](https://github.com/js-cosmos/vuex-light/compare/v2.0.2...v2.0.3) (2021-03-01)
