@@ -167,12 +167,19 @@ const store = createStore(
       // ...
     },
   },
+  // modules
+  {
+    module: createStore({
+      moduleCount: 0,
+    }),
+  },
 )
 
 store.state.count
 store.getters.isOdd
 store.mutations.increment()
 store.actions.incrementIfOdd()
+store.modules.module.state.moduleCount
 ```
 
 # Plugins

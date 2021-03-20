@@ -101,13 +101,15 @@ export function createStore<
   StateOption extends StateOptionType,
   GettersOption extends GettersOptionType<StateOption>,
   MutationsOption extends MutationsOptionType<StateOption, GettersOption>,
-  ActionsOption extends ActionsOptionType<StateOption, GettersOption, MutationsOption>
+  ActionsOption extends ActionsOptionType<StateOption, GettersOption, MutationsOption>,
+  Modules extends { [P: string]: any }
 >(
   stateOption: StateOption,
   gettersOption?: GettersOption,
   mutationsOption?: MutationsOption,
   actionsOption?: ActionsOption,
   pluginsOption?: Plugin[],
+  modules: Modules = {} as Modules,
 ) {
   if (__DEV__) {
     assert(isPlainObject(stateOption), 'invalid state type.')
@@ -182,6 +184,7 @@ export function createStore<
     subscribe,
     actionSubscribe,
     replaceState,
+    modules,
   }
 
   const optionPlugins = pluginsOption || []

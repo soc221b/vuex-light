@@ -39,7 +39,9 @@ export function createLoggerPlugin(options?: Options): (store: any) => void;
 export function createPersistPlugin(options?: PersistPluginOptions): (store: any) => void;
 
 // @public (undocumented)
-export function createStore<StateOption extends StateOptionType, GettersOption extends GettersOptionType<StateOption>, MutationsOption extends MutationsOptionType<StateOption, GettersOption>, ActionsOption extends ActionsOptionType<StateOption, GettersOption, MutationsOption>>(stateOption: StateOption, gettersOption?: GettersOption, mutationsOption?: MutationsOption, actionsOption?: ActionsOption, pluginsOption?: Plugin_2[]): {
+export function createStore<StateOption extends StateOptionType, GettersOption extends GettersOptionType<StateOption>, MutationsOption extends MutationsOptionType<StateOption, GettersOption>, ActionsOption extends ActionsOptionType<StateOption, GettersOption, MutationsOption>, Modules extends {
+    [P: string]: any;
+}>(stateOption: StateOption, gettersOption?: GettersOption, mutationsOption?: MutationsOption, actionsOption?: ActionsOption, pluginsOption?: Plugin_2[], modules?: Modules): {
     state: DeepReadonly<StateOption>;
     getters: { readonly [P in keyof GettersOption]: DeepReadonly<ReturnType<OmitFirstParameter<GettersOption[P]>>>; };
     mutations: { readonly [P_1 in keyof MutationsOption]: Exclude<OmitFirstParameter<MutationsOption[P_1]>, AsyncFunc>; };
@@ -47,6 +49,7 @@ export function createStore<StateOption extends StateOptionType, GettersOption e
     subscribe: (subscriber: Subscriber) => void;
     actionSubscribe: (subscriber: ActionSubscriber) => void;
     replaceState: (newState: StateOption) => void;
+    modules: Modules;
 };
 
 // @public (undocumented)

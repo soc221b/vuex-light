@@ -11,7 +11,7 @@
 |  [assert(condition, message)](./vuex-light.assert.md) |  |
 |  [createLoggerPlugin(options)](./vuex-light.createloggerplugin.md) |  |
 |  [createPersistPlugin(options)](./vuex-light.createpersistplugin.md) |  |
-|  [createStore(stateOption, gettersOption, mutationsOption, actionsOption, pluginsOption)](./vuex-light.createstore.md) |  |
+|  [createStore(stateOption, gettersOption, mutationsOption, actionsOption, pluginsOption, modules)](./vuex-light.createstore.md) |  |
 |  [defaultActionFilter(\_action)](./vuex-light.defaultactionfilter.md) |  |
 |  [defaultActionTransformer(action)](./vuex-light.defaultactiontransformer.md) |  |
 |  [defaultAssertStorage(storage)](./vuex-light.defaultassertstorage.md) |  |

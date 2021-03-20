@@ -95,6 +95,12 @@ it('e2e', () => {
     },
 
     [createLoggerPlugin({ logActions: false, logMutations: false }), createPersistPlugin()],
+
+    {
+      module: createStore({
+        moduleCount: 0,
+      }),
+    },
   )
 
   // =========================================================================
@@ -159,6 +165,11 @@ it('e2e', () => {
   expectType<
     TypeEqual<(number: number, condition: boolean, notExists: any) => void, typeof store.actions.incrementByNumberIf>
   >(false)
+
+  // =========================================================================
+  // modules
+  // =========================================================================
+  expectType<TypeEqual<number, typeof store.modules.module.state.moduleCount>>(true)
 
   spy.mockRestore()
 })
