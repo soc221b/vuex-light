@@ -104,28 +104,30 @@ export function createStore<
   ActionsOption extends ActionsOptionType<StateOption, GettersOption, MutationsOption>,
   Modules extends { [P: string]: any }
 >(
-  stateOption: StateOption,
-  gettersOption?: GettersOption,
-  mutationsOption?: MutationsOption,
-  actionsOption?: ActionsOption,
-  pluginsOption?: Plugin[],
-  modules: Modules = {} as Modules,
+  options: {
+    state?: StateOption
+    getters?: GettersOption
+    mutations?: MutationsOption
+    actions?: ActionsOption
+    plugins?: Plugin[]
+    modules?: Modules
+  } = {},
 ) {
   if (__DEV__) {
-    assert(isPlainObject(stateOption), 'invalid state type.')
+    assert(isPlainObject(options.state), 'invalid state type.')
   }
 
   const { subscribe, subscribers } = useSubscriber<Subscriber>()
   const { subscribe: actionSubscribe, subscribers: actionSubscribers } = useSubscriber<ActionSubscriber>()
 
-  const normalizedStateOption = isReactive(stateOption) ? toRefs(stateOption) : stateOption
+  const normalizedStateOption = options.state && isReactive(options.state) ? toRefs(options.state) : options.state ?? {}
   const state = ref(
     getOwnKeys(normalizedStateOption).reduce((state, stateKey) => {
       return Object.assign(state, { [stateKey]: normalizedStateOption[stateKey] })
     }, {}),
   ) as Ref<StateOption>
 
-  const normalizedGettersOption = gettersOption || ({} as GettersOption)
+  const normalizedGettersOption = options.getters || ({} as GettersOption)
   const getters = readonly(
     reactive(
       getOwnKeys(normalizedGettersOption).reduce((rawGetters, getterKey) => {
@@ -137,7 +139,7 @@ export function createStore<
     ),
   ) as { readonly [P in keyof GettersOption]: DeepReadonly<ReturnType<OmitFirstParameter<GettersOption[P]>>> }
 
-  const normalizedMutationsOption = mutationsOption || ({} as MutationsOption)
+  const normalizedMutationsOption = options.mutations || ({} as MutationsOption)
   const mutations = getOwnKeys(normalizedMutationsOption).reduce((mutations, mutationKey) => {
     const mutation = (payload: unknown) => {
       const result = (normalizedMutationsOption as any)[mutationKey](
@@ -150,7 +152,7 @@ export function createStore<
     return Object.assign(mutations, { [mutationKey]: mutation })
   }, {}) as { readonly [P in keyof MutationsOption]: Exclude<OmitFirstParameter<MutationsOption[P]>, AsyncFunc> }
 
-  const normalizedActionsOption = actionsOption || ({} as ActionsOption)
+  const normalizedActionsOption = options.actions || ({} as ActionsOption)
   const actions = getOwnKeys(normalizedActionsOption).reduce((actions, actionKey) => {
     const action = (payload: unknown) => {
       actionSubscribers.forEach(subscriber => subscriber.call(null, { key: actionKey as string, payload }))
@@ -184,10 +186,10 @@ export function createStore<
     subscribe,
     actionSubscribe,
     replaceState,
-    modules,
+    modules: options.modules ?? ({} as Modules),
   }
 
-  const optionPlugins = pluginsOption || []
+  const optionPlugins = options.plugins || []
   optionPlugins.forEach(plugin => plugin(store as any))
 
   return store
