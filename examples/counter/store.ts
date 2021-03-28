@@ -1,14 +1,14 @@
 import { createStore } from 'vuex-light'
 
-const store = createStore(
-  {
+const store = createStore({
+  state: {
     count: 0,
   },
-  {
+  getters: {
     isOdd: ({ state }) => state.count % 2,
     evenOrOdd: ({ getters }) => (getters.isOdd ? 'odd' : 'even'),
   },
-  {
+  mutations: {
     increment({ state }) {
       state.count++
     },
@@ -16,7 +16,7 @@ const store = createStore(
       state.count--
     },
   },
-  {
+  actions: {
     increment: ({ mutations }) => mutations.increment(),
     decrement: ({ mutations }) => mutations.decrement(),
     incrementIfOdd({ mutations, getters }) {
@@ -33,5 +33,5 @@ const store = createStore(
       })
     },
   },
-)
+})
 export default store

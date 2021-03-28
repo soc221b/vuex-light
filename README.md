@@ -57,20 +57,16 @@ Create the simplest store:
 import { createStore } from 'vuex-light'
 
 // Create a new store instance.
-export const store = createStore(
-  // state
-  {
+export const store = createStore({
+  state: {
     count: 0,
   },
-  // getters
-  {},
-  // mutations
-  {
+  mutations: {
     increment({ state }) {
       state.count++
     },
   },
-)
+})
 ```
 
 Now, your can access the store by the following ways:
@@ -145,36 +141,33 @@ Now, your can access the store by the following ways:
 # Core API
 
 ```ts
-const store = createStore(
-  // state
-  {
+const store = createStore({
+  state: {
     count: 0,
   },
-  // getters
-  {
+  getters: {
     isOdd({ state, getters }) {
       // ...
     },
   },
-  // mutations
-  {
+  mutations: {
     increment({ state, getters, mutations }, ...payloads) {
       // ...
     },
   },
-  // actions
-  {
+  actions: {
     incrementIfOdd({ state, getters, mutations, actions }, ...payloads) {
       // ...
     },
   },
-  // modules
-  {
+  modules: {
     module: createStore({
-      moduleCount: 0,
+      state: {
+        moduleCount: 0,
+      },
     }),
   },
-)
+})
 
 store.state.count
 store.getters.isOdd

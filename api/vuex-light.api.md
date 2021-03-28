@@ -39,7 +39,14 @@ export function createPersistPlugin(options?: PersistPluginOptions): (store: any
 // @public (undocumented)
 export function createStore<StateOption extends StateOptionType, GettersOption extends GettersOptionType<StateOption>, MutationsOption extends MutationsOptionType<StateOption, GettersOption>, ActionsOption extends ActionsOptionType<StateOption, GettersOption, MutationsOption>, Modules extends {
     [P: string]: any;
-}>(stateOption: StateOption, gettersOption?: GettersOption, mutationsOption?: MutationsOption, actionsOption?: ActionsOption, pluginsOption?: Plugin_2[], modules?: Modules): {
+}>(options?: {
+    state?: StateOption;
+    getters?: GettersOption;
+    mutations?: MutationsOption;
+    actions?: ActionsOption;
+    plugins?: Plugin_2[];
+    modules?: Modules;
+}): {
     state: DeepReadonly<StateOption>;
     getters: { readonly [P in keyof GettersOption]: DeepReadonly<ReturnType<OmitFirstParameter<GettersOption[P]>>>; };
     mutations: { readonly [P_1 in keyof MutationsOption]: Exclude<OmitFirstParameter<MutationsOption[P_1]>, AsyncFunc>; };
