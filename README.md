@@ -139,7 +139,7 @@ Now, your can access the store by the following ways:
    })
    ```
 
-   Example: [Todo MVC](https://codesandbox.io/s/github/iendeavor/vuex-light/tree/main/examples/todomvc)
+   Example: [Todo MVC](https://codesandbox.io/s/github/iendeavor/vuex-light/tree/main/examples/todomvc-vite)
 
 # Core API
 

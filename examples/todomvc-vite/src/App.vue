@@ -34,7 +34,7 @@
       <ul class="filters">
         <template v-for="(val, key) in filters" :key="key">
           <li>
-            <a :href="'#/' + key" :class="{ selected: visibility === key }" @click="visibility = key">{{
+            <a :href="'#/' + key" :class="{ selected: visibility === key }" @click="() => switchTab(key)">{{
               capitalize(key)
             }}</a>
           </li>
@@ -60,6 +60,11 @@ export default defineComponent({
   components: { TodoItem },
   setup() {
     const visibility = ref<keyof typeof filters>('all')
+    const switchTab = (key: string) => {
+      if (key in Object.keys(filters)) {
+        visibility.value = key as keyof typeof filters
+      }
+    }
     const store = useStore()
     const todos = computed(() => store.state.todos)
     const allChecked = computed(() => todos.value.every(todo => todo.done))
@@ -78,6 +83,7 @@ export default defineComponent({
     const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
     return {
       visibility,
+      switchTab,
       filters,
       todos,
       allChecked,
