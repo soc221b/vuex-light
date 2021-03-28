@@ -15,7 +15,7 @@
   "module": "dist/index.esm-bundler.js",
   "unpkg": "dist/index.global.prod.js",
   "jsdelivr": "dist/index.global.prod.js",
-  "types": "dist/index.d.ts",
+  "types": "dist/src/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/js-cosmos/vuex-light.git"

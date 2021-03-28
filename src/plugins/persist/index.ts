@@ -1,7 +1,7 @@
 import { set, get } from 'shvl'
 import { Subscriber, CreateStoreReturnType } from '../../'
 import { mergeDeepWithKey } from 'ramda'
-import { DeepReadonly } from 'src/util'
+import { DeepReadonly } from '../../util'
 
 /**
  * @public

@@ -4,8 +4,6 @@
 
 ```ts
 
-import { DeepReadonly as DeepReadonly_2 } from 'src/util';
-
 // @public (undocumented)
 export type ActionsOptionType<StateOption extends StateOptionType, GettersOption extends GettersOptionType<StateOption>, MutationsOption extends MutationsOptionType<StateOption, GettersOption>> = Record<Key, ({ state, getters, mutations, actions, }: {
     state: DeepReadonly<StateOption>;
@@ -91,7 +89,7 @@ export function defaultMutationTransformer(mutation: Parameters<Subscriber>['0']
 };
 
 // @public (undocumented)
-export function defaultReducer<State extends DeepReadonly_2<Record<any, any>>>(state: State, paths: string[] | null): any;
+export function defaultReducer<State extends DeepReadonly<Record<any, any>>>(state: State, paths: string[] | null): any;
 
 // @public (undocumented)
 export function defaultSetState(key: Parameters<Storage_2['setItem']>['0'], state: any, storage: Storage_2): void;
