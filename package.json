@@ -4,7 +4,7 @@
   "engines": {
     "node": ">=10"
   },
-  "description": "A store made with vue 3 composition API",
+  "description": "Better DX for Vue 3 state management solution",
   "keywords": [
     "vue",
     "vuex",
