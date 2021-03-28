@@ -3,22 +3,23 @@ import { createStore } from '../src'
 
 it('can create store with state', () => {
   createStore({
-    count: 0,
+    state: {
+      count: 0,
+    },
   })
 })
 
 it('state should be reactive', async () => {
-  const store = createStore(
-    {
+  const store = createStore({
+    state: {
       count: 0,
     },
-    {},
-    {
+    mutations: {
       increment({ state }) {
         ++state.count
       },
     },
-  )
+  })
 
   const { count } = toRefs(store.state)
   expect(count.value).toBe(0)
@@ -42,14 +43,13 @@ it('state should be reactive', async () => {
 })
 
 it('state should be deeply reactive', async () => {
-  const store = createStore(
-    {
+  const store = createStore({
+    state: {
       deep: {
         count: 0,
       },
     },
-    {},
-    {
+    mutations: {
       increment({ state }) {
         ++state.deep.count
       },
@@ -57,7 +57,7 @@ it('state should be deeply reactive', async () => {
         state.deep = deep
       },
     },
-  )
+  })
 
   const { deep } = toRefs(store.state)
   expect(deep.value.count).toBe(0)
@@ -90,32 +90,30 @@ it('state should be deeply reactive', async () => {
 })
 
 it('can create store with mutations', () => {
-  createStore(
-    {
+  createStore({
+    state: {
       count: 0,
     },
-    {},
-    {
+    mutations: {
       increment({ state }) {
         ++state.count
       },
     },
-  )
+  })
 })
 
 it('can reactive with existing reactivity object', async () => {
   const originalState = reactive({
     count: 0,
   })
-  const store = createStore(
-    originalState,
-    {},
-    {
+  const store = createStore({
+    state: originalState,
+    mutations: {
       increment({ state }) {
         ++state.count
       },
     },
-  )
+  })
 
   expect(store.state.count).toBe(0)
   expect(originalState.count).toBe(0)
@@ -144,31 +142,31 @@ it('can reactive with existing reactivity object', async () => {
 })
 
 it('can create store with getters', () => {
-  createStore(
-    {
+  createStore({
+    state: {
       count: 0,
     },
-    {
+    getters: {
       double: () => 2,
     },
-  )
+  })
 })
 
 it('getter should auto bind state and getters to mutations', () => {
-  const store = createStore(
-    {
+  const store = createStore({
+    state: {
       count: 0,
     },
-    {
+    getters: {
       double: ({ state }) => state.count * 2,
       isDoubleGreaterThan4: ({ getters }) => getters.double > 4,
     },
-    {
+    mutations: {
       increment({ state }) {
         ++state.count
       },
     },
-  )
+  })
 
   store.mutations.increment()
   expect(store.getters.isDoubleGreaterThan4).toBe(false)
@@ -181,19 +179,19 @@ it('getter should auto bind state and getters to mutations', () => {
 })
 
 it('getter should be reactive', async () => {
-  const store = createStore(
-    {
+  const store = createStore({
+    state: {
       count: 0,
     },
-    {
+    getters: {
       double: ({ state }) => state.count * 2,
     },
-    {
+    mutations: {
       increment({ state }) {
         ++state.count
       },
     },
-  )
+  })
 
   const { double } = toRefs(store.getters)
   expect(double.value).toBe(0)
@@ -210,21 +208,21 @@ it('getter should be reactive', async () => {
 })
 
 it('mutation should auto bind state and getters to mutations', () => {
-  const store = createStore(
-    {
+  const store = createStore({
+    state: {
       count: 0,
     },
-    {
+    getters: {
       isLessThan2: ({ state }) => state.count < 2,
     },
-    {
+    mutations: {
       incrementIfLessThan2({ state, getters }) {
         if (getters.isLessThan2) {
           ++state.count
         }
       },
     },
-  )
+  })
 
   store.mutations.incrementIfLessThan2()
   expect(store.state.count).toBe(1)
@@ -237,43 +235,42 @@ it('mutation should auto bind state and getters to mutations', () => {
 })
 
 it('can pass payload to mutations', () => {
-  const store = createStore(
-    {
+  const store = createStore({
+    state: {
       count: 0,
     },
-    {},
-    {
+    mutations: {
       incrementByNumber({ state }, number: number) {
         state.count = number
       },
     },
-  )
+  })
 
   store.mutations.incrementByNumber(42)
   expect(store.state.count).toBe(42)
 })
 
 it('should auto bind state, getters and mutations to actions', () => {
-  const store = createStore(
-    {
+  const store = createStore({
+    state: {
       count: 0,
     },
-    {
+    getters: {
       isOdd: ({ state }) => state.count % 2 === 1,
     },
-    {
+    mutations: {
       increment({ state }) {
         ++state.count
       },
     },
-    {
+    actions: {
       incrementIfOddAndLessThan4({ state, getters, mutations }) {
         if (state.count >= 4) return
         if (getters.isOdd === false) return
         mutations.increment()
       },
     },
-  )
+  })
 
   store.actions.incrementIfOddAndLessThan4()
   expect(store.state.count).toBe(0)

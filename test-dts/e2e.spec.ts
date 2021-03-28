@@ -7,12 +7,12 @@ it('e2e', () => {
   // =========================================================================
   // createStore
   // =========================================================================
-  const store = createStore(
-    {
+  const store = createStore({
+    state: {
       count: 0,
     },
 
-    {
+    getters: {
       double({ state, getters }) {
         expectType<TypeEqual<number, typeof state.count>>(true)
         expectType<TypeEqual<any, typeof state.count>>(false)
@@ -29,7 +29,7 @@ it('e2e', () => {
       },
     },
 
-    {
+    mutations: {
       increment() {},
       incrementByNumberIf({ state, getters, mutations }, _number: number, _condition: boolean) {
         expectType<TypeEqual<number, typeof state.count>>(true)
@@ -53,7 +53,7 @@ it('e2e', () => {
       },
     },
 
-    {
+    actions: {
       increment() {},
       incrementByNumberIf({ state, getters, mutations, actions }, _number: number, _condition: boolean) {
         expectType<TypeEqual<number, typeof state.count>>(true)
@@ -94,14 +94,16 @@ it('e2e', () => {
       },
     },
 
-    [createLoggerPlugin({ logActions: false, logMutations: false }), createPersistPlugin()],
+    plugins: [createLoggerPlugin({ logActions: false, logMutations: false }), createPersistPlugin()],
 
-    {
+    modules: {
       module: createStore({
-        moduleCount: 0,
+        state: {
+          moduleCount: 0,
+        },
       }),
     },
-  )
+  })
 
   // =========================================================================
   // state
