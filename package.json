@@ -2,7 +2,7 @@
   "name": "vuex-light",
   "version": "2.1.1",
   "engines": {
-    "node": ">=10"
+    "node": ">=12"
   },
   "description": "Better DX for Vue 3 state management solution",
   "keywords": [
