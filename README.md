@@ -2,9 +2,9 @@
 
 [![npm](https://img.shields.io/npm/v/vuex-light)](https://www.npmjs.com/package/vuex-light)
 [![npm bundle size](https://img.shields.io/bundlephobia/min/vuex-light)](https://bundlephobia.com/result?p=vuex-light@latest)
-[![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/js-cosmos/vuex-light/CI/main)](https://github.com/js-cosmos/vuex-light/actions?query=workflow%3ACI+branch%3Amain+)
+[![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/iendeavor/vuex-light/CI/main)](https://github.com/iendeavor/vuex-light/actions?query=workflow%3ACI+branch%3Amain+)
 ![npm downloads](https://img.shields.io/npm/dm/vuex-light)
-![last commit](https://img.shields.io/github/last-commit/js-cosmos/vuex-light/main)
+![last commit](https://img.shields.io/github/last-commit/iendeavor/vuex-light/main)
 
 <p align="center">
   <a href="http://www.youtube.com/watch?v=bXR1VQWUd20" target="_blank">
@@ -25,11 +25,11 @@ In _vuex-light_, you have better typing to create and use store:
 # Features
 
 - Robust typescript support :muscle:
-  > See [e2e test](https://github.com/js-cosmos/vuex-light/blob/main/test-dts/e2e.spec.ts).
+  > See [e2e test](https://github.com/iendeavor/vuex-light/blob/main/test-dts/e2e.spec.ts).
 - Consistent and intuitive interface :bulb:
-  > See [GettersOption](https://js-cosmos.github.io/vuex-light/vuex-light.gettersoptiontype.html),
-  > [MutationsOption](https://js-cosmos.github.io/vuex-light/vuex-light.mutationsoptiontype.html),
-  > [ActionsOption](https://js-cosmos.github.io/vuex-light/vuex-light.actionsoptiontype.html) typing.
+  > See [GettersOption](https://iendeavor.github.io/vuex-light/vuex-light.gettersoptiontype.html),
+  > [MutationsOption](https://iendeavor.github.io/vuex-light/vuex-light.mutationsoptiontype.html),
+  > [ActionsOption](https://iendeavor.github.io/vuex-light/vuex-light.actionsoptiontype.html) typing.
 - Implement with vue 3 reactivity system only
 - Light weight
 
@@ -88,7 +88,7 @@ Now, your can access the store by the following ways:
    })
    ```
 
-   Example: [Hello world](https://codesandbox.io/s/github/js-cosmos/vuex-light/tree/main/examples/hello-world)
+   Example: [Hello world](https://codesandbox.io/s/github/iendeavor/vuex-light/tree/main/examples/hello-world)
 
 2. [provide/inject](https://v3.vuejs.org/api/application-api.html#provide)
 
@@ -110,7 +110,7 @@ Now, your can access the store by the following ways:
    app.provide('store', store)
    ```
 
-   Example: [Counter](https://codesandbox.io/s/github/js-cosmos/vuex-light/tree/main/examples/counter)
+   Example: [Counter](https://codesandbox.io/s/github/iendeavor/vuex-light/tree/main/examples/counter)
 
 3. useStore
 
@@ -139,7 +139,7 @@ Now, your can access the store by the following ways:
    })
    ```
 
-   Example: [Todo MVC](https://codesandbox.io/s/github/js-cosmos/vuex-light/tree/main/examples/todomvc)
+   Example: [Todo MVC](https://codesandbox.io/s/github/iendeavor/vuex-light/tree/main/examples/todomvc)
 
 # Core API
 
@@ -186,11 +186,11 @@ store.modules.module.state.moduleCount
 
 ## `createLoggerPlugin`
 
-https://js-cosmos.github.io/vuex-light/vuex-light.createloggerplugin.html
+https://iendeavor.github.io/vuex-light/vuex-light.createloggerplugin.html
 
 ## `createPersistPlugin`
 
-https://js-cosmos.github.io/vuex-light/vuex-light.createpersistplugin.html
+https://iendeavor.github.io/vuex-light/vuex-light.createpersistplugin.html
 
 # Contributing
 
