@@ -26,6 +26,7 @@ In _vuex-light_, you have better typing to create and use store:
 
 - Robust typescript support :muscle:
   > See [e2e test](https://github.com/iendeavor/vuex-light/blob/main/test-dts/e2e.spec.ts).
+- VM agnostic - you can directly import and use it **anywhere**, no matter whether in `setup` lifecycle or not.
 - Consistent and intuitive interface :bulb:
   > See [GettersOption](https://iendeavor.github.io/vuex-light/vuex-light.gettersoptiontype.html),
   > [MutationsOption](https://iendeavor.github.io/vuex-light/vuex-light.mutationsoptiontype.html),
