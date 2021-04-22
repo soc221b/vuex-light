@@ -639,12 +639,13 @@
     "@rushstack/node-core-library" "3.36.2"
 
 "@microsoft/api-extractor@^7.12.1":
-  version "7.13.5"
-  resolved "https://registry.yarnpkg.com/@microsoft/api-extractor/-/api-extractor-7.13.5.tgz#927eee2315c9e96d23c24a9f4d8b6d7c6d1957af"
-  integrity sha512-03RyL5dKn/tbt0Q8DQSFSaiV7nFgrfPElHoYA4QwGORK/7mbGg4kdhXL+UgO55BkSUniTPMe0Vtt1rIyt/3lng==
+  version "7.14.0"
+  resolved "https://registry.yarnpkg.com/@microsoft/api-extractor/-/api-extractor-7.14.0.tgz#8427753663807678ea49dd92a16113496e92b0ef"
+  integrity sha512-R9B0ic8EIcHhwSFQWYTyQX7QDi7kXONeKdIjJI8R+WzVJMA3r0Je9XxSQxxZ9MZIBUxv3fB7pXC2CPIsSkI/BA==
   dependencies:
-    "@microsoft/api-extractor-model" "7.12.5"
-    "@microsoft/tsdoc" "0.12.24"
+    "@microsoft/api-extractor-model" "7.13.0"
+    "@microsoft/tsdoc" "0.13.2"
+    "@microsoft/tsdoc-config" "~0.15.2"
     "@rushstack/node-core-library" "3.36.2"
     "@rushstack/rig-package" "0.2.12"
     "@rushstack/ts-command-line" "4.7.10"
