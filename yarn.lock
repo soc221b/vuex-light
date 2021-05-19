@@ -609,13 +609,13 @@
     chalk "^4.0.0"
 
 "@microsoft/api-documenter@^7.12.1":
-  version "7.13.6"
-  resolved "https://registry.yarnpkg.com/@microsoft/api-documenter/-/api-documenter-7.13.6.tgz#a25c9c45f165cea37d10a447bde3f06c67b4ed18"
-  integrity sha512-5l8OaFVPRlcwoT0d/lXYAc5+hRS8ItG+ejmHZP5ny7jTlHj1bMGJUDrP8r0u1L5n2K13siwQRnNGpiuhSWOJfw==
+  version "7.13.9"
+  resolved "https://registry.yarnpkg.com/@microsoft/api-documenter/-/api-documenter-7.13.9.tgz#1e3b1bb7f4ec8b0bf8a1d7bb862275d581949a87"
+  integrity sha512-saiR5QUdAvRzkCs42d61nQ8eWGZSuE/hfqFFgjWCCpw6e9DJnOGHBwu79/nkZb8jraU5KWRXyfBNPBNrmsxqJQ==
   dependencies:
-    "@microsoft/api-extractor-model" "7.13.1"
+    "@microsoft/api-extractor-model" "7.13.2"
     "@microsoft/tsdoc" "0.13.2"
-    "@rushstack/node-core-library" "3.37.0"
+    "@rushstack/node-core-library" "3.38.0"
     "@rushstack/ts-command-line" "4.7.10"
     colors "~1.2.1"
     js-yaml "~3.13.1"
