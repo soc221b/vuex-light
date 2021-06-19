@@ -158,11 +158,8 @@ function endMessage(logger: typeof defaultLogger) {
 
 function getFormattedTime() {
   const time = new Date()
-  return ` @ ${time.getHours().toString().padStart(2, '0')}:${time
-    .getMinutes()
+  return ` @ ${time.getHours().toString().padStart(2, '0')}:${time.getMinutes().toString().padStart(2, '0')}:${time
+    .getSeconds()
     .toString()
-    .padStart(2, '0')}:${time.getSeconds().toString().padStart(2, '0')}.${time
-    .getMilliseconds()
-    .toString()
-    .padStart(2, '0')}`
+    .padStart(2, '0')}.${time.getMilliseconds().toString().padStart(2, '0')}`
 }

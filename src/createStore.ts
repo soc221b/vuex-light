@@ -29,7 +29,7 @@ export type GettersOptionType<StateOption extends StateOptionType> = Record<
  */
 export type MutationsOptionType<
   StateOption extends StateOptionType,
-  GettersOption extends GettersOptionType<StateOption>
+  GettersOption extends GettersOptionType<StateOption>,
 > = Record<
   Key,
   Exclude<
@@ -55,7 +55,7 @@ export type MutationsOptionType<
 export type ActionsOptionType<
   StateOption extends StateOptionType,
   GettersOption extends GettersOptionType<StateOption>,
-  MutationsOption extends MutationsOptionType<StateOption, GettersOption>
+  MutationsOption extends MutationsOptionType<StateOption, GettersOption>,
 > = Record<
   Key,
   (
@@ -102,7 +102,7 @@ export function createStore<
   GettersOption extends GettersOptionType<StateOption>,
   MutationsOption extends MutationsOptionType<StateOption, GettersOption>,
   ActionsOption extends ActionsOptionType<StateOption, GettersOption, MutationsOption>,
-  Modules extends { [P: string]: any }
+  Modules extends { [P: string]: any },
 >(
   stateOption: StateOption,
   gettersOption?: GettersOption,
