@@ -6,35 +6,23 @@
 ![npm downloads](https://img.shields.io/npm/dm/vuex-light)
 ![last commit](https://img.shields.io/github/last-commit/iendeavor/vuex-light/main)
 
-<p align="center">
-  <a href="http://www.youtube.com/watch?v=bXR1VQWUd20" target="_blank">
-    <img src="./screenshots/typing.png" alt="demo" width="720" />
-  </a>
-</p>
+## Why
 
-# Why
+Have you ever wanted to [have type-ahead feature or intelligense](https://github.com/vuejs/vuex/issues/564) when commit
+a mutation or dispatch actions?
 
-Have you ever want to know "what type payload is" or "what getters the store have" when use the vuex?
+Have you want to use such a token which is saved in the store and you
+[cannot inject `useStore` hook](https://github.com/vuejs/vuex/issues/1873) due to you aren't in setup lifecycle?
 
-In _vuex-light_, you have better typing to create and use store:
+## Features
 
-<p align="center">
-  <img src="./screenshots/vuex-light.png" alt="simple store" width="720">
-</p>
-
-# Features
-
-- Robust typescript support :muscle:
-  > See [e2e test](https://github.com/iendeavor/vuex-light/blob/main/test-dts/e2e.spec.ts).
+- :bulb: Better DX - consistent and intuitive interface
+- :muscle: Robust typescript support
 - VM agnostic - you can directly import and use it **anywhere**, no matter whether in `setup` lifecycle or not.
-- Consistent and intuitive interface :bulb:
-  > See [GettersOption](https://iendeavor.github.io/vuex-light/vuex-light.gettersoptiontype.html),
-  > [MutationsOption](https://iendeavor.github.io/vuex-light/vuex-light.mutationsoptiontype.html),
-  > [ActionsOption](https://iendeavor.github.io/vuex-light/vuex-light.actionsoptiontype.html) typing.
-- Implement with vue 3 reactivity system only
-- Light weight
 
-# Installation
+## Getting Started
+
+### Setup
 
 via npm
 
@@ -48,7 +36,7 @@ via cdn
 <script src="https://unpkg.com/vuex-light@latest"></script>
 ```
 
-# Getting Started
+### Getting Started
 
 Create the simplest store:
 
@@ -142,7 +130,9 @@ Now, your can access the store by the following ways:
 
    Example: [Todo MVC](https://codesandbox.io/s/github/iendeavor/vuex-light/tree/main/examples/todomvc-vite)
 
-# Core API
+## API
+
+### Core
 
 ```ts
 const store = createStore(
@@ -183,25 +173,25 @@ store.actions.incrementIfOdd()
 store.modules.module.state.moduleCount
 ```
 
-# Plugins
+### Plugins
 
-## `createLoggerPlugin`
+#### `createLoggerPlugin`
 
 https://iendeavor.github.io/vuex-light/vuex-light.createloggerplugin.html
 
-## `createPersistPlugin`
+#### `createPersistPlugin`
 
 https://iendeavor.github.io/vuex-light/vuex-light.createpersistplugin.html
 
-# Contributing
+## Contributing
 
 Please read [CONTRIBUTING.md](/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull
 requests to us.
 
-# Versioning
+### Versioning
 
 We use [SemVer](https://semver.org/) for versioning. For the versions available, see the tags on this repository.
 
-# License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](/LICENSE) file for details
