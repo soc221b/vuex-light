@@ -116,7 +116,7 @@ export function createStore<
   }
 
   const { subscribe, subscribers } = useSubscriber<Subscriber>()
-  const { subscribe: actionSubscribe, subscribers: actionSubscribers } = useSubscriber<ActionSubscriber>()
+  const { subscribe: subscribeAction, subscribers: actionSubscribers } = useSubscriber<ActionSubscriber>()
 
   const normalizedStateOption = isReactive(stateOption) ? toRefs(stateOption) : stateOption
   const state = ref(
@@ -182,7 +182,11 @@ export function createStore<
     mutations,
     actions,
     subscribe,
-    actionSubscribe,
+    actionSubscribe: (subscriber: ActionSubscriber) => {
+      console.warn('Deprecated: use `subscribeAction` instead.')
+      return subscribeAction(subscriber)
+    },
+    subscribeAction,
     replaceState,
     modules,
   }

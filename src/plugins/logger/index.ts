@@ -123,7 +123,7 @@ export function createLoggerPlugin(options?: Options) {
 
     if (logActions) {
       // TODO: add type info
-      store.actionSubscribe((action: any) => {
+      store.subscribeAction((action: any) => {
         if (actionFilter(action) === false) return
 
         const formattedTime = getFormattedTime()

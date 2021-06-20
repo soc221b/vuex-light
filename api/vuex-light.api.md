@@ -46,6 +46,7 @@ export function createStore<StateOption extends StateOptionType, GettersOption e
     actions: { readonly [P_2 in keyof ActionsOption]: OmitFirstParameter<ActionsOption[P_2]>; };
     subscribe: (subscriber: Subscriber) => void;
     actionSubscribe: (subscriber: ActionSubscriber) => void;
+    subscribeAction: (subscriber: ActionSubscriber) => void;
     replaceState: (newState: StateOption) => void;
     modules: Modules;
 };
