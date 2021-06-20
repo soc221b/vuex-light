@@ -3,22 +3,22 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-    "node": ">=10"
+    "node": ">=12"
   },
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build"
   },
   "dependencies": {
-    "core-js": "^3.6.5",
-    "vue": "^3.0.0",
-    "vuex-light": "2.1.1"
+    "core-js": "^3",
+    "vue": "^3",
+    "vuex-light": "^2"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-typescript": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
-    "@vue/compiler-sfc": "^3.0.0",
-    "typescript": "~4.1.5"
+    "@vue/cli-plugin-babel": "^4",
+    "@vue/cli-plugin-typescript": "^4",
+    "@vue/cli-service": "^4",
+    "@vue/compiler-sfc": "^3",
+    "typescript": "^4"
   }
 }

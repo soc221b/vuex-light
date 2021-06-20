@@ -7,8 +7,17 @@
 </template>
 
 <script lang="ts">
-export default {
-  name: 'HelloWorld',
-  inject: ['store'],
-}
+import { defineComponent } from 'vue'
+import { useStore } from './store'
+
+export default defineComponent({
+  name: 'Counter',
+  setup() {
+    const store = useStore()
+
+    return {
+      store,
+    }
+  },
+})
 </script>

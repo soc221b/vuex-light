@@ -34,4 +34,7 @@ const store = createStore(
     },
   },
 )
-export default store
+
+export function useStore() {
+  return store
+}

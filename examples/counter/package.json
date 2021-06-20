@@ -2,17 +2,23 @@
   "name": "counter",
   "version": "0.0.0",
   "private": true,
+  "engines": {
+    "node": ">=12"
+  },
   "scripts": {
     "dev": "vite",
-    "build": "vite build"
+    "build": "vue-tsc --noEmit && vite build",
+    "serve": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.0.4",
-    "vuex-light": "2.0.0-alpha.2"
+    "vue": "^3",
+    "vuex-light": "^2"
   },
   "devDependencies": {
-    "@vue/compiler-sfc": "^3.0.4",
-    "typescript": "^4.1.3",
-    "vite": "^1.0.0-rc.13"
+    "@vitejs/plugin-vue": "^1",
+    "@vue/compiler-sfc": "^3",
+    "typescript": "^4",
+    "vite": "^2",
+    "vue-tsc": "^0"
   }
 }

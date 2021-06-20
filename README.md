@@ -41,11 +41,10 @@ via cdn
 Create the simplest store:
 
 ```ts
-// store.ts
+// ./store.ts
 import { createStore } from 'vuex-light'
 
-// Create a new store instance.
-export const store = createStore(
+const store = createStore(
   // state
   {
     count: 0,
@@ -59,76 +58,35 @@ export const store = createStore(
     },
   },
 )
+
+export function useStore() {
+  return store
+}
 ```
 
-Now, your can access the store by the following ways:
+```html
+<!-- ./App.vue -->
+<template>
+  Clicked: {{ store.state.count }} times.
+  <button @click="store.mutations.increment">+</button>
+</template>
 
-1. [globalProperty](https://v3.vuejs.org/api/application-config.html#globalproperties)
+<script lang="ts">
+  import { defineComponent } from 'vue'
+  import { useStore } from './store'
 
-   ```ts
-   // main.ts
-   // Adds the $store property that can be accessed in any component instance inside the application.
-   app.config.globalProperties.$store = store
+  export default defineComponent({
+    setup() {
+      const { state, mutations } = useStore()
 
-   app.component('child-component', {
-     mounted() {
-       console.log(this.$store.state.count)
-     },
-   })
-   ```
-
-   Example: [Hello world](https://codesandbox.io/s/github/iendeavor/vuex-light/tree/main/examples/hello-world)
-
-2. [provide/inject](https://v3.vuejs.org/api/application-api.html#provide)
-
-   ```ts
-   // main.ts
-   import { createApp } from 'vue'
-   import { store } from './store'
-
-   const app = createApp({
-     inject: ['store'],
-     template: `
-       <div>
-         {{ store.state.count }}
-       </div>
-     `,
-   })
-
-   // Sets the store that can be injected into all components within the application.
-   app.provide('store', store)
-   ```
-
-   Example: [Counter](https://codesandbox.io/s/github/iendeavor/vuex-light/tree/main/examples/counter)
-
-3. useStore
-
-   ```ts
-   // store.ts
-   // create the `useStore` composition function
-   export function useStore() {
-     return store
-   }
-   ```
-
-   ```ts
-   // in a vue component
-   import { defineComponent } from 'vue'
-   import { useStore } from './store'
-
-   export default defineComponent({
-     setup() {
-       const { state, mutations } = useStore()
-
-       return {
-         state,
-         mutations,
-       }
-     },
-   })
-   ```
-
-   Example: [Todo MVC](https://codesandbox.io/s/github/iendeavor/vuex-light/tree/main/examples/todomvc-vite)
+      return {
+        state,
+        mutations,
+      }
+    },
+  })
+</script>
+```
 
 ## API
 
@@ -160,9 +118,12 @@ const store = createStore(
   },
   // modules
   {
-    module: createStore({
-      moduleCount: 0,
-    }),
+    module: createStore(
+      // state
+      {
+        moduleCount: 0,
+      },
+    ),
   },
 )
 

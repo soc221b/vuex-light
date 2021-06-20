@@ -77,9 +77,7 @@ const store = createStore(
   },
   [createPersistPlugin(), createLoggerPlugin()],
 )
-export default store
 
-// declare the `useStore` composition function
 export function useStore() {
   return store
 }
