@@ -1,3 +1,5 @@
+WARNING: This package is no longer to be maintained, use [Pinia](https://pinia.esm.dev/) instead.
+
 # vuex-light
 
 [![npm](https://img.shields.io/npm/v/vuex-light)](https://www.npmjs.com/package/vuex-light)
